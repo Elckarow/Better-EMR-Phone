@@ -1282,7 +1282,7 @@ screen _phone_image(img):
     add img:
         align (0.5, 0.5)
     
-    dismiss action Hide("_phone_image", dissolve)
+    key ["mouseup_1", "mouseup_3"] action Hide("_phone_image", dissolve)
 
 style phone_messages_button:
     xalign 0.5

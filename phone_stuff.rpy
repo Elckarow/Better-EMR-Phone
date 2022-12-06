@@ -9,9 +9,6 @@ define gui.phone_message_label_null_height = 4
 
 init 10 python:
     config.gl2 = True # required
-    config.developer = True
-
-    config.start_callbacks.append(lambda: renpy.run(Preference("rollback side", "left")))
 
 init -10 python:
     import collections

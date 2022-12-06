@@ -707,9 +707,7 @@ screen phone_say(who, what):
                     text who id "who"
 
             window:
-                text what id "what":
-                    if persistent.change_seen_text_color and renpy.is_seen():
-                        color persistent.seen_text_color
+                text what id "what"
 
 style phone_say_frame is empty:
     xfill True yfill True

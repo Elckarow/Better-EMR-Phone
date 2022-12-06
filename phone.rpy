@@ -381,7 +381,7 @@ ez clap
 
 
 We'll be needing a group chat for this.
-As stated previoulsy, "Doing `default my_group = phone.GroupChat(...)` isn't enough.".
+As stated previously, "Doing `default my_group = phone.GroupChat(...)` isn't enough.".
 BUT, doing:
 
 ```

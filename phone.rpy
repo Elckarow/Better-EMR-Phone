@@ -449,6 +449,9 @@ label start:
     call _phone_register
     ...
 ```
+This label should only be called once (see https://github.com/Elckarow/Phone/issues/1).
+
+
 And NOW you are good to go.
 
 

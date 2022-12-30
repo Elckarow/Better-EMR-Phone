@@ -533,7 +533,7 @@ style phone_phone:
 init python in phone:
     from renpy import store
     from store import RoundedFrame, Color, Solid, __, pause, collections, Text, Transform, BrightnessMatrix, datetime
-    from store import basestring, config
+    from store import basestring
 
     class Character(object):
         def __init__(self, name, icon, key, cps, color):
@@ -1369,6 +1369,8 @@ label _phone_register: # not used anymore but kept for backwards comptability
 default mc_sayo = phone.GroupChat("Sayori", "mod_assets/phone/sayori_icon.png", "mc_sayo")
 
 init -1 python in phone:
+    from store import config
+    
     def register(f):
         config.start_callbacks.append(f)
 

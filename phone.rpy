@@ -533,7 +533,7 @@ style phone_phone:
 init python in phone:
     from renpy import store
     from store import RoundedFrame, Color, Solid, __, pause, collections, Text, Transform, BrightnessMatrix, datetime
-    from store import basestring
+    from store import basestring, config
 
     class Character(object):
         def __init__(self, name, icon, key, cps, color):

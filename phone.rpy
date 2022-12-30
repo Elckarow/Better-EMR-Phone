@@ -416,10 +416,7 @@ label start:
 ```
 
 
-To register messages, labels and calls before the game starts, it's a bit of a mess.
-Due to renpy's behavior (aka `default` statements not executing when the functions in `config.start_callbacks` are called),
-you'll have to go through with that method:
-
+To register messages before the game starts, simply decorate your function with `register`:
 ```
 init python in phone:
     @register
@@ -439,21 +436,8 @@ init python in phone:
         register_image("goofy", "mc", "mod_assets/phone/sayori_icon.png")
         register_message("goofy", "s", _("What the f-"))
 ```
-First of all, decorate a function with `register`. This function should only ever call `register_...`.
-
-
-Then, in the `start` label (or whetever label you use when starting a new game), call the `_phone_register` label.
-
-```
-label start:
-    call _phone_register
-    ...
-```
-This label should only be called once (see https://github.com/Elckarow/Phone/issues/1).
-
-
 And NOW you are good to go.
-
+(for those who a version prior to 1.1.0, the label `_phone_register` is not needed anymore. It was a dumb mistake on my part.)
 
 
 For those who want to define their own screens:
@@ -1362,20 +1346,16 @@ style phone_typing_istyping is _base_phone_text:
 #############################################################################################################
 #############################################################################################################
 
-label _phone_register:
-    python hide:
-        for i in phone._to_register:
-            i()
+define -10 config.early_start_store = False
+
+label _phone_register: # not used anymore but kept for backwards comptability
     return
 
 default mc_sayo = phone.GroupChat("Sayori", "mod_assets/phone/sayori_icon.png", "mc_sayo")
 
 init -1 python in phone:
-    _to_register = [ ]
-
     def register(f):
-        _to_register.append(f)
-        return f
+        config.start_callbacks.append(f)
 
     @register
     def __register_mc_sayo_messages():

@@ -599,7 +599,7 @@ default phone._data = collections.defaultdict(
 init python in phone:
     def sort_messages(key):
         global _data
-        _data[group_chat(key).key]["message"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
+        _data[character(key).key]["message"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
         
 #############################################################################################################
 #############################################################################################################

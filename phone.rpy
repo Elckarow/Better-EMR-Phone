@@ -596,6 +596,11 @@ default phone._data = collections.defaultdict(
     phone._DefaultData() # can't pickle lambdas, sadge
 )
 
+init python in phone:
+    def sort_messages(key):
+        global _data
+        _data[key]["message"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
+        
 #############################################################################################################
 #############################################################################################################
 #############################################################################################################
@@ -907,6 +912,9 @@ init python in phone:
         global _group_chat
         if _group_chat is None:
             raise Exception("ending discussion, but no discussion ever started")
+            
+        for key in group_chat._characters:
+            sort_messages(key)
         
         _group_chat = None
 
@@ -1374,3 +1382,10 @@ init -1 python in phone:
         register_label("goofy", "'Sayori' was added to the group chat")
         register_image("goofy", "mc", "mod_assets/phone/sayori_icon.png")
         register_message("goofy", "s", _("What the f-"))
+
+init 10 python in phone:
+    @config.start_callbacks.append
+    def __sort_register_messages():
+        global _data
+        for key in _data:
+            sort_messages(key)

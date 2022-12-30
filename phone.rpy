@@ -166,6 +166,7 @@ Removes a character to this group chat, and removes the group chat from the char
 Additionally, the following field can be read and safely modified:
 `name`
 `icon`
+`date` (should not be modified)
 
 
 Various functions related to these objects.
@@ -789,10 +790,10 @@ init python in phone:
         def __init__(self, name, icon, key):
             self.name = name
             self.icon = icon
+            self.date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
 
             self._characters = set()            
             self._messages = []
-            self._date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
             self._page = 0
             
             self.key = key
@@ -1015,11 +1016,11 @@ init python in phone:
     def register_date(group, month, day, year, hour, minute):
         group = group_chat(group)
 
-        if (group._date.month, group._date.day, group._date.year) < (month, day, year):
+        if (group.date.month, group.date.day, group.date.year) < (month, day, year):
             global message_date_pattern
             register_label(group, __(message_date_pattern).format(month=str(month).zfill(2), day=str(day).zfill(2), year=str(year).zfill(2)))
         
-        group._date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+        group.date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
 
         global message_hour_pattern
         register_label(group, __(message_time_pattern).format(hour=str(hour).zfill(2), minute=str(minute).zfill(2)))

@@ -166,6 +166,7 @@ Removes a character to this group chat, and removes the group chat from the char
 Additionally, the following field can be read and safely modified:
 `name`
 `icon`
+`date` (should not be modified)
 
 
 Various functions related to these objects.
@@ -265,6 +266,12 @@ def register_date(group, month, day, year, hour, minute):
 ```
 Saves a date in the *group chat* `group`.
 This is called automatically by the `phone.date` function.
+
+
+```
+def sort_messages(key):
+```
+Sorts the group chats of the *character* `key` according to their last registered date.
 
 
 ###########
@@ -595,6 +602,11 @@ default phone._data = collections.defaultdict(
     phone._DefaultData() # can't pickle lambdas, sadge
 )
 
+init python in phone:
+    def sort_messages(key):
+        global _data
+        _data[character(key).key]["message"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
+        
 #############################################################################################################
 #############################################################################################################
 #############################################################################################################
@@ -789,10 +801,10 @@ init python in phone:
         def __init__(self, name, icon, key):
             self.name = name
             self.icon = icon
+            self.date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
 
             self._characters = set()            
             self._messages = []
-            self._date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
             self._page = 0
             
             self.key = key
@@ -906,6 +918,9 @@ init python in phone:
         global _group_chat
         if _group_chat is None:
             raise Exception("ending discussion, but no discussion ever started")
+            
+        for key in group_chat._characters:
+            sort_messages(key)
         
         _group_chat = None
 
@@ -1015,11 +1030,11 @@ init python in phone:
     def register_date(group, month, day, year, hour, minute):
         group = group_chat(group)
 
-        if (group._date.month, group._date.day, group._date.year) < (month, day, year):
+        if (group.date.month, group.date.day, group.date.year) < (month, day, year):
             global message_date_pattern
             register_label(group, __(message_date_pattern).format(month=str(month).zfill(2), day=str(day).zfill(2), year=str(year).zfill(2)))
         
-        group._date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+        group.date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
 
         global message_hour_pattern
         register_label(group, __(message_time_pattern).format(hour=str(hour).zfill(2), minute=str(minute).zfill(2)))
@@ -1373,3 +1388,10 @@ init -1 python in phone:
         register_label("goofy", "'Sayori' was added to the group chat")
         register_image("goofy", "mc", "mod_assets/phone/sayori_icon.png")
         register_message("goofy", "s", _("What the f-"))
+
+init 10 python in phone:
+    @config.start_callbacks.append
+    def __sort_register_messages():
+        global _data
+        for key in _data:
+            sort_messages(key)

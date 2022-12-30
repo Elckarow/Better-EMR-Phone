@@ -268,6 +268,12 @@ Saves a date in the *group chat* `group`.
 This is called automatically by the `phone.date` function.
 
 
+```
+def sort_messages(key):
+```
+Sorts the group chats of the *character* `key` according to their last registered date.
+
+
 ###########
 
 

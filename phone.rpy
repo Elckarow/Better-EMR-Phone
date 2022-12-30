@@ -1362,20 +1362,14 @@ style phone_typing_istyping is _base_phone_text:
 #############################################################################################################
 #############################################################################################################
 
-label _phone_register:
-    python hide:
-        for i in phone._to_register:
-            i()
+label _phone_register: # not used anymore
     return
 
 default mc_sayo = phone.GroupChat("Sayori", "mod_assets/phone/sayori_icon.png", "mc_sayo")
 
 init -1 python in phone:
-    _to_register = [ ]
-
     def register(f):
-        _to_register.append(f)
-        return f
+        config.start_callbacks.append(f)
 
     @register
     def __register_mc_sayo_messages():

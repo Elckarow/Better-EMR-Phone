@@ -1346,6 +1346,8 @@ style phone_typing_istyping is _base_phone_text:
 #############################################################################################################
 #############################################################################################################
 
+define -10 config.early_start_store = False
+
 label _phone_register: # not used anymore but kept for backwards comptability
     return
 

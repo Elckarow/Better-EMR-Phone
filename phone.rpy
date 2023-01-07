@@ -925,7 +925,7 @@ init python in phone:
         if _group_chat is None:
             raise Exception("ending discussion, but no discussion ever started")
             
-        for key in group_chat._characters:
+        for key in _group_chat._characters:
             sort_messages(key)
         
         _group_chat = None

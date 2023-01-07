@@ -651,7 +651,7 @@ default phone._current_caller = None
 
 init 1 python in phone:
     def _call_time(st, at):
-        return Text(time.strftime("%M:%S", time.gmtime(st)), style="phone_call_time"), 0.0)
+        return Text(time.strftime("%M:%S", time.gmtime(st)), style="phone_call_time"), 0.0
 
 screen phone_call():
     tag phone

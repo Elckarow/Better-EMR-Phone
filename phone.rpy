@@ -649,6 +649,10 @@ init python in phone:
 
 default phone._current_caller = None
 
+init 1 python in phone:
+    def _call_time(st, at):
+        return Text(time.strftime("%M:%S", time.gmtime(st)), style="phone_call_time"), 0.0)
+
 screen phone_call():
     tag phone
     use phone(xpos=gui.phone_call_xpos):
@@ -658,7 +662,7 @@ screen phone_call():
 
         vbox:
             text "[phone._current_caller.name!t]"
-            add DynamicDisplayable(lambda st, at: (Text(time.strftime("%M:%S", time.gmtime(st)), style="phone_call_time"), 0.0))
+            add DynamicDisplayable(phone._call_time)
 
         frame:            
             add phone._current_caller.icon:

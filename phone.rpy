@@ -650,6 +650,8 @@ init python in phone:
 default phone._current_caller = None
 
 init 1 python in phone:
+    from store import time
+    
     def _call_time(st, at):
         return Text(time.strftime("%M:%S", time.gmtime(st)), style="phone_call_time"), 0.0
 

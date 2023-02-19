@@ -537,6 +537,7 @@ init python in phone:
 
     class Character(object):
         def __init__(self, name, icon, key, cps, color):
+            global _characters
             _characters[key] = self
 
             self.name = name
@@ -576,9 +577,11 @@ init python in phone:
         
     def character(x):
         if isinstance(x, Character): return x
+        global _characters
         return _characters.get(x, None)
     
     def has_character(key):
+        global _characters
         return key in _characters
     
     def get_textbox(color):
@@ -898,9 +901,11 @@ init python in phone:
     
     def group_chat(x):
         if isinstance(x, GroupChat): return x
+        global _group_chats
         return _group_chats.get(x, None)
     
     def has_group_chat(key):
+        global _group_chats
         return key in _group_chats
 
     def discussion(gc):

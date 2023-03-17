@@ -7,13 +7,18 @@ define gui.phone_call_xpos = 0.07
 define gui.phone_message_frame_padding = (8, 8, 8, 8)
 define gui.phone_message_label_null_height = 4
 
-init 10 python:
-    config.gl2 = True # required
+define -10 config.gl2 = True # required
 
 init -10 python:
     import collections
-    import datetime
-    import time
+    
+    def pause(time=None):
+        if time is None:
+            ui.saybehavior(afm=" ")
+            ui.interact(mouse='pause', type="pause", roll_forward=None)
+            return
+        if time <= 0: return
+        renpy.pause(time)
 
     # RoundedFrame by pseurae
     # https://gist.github.com/Pseurae/661e6084f756fc917b2889a386b16664

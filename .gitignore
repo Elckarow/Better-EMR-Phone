@@ -1,0 +1,15 @@
+*.rpyc
+
+gui.rpy
+screens.rpy
+options.rpy
+script.rpy
+
+saves/
+tl/
+cache/
+gui/
+audio/
+image/
+saves/
+mod_assets/BG

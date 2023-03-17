@@ -688,7 +688,7 @@ python early in phone:
                 dl.error("expected at least 2 'add' statements")
             
             if icon is None:
-                icon = "mod_assets/STUFF/phone/default_icon.png"
+                icon = "mod_assets/phone/default_icon.png"
             
             if _as is not None:
                 filename, linenumber = l.get_location()

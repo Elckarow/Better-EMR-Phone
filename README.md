@@ -6,4 +6,4 @@ Credit Elckarow#8399 (i will haunt you if you don't :) )
 
 ![image](https://user-images.githubusercontent.com/101005497/221384283-d21dcabc-6286-49f8-a4e6-594c273c1c2f.png)
 
-![screenshot0009](https://user-images.githubusercontent.com/101005497/225970302-e394365b-c4b4-48b6-8f4a-ad157ca040ca.png)
+![image](https://user-images.githubusercontent.com/101005497/225970680-6fef56ff-cd3c-49e9-96e6-23ee9bc87fae.png)

@@ -1,0 +1,14 @@
+<ul class="page-nav no-print">
+{%- if prev and theme_prevnext %}
+  <li class="prev no-print">
+    <a href="{{ prev.link|e }}"
+       title="{{ _('previous chapter') }}">← {{ prev.title }}</a>
+  </li>
+{%- endif %}
+{%- if next and theme_prevnext %}
+  <li class="next no-print">
+    <a href="{{ next.link|e }}"
+       title="{{ _('next chapter') }}">{{ next.title }} →</a>
+  </li>
+{%- endif %}
+</ul>

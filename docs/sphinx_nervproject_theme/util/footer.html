@@ -1,0 +1,53 @@
+<footer class="footer" role="contentinfo">
+  {% if show_copyright %}
+    <p>
+    {% if hasdoc('copyright') %}
+      {% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+    {% else %}
+      {% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
+    {% endif %}
+    </p>
+  {% endif %}
+  {% if theme_license['type'] == "CC" %}
+    <p><a href="{{ theme_license.url }}">
+      {% trans license_version=theme_license.version|e,
+      license_subtype=theme_license.subtype|e,
+      pathtocc=pathto('_static/fa/brands.svg', 1)|e %}
+        Licensed under Creative Commons
+          <svg aria-labelledby="cc_by_footer" class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title id="cc_by_footer">CC</title>
+            <use xlink:href="{{ pathtocc }}#creative-commons">
+            </use>
+          </svg> {{ license_subtype }}
+        {{ license_version }}.
+        {% endtrans %}
+      </a>
+    </p>
+  {% else %}
+    <p>
+    {% if theme_license.url %}
+      <a href="{{ theme_license.url }}">
+    {% endif %}
+    {% trans license_text=theme_license.text|e %}
+      Licensed under {{ license_text }}.
+    {% endtrans %}
+    {% if theme_license.url %}
+      </a>
+    {% endif %}
+    </p>
+  {% endif %}
+  {% if last_updated or show_sphinx %}
+    <p>
+  {% endif %}
+  {% if last_updated %}
+    {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+  {% endif %}
+  {% if show_sphinx %}
+    {% trans sphinx_version=sphinx_version|e %}Created using <a
+        href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }} with
+    <a href="https://www.nerv-project.eu">Nerv Project theme</a>
+    based on <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a>
+    and <a href="https://ablog.readthedocs.io/">ABlog</a>.{% endtrans %}</p>
+  {% endif %}
+  <div class="pagecount"></div>
+</footer>

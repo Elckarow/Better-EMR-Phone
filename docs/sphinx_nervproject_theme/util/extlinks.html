@@ -1,0 +1,37 @@
+{# external links, i.e. #}
+{% if theme_external_links %}
+  {% for (label, url) in theme_external_links %}
+    <div class="nav-item">
+      <a href="{{ url }}"
+        class="nav-link external">
+          {{ label }} <outboundlink/>
+      </a>
+    </div>
+  {% endfor %}
+{% endif %}
+{% if theme_external_languages %}
+  <div class="nav-item nav-dropdown-menu">
+    <details>
+      <summary>
+        {% for (code, name, langurl) in theme_external_languages %}
+          {% if code == language %}
+            <span class="nav-link">
+               {{ name }}
+            </span>
+          {% endif %}
+        {% endfor %}
+      </summary>
+      <ul>
+        {% for (code, name, langurl) in theme_external_languages %}
+          {% if code != language %}
+            <li class="nav-link">
+              <a href="{{ langurl }}/{{ pagename }}{{ file_suffix }}">
+                  {{ name }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </details>
+  </div>
+{% endif %}

@@ -1,0 +1,16 @@
+<div class="sidebar-links no-print">
+    <div class="sidebar-group">
+
+      <ul class="social">
+        {% for iconset, icon, text, link in theme_social %}
+        <li><a
+            class="fasvglink {{ icon }}" href="{{ link }}"
+            target="_blank">
+                <svg role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                    <use xlink:href="{{ pathto('_static/fa/' + iconset + '.svg', 1)}}#{{ icon }}">
+                    </use>
+                </svg> {{ text }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+</div></div>

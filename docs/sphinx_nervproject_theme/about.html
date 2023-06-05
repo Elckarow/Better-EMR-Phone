@@ -1,0 +1,12 @@
+<div class="sidebar-links">
+  <div class="sidebar-group">
+    <a id="mainlogo" href="{{ pathto(master_doc) }}">
+      <img src="{{ pathto('_static/' + logo, 1) }}"
+        {% if theme_logoalt %}
+        alt="{{ theme_logoalt }}"
+        {% else %}
+        alt="{{ html_title }}"
+        {% endif %}
+        title="{{ html_title }}">
+    </a>
+</div></div>

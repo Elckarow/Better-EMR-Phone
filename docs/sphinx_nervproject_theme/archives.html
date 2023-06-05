@@ -1,0 +1,13 @@
+{% if ablog and ablog.archive %}
+<nav class="sidebar-links">
+    <div class="sidebar-group">
+  <p class="caption"><span class="caption-text"><a href="{{ pathto(ablog.archive.docname) }}">{{ gettext('Archives') }}</a></span></p>
+  <ul class="current">
+  {% for coll in ablog.archive %}
+    {% if coll %}
+    <li class="toctree-l1"><a href="{{ pathto(coll.docname) }}">{{ coll }} ({{ coll|length }})</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</div></nav>
+{% endif %}

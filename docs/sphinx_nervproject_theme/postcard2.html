@@ -1,0 +1,87 @@
+<li ><dl class="navdl">
+  <dt>{{ gettext('Date') }}</dt>
+  <dd>
+    {% if post.published %}
+    <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/regular.svg', 1) }}#calendar"></use></svg>
+      {{ post.date.strftime(ablog.post_date_format) }}
+    {% else %}
+      <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#pencil-alt"></use></svg>
+      {% if post.date %}{{ post.date.strftime(ablog.post_date_format) }}
+      {% else %} {{ gettext('Draft') }} {% endif %}
+    {% endif %}</dd>
+  </dl></li>
+  <li  id="published" ><dl class="navdl">
+    <dt>{{ gettext('Published') }}</dt>
+    <dd>
+      {% if post.published and post.date != post.update %}
+        <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#pencil-alt"></use></svg> {{ gettext('Update') }}:
+        {{ post.update.strftime(ablog.post_date_format) }}
+      {% endif %}
+  </dd></dl></li>
+
+  <li  id="author"><dl class="navdl">
+    <dt>{{ gettext('Author(s)') }}</dt>
+    <dd>
+      {% if post.author %}
+        <i class="fa-fw fa fa-user"></i>
+        {% for coll in post.author %}
+          {% if coll|length %}
+          <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.author|length %},{% endif %}
+          {% else %}{{ coll }}{% if loop.index < post.author|length %},{% endif %}{% endif %}
+         {% endfor %}
+      {% endif %}
+    </dd>
+  </dl></li>
+
+  <li  id="location"><dl class="navdl">
+    <dt>{{ gettext('Location') }}</dt>
+    <dd>
+      {% if post.location %}
+        <i class="fa-fw fa fa-location-arrow"></i>
+        {% for coll in post.location %}
+          {% if coll|length %}
+          <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.location|length %},{% endif %}
+          {% else %}{{ coll }}{% if loop.index < post.location|length %},{% endif %}{% endif %}
+        {% endfor %}
+      {% endif %}
+  </dd></dl></li>
+
+  {% if post.language %}
+  <li  id="language"><dl class="navdl">
+    <dt>{{ gettext('Language') }}</dt>
+    <dd>
+        <i class="fa-fw fa fa-language"></i>
+        {% for coll in post.language %}
+          {% if coll|length %}
+          <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.language|length %},{% endif %}
+          {% else %}{{ coll }}{% if loop.index < post.language|length %},{% endif %}{% endif %}
+             {% endfor %}
+  </dd></dl></li>
+  {% endif %}
+
+  <li  id="category"><dl class="navdl">
+    <dt> {{ gettext('Category') }}</dt>
+    <dd>
+      {% if post.category %}
+      <i class="fa-fw fa fa-folder-open"></i>
+    {% for coll in post.category %}
+      {% if coll|length %}
+      <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.category|length %},{% endif %}
+      {% else %}{{ coll }}{% if loop.index < post.category|length %},{% endif %}{% endif %}
+      {% endfor %}
+    {% endif %}
+  </dd></dl></li>
+
+  <li  id="tags"><dl class="navdl">
+    <dt>{{ gettext('Tags') }}</dt>
+    <dd>
+      {% if post.tags %}
+        {% if post.tags|length > 1 %}<i class="fa-fw fa fa-tags"></i>
+          {% else %}<i class="fa-fw fa fa-tag"></i>{% endif %}
+        {% for coll in post.tags %}
+          {% if coll|length %}
+          <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.tags|length %}{% endif %}
+          {% else %}{{ coll }}{% if loop.index < post.tags|length %}{% endif %}{% endif %}
+        {% endfor %}
+    {% endif %}
+  </dd></dl></li>

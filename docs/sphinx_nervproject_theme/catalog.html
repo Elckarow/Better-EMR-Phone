@@ -1,0 +1,27 @@
+{%- extends "page.html" %}
+{% block body %}
+  {% for collection in catalog %}
+  {% if collection %}
+  <section class="section" role="feed">
+
+    <h2>
+      {{ header }}
+      <a href="{{ pathto(collection.docname) }}">{{ collection }}</a>
+    </h2>
+    {% for post in collection %}
+    <article class="section">
+      <p>
+      {% if post.published %}
+        {{ post.date.strftime(ablog.post_date_format) }}
+      {% else %}
+        {{ gettext('Draft') }}
+      {% endif %}
+      - <a href="{{ pathto(post.docname) }}{{ anchor(post) }}">{{ post.title }}</a>
+      </p>
+      {% if 0 %}<ul class="ablog-archive">{% include "postcard2.html" %}</ul>{% endif %}
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{%- extends "page.html" %}
+{% block body %}
+  <section class="section" role="feed">
+
+    <h1>
+      {% if archive_feed %}
+      <a href="{{ pathto(collection.path, 1) }}/atom.xml"><svg role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""
+              class="fasvg"><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#rss"></use></svg></a>{% endif %}
+      {{ header }}
+      {% if collection.href %}
+      <a href="{{ collection.href }}">{{ collection }}</a>
+      {% else %}
+      {{ collection }}
+      {% endif %}
+    </h1>
+    {% if ablog and ablog.blog_archive_titles %}
+    {% for post in collection %}
+    <article class="section">
+      <p>
+      {% if post.published %}
+        {{ post.date.strftime(ablog.post_date_format) }}
+      {% else %}
+        Draft
+      {% endif %}
+      - <a href="{{ pathto(post.docname) }}{{ anchor(post) }}">{{ post.title }}</a>
+      </p>
+      {% if 0 %}<ul class="ablog-archive">{% include "postcard2.html" %}</ul>{% endif %}
+    </article>
+    {% endfor %}
+    {% else %}
+    {% for post in collection %}
+
+    <article class="section">
+      <h2><a href="{{ pathto(post.docname) }}{{ anchor(post) }}">{{ post.title }}</a></h2>
+
+      <ul class="ablog-archive">
+      <li>{% if post.published %}
+      <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/regular.svg', 1) }}#calendar"></use></svg>
+        {{ post.date.strftime(ablog.post_date_format) }}
+      {% else %}
+        <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#pencil-alt"></use></svg>
+        {% if post.date %}{{ post.date.strftime(ablog.post_date_format) }}
+        {% else %} Draft {% endif %}
+      {% endif %}
+      </li>
+      {% include "postcard2.html" %}</ul>
+      {{ post.to_html(collection.docname) }}
+      <p><a href="{{ pathto(post.docname) }}">{{ _("Read more ...") }}</a></p>
+      <hr>
+    </article>
+    {% endfor %}
+    {% endif %}
+  </section>
+{% endblock %}

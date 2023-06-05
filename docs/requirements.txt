@@ -1,0 +1,5 @@
+sphinx==3.3.1
+sphinx_nervproject_theme
+sphinx_markdown_tables
+six
+jinja2<3.1.0

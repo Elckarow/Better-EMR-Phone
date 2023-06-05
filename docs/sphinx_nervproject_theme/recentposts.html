@@ -1,0 +1,12 @@
+{% if ablog %}
+<nav class="sidebar-links">
+    <div class="sidebar-group">
+  <p class="caption"><span class="caption-text"><a href="{{ pathto(ablog.blog_path) }}">{{ gettext('Recent Posts') }}</a></span></p>
+  <ul class="current">
+    {% set pcount = 1 %}
+    {% for recent in ablog.recent(5, pagename) %}
+      <li class="toctree-l1"><a href="{{ pathto(recent.docname) }}{{ anchor(recent) }}">{{ recent.date.strftime(ablog.post_date_format_short) + " - " + recent.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div></nav>
+{% endif %}

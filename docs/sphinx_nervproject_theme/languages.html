@@ -1,0 +1,10 @@
+{% if ablog and ablog.language %}
+  <p class="caption"><span class="caption-text"><a href="{{ pathto(ablog.language.path) }}">{{ gettext('Languages') }}</a></span></p>
+  <ul class="current">
+  {% for coll in ablog.language %}
+    {% if coll %}
+    <li class="toctree-l1"><a href="{{ pathto(coll.docname) }}">{{ coll }} ({{ coll|length }})</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endif %}

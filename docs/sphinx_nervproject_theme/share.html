@@ -1,0 +1,89 @@
+<section>
+  {% set post = ablog[pagename] %}
+    <div class="center social-share no-print">
+        <p>{{ gettext('Like this article? Share it!') }}</p>
+        <ul class="social">
+            <li>
+                <a class="fasvglink diaspora"
+                   href="https://share.diasporafoundation.org/?title={{ title|urlencode }}&url={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}"
+                    target="_blank"
+                    title="{{ gettext('Share on Diaspora') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#diaspora">
+                    </use>
+                </svg> Diaspora*</a>
+            </li>
+            <li>
+                <a class="fasvglink mastodon"
+                   href="https://mastodon.kujiu.org/share?text={{ title|urlencode }}:%20{{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}{% if post %}{% for tag in post.tags %}%20%23{{ tag }}{% endfor %}{% endif %}{% if theme_mastodon_user %}%20{{ theme_mastodon_user }}{% endif %}"
+                    target="_blank"
+                    title="{{ gettext('Share on Mastodon') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#mastodon">
+                    </use>
+                </svg> Mastodon</a>
+            </li>
+            <li>
+                <a class="fasvglink twitter"
+                   href="https://twitter.com/intent/tweet?text={{ title|urlencode }}&url={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}&via={% if theme_twitter_user %}{{ theme_twitter_user }}{% endif %}{% if post and post.tags|length %}&hashtags={% for tag in post.tags %}{{ tag }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}"
+                    target="_blank"
+                    title="{{ gettext('Share on Twitter') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#twitter">
+                    </use>
+                </svg> Twitter</a>
+            </li>
+            <li>
+                <a class="fasvglink facebook"
+                   href="https://www.facebook.com/sharer/sharer.php?u={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}"
+                    target="_blank"
+                    title="{{ gettext('Share on Facebook') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#facebook">
+                    </use>
+                </svg> Facebook</a>
+            </li>
+            <li>
+                <a class="fasvglink linkedin"
+                   href="https://www.linkedin.com/shareArticle?mini=true&url={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}&title={{ title|urlencode }}&source={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}"
+                    target="_blank"
+                    title="{{ gettext('Share on LinkedIn') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#linkedin">
+                    </use>
+                </svg> LinkedIn</a>
+            </li>
+            <li>
+                <a class="fasvglink reddit"
+                   href="https://www.reddit.com/submit?url={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}&title={{ title|urlencode }}"
+                    target="_blank"
+                    title="{{ gettext('Share on Reddit') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#reddit">
+                    </use>
+                </svg> Reddit</a>
+            </li>
+            <li>
+                <a class="fasvglink hackernews"
+                   href="https://news.ycombinator.com/submitlink?t={{ title|urlencode }}&u={{ ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}"
+                    target="_blank"
+                    title="{{ gettext('Share on HackerNews') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/brands.svg', 1)}}#hacker-news">
+                    </use>
+                </svg> HackerNews</a>
+            </li>
+            <li>
+                <a class="fasvglink email"
+                   href="mailto:?subject={{ title|urlencode }}&body={{
+                   ablog.page_url(pagename)|urlencode }}{% if not ablog.page_url(pagename) or ablog.page_url(pagename).endswith('/') %}index{% endif %}{{ file_suffix }}"
+                    target="_blank"
+                    title="{{ gettext('Share by email') }}">
+                    <svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="">
+                       <use xlink:href="{{ pathto('_static/fa/solid.svg', 1)}}#mail-bulk">
+                    </use>
+                </svg> {{ gettext('Email') }}</a>
+            </li>
+        </ul>
+    </div>
+</section>

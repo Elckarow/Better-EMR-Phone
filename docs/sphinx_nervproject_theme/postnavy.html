@@ -1,0 +1,25 @@
+{# prev/next are not set for drafts #}
+{% set post = ablog[pagename] %}
+{% if post.published %}
+<nav class="section">
+  <span style="float: left;">
+  {% if post.prev and theme_ablog_prevnext %}
+  {{ gettext('Previous') }}:
+  <a href="{{ pathto(post.prev.docname) }}{{ anchor(post.prev) }}">
+    <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#arrow-circle-left"></use></svg>
+    {{ post.prev.title }}
+  </a>
+  {% endif %}
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  {% if post.next and theme_ablog_prevnext%}
+  {{ gettext('Next') }}:
+  <a href="{{ pathto(post.next.docname) }}{{ anchor(post.next) }}">
+    {{ post.next.title }}
+    <svg class="fasvg" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title=""><use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#arrow-circle-right"></use></svg>
+  </a>
+  {% endif %}
+  </span>
+</nav>
+{% endif %}

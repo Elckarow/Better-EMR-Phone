@@ -1,0 +1,14 @@
+{% if ablog and pagename in ablog %}
+<div class="sidebar-links">
+    <div class="sidebar-group">
+  {% set post = ablog[pagename] %}
+
+  <p class="caption">
+      <span class="caption-text">{{ gettext('About this page') }}</span>
+  </p>
+
+  <ul class="current">
+  {% include "postcard2.html" %}
+  </ul>
+</div></div>
+{% endif %}

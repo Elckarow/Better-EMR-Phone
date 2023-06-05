@@ -1,0 +1,13 @@
+{% if ablog and ablog.category %}
+<nav class="sidebar-links">
+    <div class="sidebar-group">
+  <p class="caption"><span class="caption-text"><a href="{{ pathto(ablog.category.path) }}">{{ gettext('Categories') }}</a></span></p>
+  <ul class="current">
+  {% for coll in ablog.category %}
+    {% if coll %}
+    <li class="toctree-l1"><a href="{{ pathto(coll.docname) }}">{{ coll }} ({{ coll|length }})</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</div></nav>
+{% endif %}

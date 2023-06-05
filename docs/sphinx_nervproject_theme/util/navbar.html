@@ -1,0 +1,28 @@
+<header class="navbar">
+    <div id="header-identity" class="print-only">
+        <img id="navbar_logo" src="{{ pathto('_static/' + logo, 1) }}"/>
+        <div id="navbar_title">{{ project|e }}</div>
+    </div>
+
+  {% if builder=='html' %}
+  <button class="sidebar-button">
+      <svg id="sidebar-button-svg" role="img" aria-labelledby="sidebar-button_label" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title id="sidebar-button_label">
+              {{ gettext('Toggle sidebar') }}
+          </title>
+          <use xlink:href="{{ pathto('_static/fa/solid.svg', 1) }}#bars"></use>
+      </svg>
+  </button>
+
+  <a href="{{pathto(master_doc)}}" class="home-link">
+      <span class="site-name">{{ project|e }}</span>
+  </a>
+
+  <div class="links">
+    <div class="nav-links can-hide">
+      {%- include "util/navlinks.html" %}
+      {%- include "util/extlinks.html" %}
+    </div>
+  </div>
+  {% endif %}
+</header>

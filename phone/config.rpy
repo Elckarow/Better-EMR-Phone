@@ -61,7 +61,7 @@ python early in phone.config:
     data = {
         "call_history": list,
         "group_chats": list,
-        "background_image": type(None),
+        "background_image": lambda: None,
         "calendars": list,
     }
 

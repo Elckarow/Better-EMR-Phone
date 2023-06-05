@@ -5,7 +5,7 @@ I'd like to thank to following people for their contributions:
 - LameMan#8999 (Quick menu icons)
 - -2#6177 (Shader code for the `CircleDisplayable` displayable)
 
-as well as our contributors on GitHub:
+as well as the project's contributors on GitHub:
 - None (for now (I hope))
 
 Various ressources used:

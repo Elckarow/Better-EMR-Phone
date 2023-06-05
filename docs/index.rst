@@ -10,7 +10,7 @@ Took a few tries but here we are I guess.
 
 **If you are not using this framework for a DDLC mod, the use of Monika's icon, Natsuki's icon, Yuri's icon, Sayori's icon and MC's icon is forbidden.**
 
-**Be sure to credit `Elckarow#8399` for making this framework or I will haunt your dreams.**
+**Be sure to credit Elckarow#8399 for making this framework (or I will haunt your dreams).**
 
 .. toctree::
     :maxdepth: 1
@@ -23,10 +23,10 @@ Took a few tries but here we are I guess.
 .. toctree:: 
     :maxdepth: 1
     
+    make_your_own_app
     contacts
     call_history
     calendars
-    make_your_own_app
 
 .. toctree:: 
     :maxdepth: 1

@@ -140,7 +140,10 @@ screen phone():
         )
         current_page = min(current_page, max_page)
 
-    textbutton "quit" xalign 1.0 action PhoneReturn()
+    frame style "empty":
+        align (1.0, 0.0) padding (10, 10)
+        background "#474747"
+        textbutton "Quit" action PhoneReturn()
 
     if coords_to_move is not None:
         key "K_ESCAPE" action SetScreenVariable("coords_to_move", None)
@@ -195,11 +198,14 @@ screen phone():
                             for bx, b_app in enumerate(b_app_row):
                                 use _phone_application_button(b_app, (None, bx, by), coords_to_move)
 
-style phone_main_button is empty                
-style phone_main_button_text is empty:
+style phone_main_text is empty:
     font "DejaVuSans.ttf"
-    color "#4e4e4e" outlines []
+    color "#fff" outlines []
     size 22
+
+style phone_main_button is empty                
+style phone_main_button_text is phone_main_text:
+    color "#4e4e4e"
 
 style phone_main_side is empty:
     xfill True yfill True

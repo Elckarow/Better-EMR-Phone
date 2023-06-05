@@ -6,9 +6,9 @@ As the name indicates, the first version of this phone was first seen in the DDL
 It was pretty good (visually that is). The back-end code was... *a bit spaghetti not gonna lie*. Since I needed a phone for my own (well not my *own* per se, I simply am the lead coder) DDLC mod `Doki Doki Undercurrents <https://undercurrentsmod.weebly.com/>`_ (go check it out), I decided to... remake the whole thing.
 Took a few tries but here we are I guess.
 
-**If you are not using this framework for a DDLC mod, the use of Monika's icon, Natsuki's icon, Yuri's icon, Sayori's icon and MC's icon is forbidden.**
+*Credit goes to Wretched Team for the original version.*
 
-*Credit goes to Wretched Team for the original version. Also thank* **silver#7587** *for making MC's icon, and* **-2** *(we shall one day rid the world of the Organization).*
+**If you are not using this framework for a DDLC mod, the use of Monika's icon, Natsuki's icon, Yuri's icon, Sayori's icon and MC's icon is forbidden.**
 
 **Be sure to credit `Elckarow#8399` for making this framework or I will haunt your dreams.**
 
@@ -36,3 +36,12 @@ Took a few tries but here we are I guess.
     system
     click_effects
     audio
+
+----
+
+.. toctree:: 
+    :maxdepth: 1
+
+    credits
+    changelog
+    incompatible

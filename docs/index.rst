@@ -13,27 +13,24 @@ Took a few tries but here we are I guess.
 **Be sure to credit `Elckarow#8399` for making this framework or I will haunt your dreams.**
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
-    text_messages_and_calls
     characters
     emojis
     discussion
     calls
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 1
     
-    applications
     contacts
     call_history
     calendars
     make_your_own_app
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 1
 
-    other
     functions_and_actions
     config
     system

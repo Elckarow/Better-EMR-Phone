@@ -1,7 +1,7 @@
 Welcome to the Better EMR Phone Documentation!
 ==============================================
 
-**This framework is intended for RenPy 7.4.9+ only. Any RenPy version below 7.4.9 will lead to errors and unexpected behavior.**
+**This framework is intended for Ren'Py 7.4.9+ only. Any Ren'Py version below 7.4.9 will lead to errors and unexpected behavior.**
 
 As the name indicates, the first version of this phone was first seen in the DDLC mod `Doki Doki: Exit Music REDUX <https://www.reddit.com/r/DDLCMods/comments/q3xamu/edit_music_redux_full_release/>`_.
 

@@ -518,7 +518,7 @@ python early in phone:
 
         if register: return label
 
-        delay = "0.5" if not ll.keyword("delay") else float(ll.require(ll.float))
+        delay = "0.5" if not ll.keyword("delay") else ll.require(ll.simple_expression)
         return label, delay
     
     def _parse_phone_date(ll, register):

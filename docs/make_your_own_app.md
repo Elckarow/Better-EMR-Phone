@@ -58,7 +58,7 @@ init python:
 Now that you've done this, it's time to add the app to the `*character*`s you've defined, using those two functions.
 
 `def add_application(app, page=0, key=None)`
-Adds the application `app` to the known applications for `*character*` `key`. Returns `True` if it succesfully added the app, `False` if it failed, or `None` if RenPy is still in init phase.
+Adds the application `app` to the known applications for `*character*` `key`. Returns `True` if it succesfully added the app, `False` if it failed, or `None` if Ren'Py is still in init phase.
 
 `def add_app_to_all_characters(app, page=0)`
 Same as above but for every `*character*` known at execution time.

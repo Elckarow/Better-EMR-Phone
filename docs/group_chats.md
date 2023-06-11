@@ -40,6 +40,9 @@ If `x` is a `phone.group_chat.GroupChat` object, will return that object, otherw
 `def has_group_chat(key)`
 Returns if a group chat with the key `key` exists.
 
+`def get_all()`
+Returns a list of every group chats defined.
+
 ---
 ## Example
 

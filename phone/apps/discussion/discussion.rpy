@@ -95,7 +95,7 @@ init -100 python in phone.discussion:
         _current_payload = None
 
         store._window_auto = True
-        pause(None)
+        pause(delay)
 
     def register_message(group, sender, text):
         _check_for_tags(text)

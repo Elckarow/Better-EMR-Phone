@@ -1,6 +1,6 @@
 # Phone calls
 
-*The following functions are defined in the* **`phone.calls`** *namespace (not **`phone.call`**, RenPy doesn't like me using that).*
+*The following functions are defined in the* **`phone.calls`** *namespace (not **`phone.call`**, Ren'Py doesn't like me using that).*
 
 Phone calls require a certain type of sayer. The need **those 3** properties:
 - `screen` set to `"phone_say" `

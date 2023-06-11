@@ -60,4 +60,8 @@ init -100 python in phone.character:
     def get_textbox(color):
         return RoundedFrame(color, radius=config.textbox_radius)
 
+    def get_all():
+        global _characters
+        return list(_characters.values())
+
 default phone.character._characters = { }

@@ -1,4 +1,4 @@
-A RenPy 7.4.9+ phone framework inspired by EMR's phone.
+A Ren'Py 7.4.9+ phone framework inspired by EMR's phone.
 
 Credit Elckarow#8399 [Official documentation can be found here](https://better-emr-phone.readthedocs.io/en/latest/).
 

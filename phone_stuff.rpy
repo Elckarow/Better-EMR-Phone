@@ -39,8 +39,12 @@ python early:
         style_object = getattr(style, name)
         return (lambda target: style_object,) + style.default.hyperlink_functions[1:]
 
-    def get_mixer(mixer):
-        return (preferences.get_mixer if renpy.version_tuple[:2] >= ((7, 6) if renpy.compat.PY2 else (8, 1)) else preferences.get_volume)(mixer)
+    if renpy.version_tuple[:2] >= ((7, 6) if renpy.compat.PY2 else (8, 1)):
+        def get_mixer(mixer):
+            return preferences.get_mixer(mixer)
+    else:
+        def get_mixer(mixer):
+            return preferences.get_volume(mixer)
 
     def pause(time=None):
         if time is None:

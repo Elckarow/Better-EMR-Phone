@@ -5,7 +5,7 @@
 ## The phone `Character` class
 
 **`class Character(object)`**
-Not to confuse with RenPy's `Character` objects (we're in the `phone.character` namespace remember), these objects form the core of the framework.
+Not to confuse with Ren'Py's `Character` objects (we're in the `phone.character` namespace remember), these objects form the core of the framework.
 
 When talking about a phone `Character` object, I will (most of the time) use this notation:
 `*character*`
@@ -44,6 +44,9 @@ Returns true if there is a phone `Character` with the key `key`, or fals if ther
 
 `def get_textbox(color)`
 Returns a `RoundedFrame` with the of the color `color` and the radius given by `phone.config.textbox_radius`.
+
+`def get_all()`
+Returns a list of all phone `Character` objects defined.
 
 ---
 ## Example

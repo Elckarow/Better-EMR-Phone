@@ -183,6 +183,10 @@ init -100 python in phone.group_chat:
     def has_group_chat(key):
         global _group_chats
         return key in _group_chats
+
+    def get_all():
+        global _group_chats
+        return list(_group_chats.values())
     
 default -100 phone.group_chat._group_chats = { }
 

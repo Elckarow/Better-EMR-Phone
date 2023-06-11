@@ -1,4 +1,4 @@
-# Config
+# Configuration Variables
 
 *The following variables are defined in the* **`phone.config`** *namespace.*
 **This namespace is considered *constant* and should not be modified outside of init time.**

@@ -265,9 +265,9 @@ screen _phone_status_bar():
                                     lambda st, at: (
                                         (
                                             phone.config.basedir + "volume_icon_0.png"
-                                            if preferences.get_mixer("phone") == 0.0
+                                            if get_mixer("phone") == 0.0
                                             else phone.config.basedir + "volume_icon_1.png"
-                                            if preferences.get_mixer("phone") < 0.5
+                                            if get_mixer("phone") < 0.5
                                             else phone.config.basedir + "volume_icon_2.png"
                                         ),
                                         0.1

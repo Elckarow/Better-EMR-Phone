@@ -263,9 +263,9 @@ python early in phone:
     
     class _RawPhonePass(cds_utils.Statement):
         def execute(self):
-            pause()
+            store.pause()
 
-    class _RawPhoneDiscussion(python_object):
+    class _RawPhoneDiscussion(cds_utils.Statement):
         __slots__ = ("gc", "statements")
 
         def __init__(self, gc, statements):
@@ -921,7 +921,7 @@ python early in phone:
                 rv.insert(0, self.define.name)
             return rv
     
-    class _RawDefineGroupChat(python_object):
+    class _RawDefineGroupChat(cds_utils.Statement):
         __slots__ = ("name", "icon", "key", "chars", "default_statement")
 
         def __init__(self, name, icon, key, chars, default_statement):

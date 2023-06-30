@@ -2,6 +2,9 @@
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+## 3.0.3
+- Fixed the `calendar` app layout.
+
 ## 3.0.2
 - Fixed the `pass` phone discussion statement
 

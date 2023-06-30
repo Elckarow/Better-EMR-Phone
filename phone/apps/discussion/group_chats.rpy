@@ -47,9 +47,8 @@ init -100 python in phone.group_chat:
                 char = character(char).key
                 self._characters.add(char)
 
-                global data
-                if self.key not in data[char]["group_chats"]:
-                    data[char]["group_chats"].append(self.key)
+                if self.key not in phone.data[char]["group_chats"]:
+                    phone.data[char]["group_chats"].append(self.key)
             
             return self
         
@@ -58,8 +57,7 @@ init -100 python in phone.group_chat:
             if char not in self._characters: return
             self._characters.remove(char)
 
-            global data
-            data[char]["group_chats"].remove(self.key)
+            phone.data[char]["group_chats"].remove(self.key)
         
         def number_of_messages_sent(self, char):
             if char is not None: key = charcter(char).key
@@ -194,6 +192,3 @@ init python in phone.group_chat:
     from store.phone.character import character
     from store.phone.discussion import _PayloadTypes, remove_text_tags
     from store.phone import format_time, format_date
-
-init python in phone:
-    renpy_config.start_callbacks.append(lambda: setattr(group_chat, "data", data))

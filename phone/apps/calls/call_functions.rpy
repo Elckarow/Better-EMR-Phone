@@ -1,6 +1,6 @@
 init -100 python in phone.calls:
     from renpy import store
-    from store import Transform, BrightnessMatrix
+    from store import Transform, BrightnessMatrix, phone
     from store.phone import character, config, show_layer_at, set_current_screen, system
     import time
 
@@ -58,17 +58,14 @@ init -100 python in phone.calls:
 
         date = system.get_date()
 
-        ch1 = data[key1]["call_history"]
+        ch1 = phone.data[key1]["call_history"]
         ch1.append(_CallEntry(key2, date, duration))
 
         while len(ch1) > config.call_history_lenght: ch1.pop(0)
         
-        ch2 = data[key2]["call_history"]
+        ch2 = phone.data[key2]["call_history"]
         ch2.append(_CallEntry(key1, date, duration))
 
         while len(ch2) > config.call_history_lenght: ch2.pop(0)
 
 default -100 phone.calls._current_caller = None
-
-init python in phone:
-    renpy_config.start_callbacks.append(lambda: setattr(calls, "data", data))

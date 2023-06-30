@@ -2,7 +2,7 @@ python early in phone:
     from renpy import store
     from store import config as renpy_config # phone.config is a substore
 
-    __version__ = (3, 0, 1)
+    __version__ = (3, 0, 3)
     __author__ = "Elckarow#8399" # smh my head my head
 
 init -150 python in phone:

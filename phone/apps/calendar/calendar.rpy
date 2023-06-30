@@ -138,7 +138,7 @@ screen phone_calendars():
     use _phone():
         style_prefix "phone_calendar"
 
-        vbox xalign 0.5:
+        side "t c":
             use app_base():
                 style_prefix "app_base"
                 text _("Calendar") xalign 0.5 text_align 0.5
@@ -205,6 +205,9 @@ screen phone_calendars():
                                 text selected_entry.description
                             else:
                                 text _("No description provided.")
+
+style phone_calendar_side is empty:
+    yfill True xfill True
 
 style phone_calendar_grid is empty:
     spacing 10

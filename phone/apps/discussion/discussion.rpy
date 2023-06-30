@@ -1,12 +1,11 @@
 init -100 python in phone.discussion:
     from renpy import store
-    from store import ui, pause
+    from store import ui, pause, phone
     from store.phone import config, show_layer_at, set_current_screen, format_date, format_time, emojis
     import datetime
 
     def sort_messages(key):
-        global data
-        data[character(key).key]["group_chats"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
+        phone.data[character(key).key]["group_chats"].sort(key=lambda gc: group_chat(gc).date, reverse=True)
     
     def _check_for_tags(s):
         if renpy.filter_text_tags(s, allow=config.message_text_tags) != s:
@@ -262,9 +261,6 @@ python early in phone.discussion._PayloadTypes: # fake enum because of the modul
 init python in phone.discussion:
     from store.phone.group_chat import group_chat
     from store.phone.character  import character
-
-init python in phone:
-    renpy_config.start_callbacks.append(lambda: setattr(discussion, "data", data))
 
 init 1400 python in phone:
     @renpy_config.start_callbacks.append

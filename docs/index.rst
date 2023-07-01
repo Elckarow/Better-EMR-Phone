@@ -32,6 +32,11 @@ Took a few tries but here we are I guess.
 
 .. toctree:: 
     :maxdepth: 1
+    
+    built_in_screens
+
+.. toctree:: 
+    :maxdepth: 1
 
     functions_and_actions
     config

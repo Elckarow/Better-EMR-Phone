@@ -31,7 +31,7 @@ Adds a label to the current group chat.
 The python equivalent of the `label` discussion statement.
 
 `def date(month, day, year, hour, minute, delay=0.5):`
-Adds a date as label to the current group chat. The date is saved to the group chat using `datetime.datetime`. If any of these fields are `None`, they are taken from the currently saved date.
+Adds a date as label to the current group chat. The date is saved to the group chat using `datetime.datetime`. If any of these values are `None`, they are taken from the currently saved date. If any of these values are `True`, they are taken from the date returned by `phone.system.get_date()`.
 The python equivalent of the `time` discussion statement.
 
 `def typing(sender, value, delay=None)`
@@ -85,18 +85,17 @@ Used to start a phone discussion.
 If a simple expression is given, it must be a `*group chat*`.
 If no simple expression is given (or that `None` is given), it's assumed that a discussion is already going on, and will therefore use the current group chat.
 
-It expects a block which can contain the following statements:
+If a block is given, the following statements can be used:
 
 - ` `
 The default statement, equivalent of the `phone.discussion.message` function.
 It expects a `*character*` and a string (flagged as translatable).
-It also accepts the delay property (defaults to `None`).
+It accepts the `delay` property (defaults to `None`) which is the time to wait before the next statement executes. A `None` delay will wait for user input. A negative value delay won't wait.
 
 - `image` 
 The equivalent of the `phone.discussion.image` function.
 It expects a `*character*` and a simple expression (the image).
 It accepts the `time` property (defaults to `2.0`), which is the time the image is being sent for.
-It accepts the `delay` property (default to `None`) which is the time to wait before the next statement executes. A `None` delay will wait for user input. A negative value delay won't wait.
 
 - `label`
 The equivalent of the `phone.discussion.label` function.
@@ -105,7 +104,7 @@ It also accepts the `delay` property (defaults to `0.5`).
     
 - `time`
 The equivalent of the `phone.discussion.date` function.
-It expects at least one of the following property: `year`, `month`, `day`, `hour`, `minute`.
+It expects at least one of the following property; `year`, `month`, `day`, `hour`, `minute`; which can be a number, `None` or `True`.
 If one of these is missing, it is retrieved from the current date registered.
 It also accepts the `delay` property (defaults to 0.5).
     
@@ -129,12 +128,13 @@ The one-line python statement.
 Executes code in the global store.
     
 - `python`
-Works the same way as the normal `python` statement except for 2 things:
-Does not accept the `early` close.
+Works the same way as the normal `python` statement except for one thing:
 If the `in` clause is given, the substore is created at init 0, unlike the regular `python` statement which does it at early time.
     
 - `pass`
 Does nothing and waits for user input. Can be used to display the phone screen without actually sending any message.
+
+If no block is given, it behaves as if a single `pass` statement was given.
 
 `phone end discussion`
 Used to end a phone discussion.

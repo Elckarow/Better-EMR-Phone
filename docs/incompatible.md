@@ -2,6 +2,9 @@
 
 A list of all changes that may require you to modify some of your code.
 
+## 3.0.4
+- None
+
 ## 3.0.3
 - None
 

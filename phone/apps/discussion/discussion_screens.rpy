@@ -285,7 +285,6 @@ style phone_messages_text is empty:
     size 19
     line_leading 0
     line_spacing 0
-    yoffset -1
     layout "greedy"
     font phone.config.basedir + "Aller_Rg.ttf"
     hyperlink_functions hyperlink_functions_style("phone_messages_text_hyperlink")

@@ -57,11 +57,11 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
             discussion.message(
-                eval(self.sender, globals),
+                eval(self.sender, locals),
                 self.message,
-                eval(self.delay, globals)
+                eval(self.delay, locals)
             )
         
         def lint(self):
@@ -83,24 +83,24 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
             discussion.image(
-                eval(self.sender, globals),
-                eval(self.image, globals),
-                eval(self.time, globals),
-                eval(self.delay, globals)
+                eval(self.sender, locals),
+                eval(self.image, locals),
+                eval(self.time, locals),
+                eval(self.delay, locals)
             )
         
         def lint(self):
-            globals = store.__dict__
+            locals = store.__dict__
 
             try:
-                character.character(eval(self.sender, globals))
+                character.character(eval(self.sender, locals))
             except Exception:
                 _phone_lint_error("'{}' is not a *character*.".format(self.sender))
             
             try:
-                image = eval(self.image, globals)
+                image = eval(self.image, locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.image))
             else:
@@ -130,14 +130,14 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
-            discussion.date(delay=eval(self.delay, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
+            locals = store.__dict__
+            discussion.date(delay=eval(self.delay, locals), **{k: eval(v, locals) for k, v in self.kwargs.items()})
         
         def lint(self):
-            globals = store.__dict__
+            locals = store.__dict__
 
             try:
-                month = eval(self.kwargs["month"], globals)
+                month = eval(self.kwargs["month"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["month"]))
             else:
@@ -145,7 +145,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid month.".format(month))
             
             try:
-                day = eval(self.kwargs["day"], globals)
+                day = eval(self.kwargs["day"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["day"]))
             else:
@@ -153,7 +153,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid day.".format(day))
 
             try:
-                minute = eval(self.kwargs["minute"], globals)
+                minute = eval(self.kwargs["minute"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["minute"]))
             else:
@@ -161,7 +161,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid minute.".format(minute))
 
             try:
-                hour = eval(self.kwargs["hour"], globals)
+                hour = eval(self.kwargs["hour"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["hour"]))
             else:
@@ -169,7 +169,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid hour.".format(hour))
             
             try:
-                hour = eval(self.kwargs["year"], globals)
+                hour = eval(self.kwargs["year"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["year"]))
     
@@ -182,11 +182,11 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
             discussion.typing(
-                eval(self.sender, globals),
-                eval(self.value, globals),
-                eval(self.delay, globals)
+                eval(self.sender, locals),
+                eval(self.value, locals),
+                eval(self.delay, locals)
             )
         
         def lint(self):
@@ -202,9 +202,9 @@ python early in phone:
             self.entries = entries
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
             for condition, block in self.entries:
-                if eval(condition, globals):
+                if eval(condition, locals):
                     for statement in block:
                         statement.execute()
                     return
@@ -224,16 +224,16 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
 
             blocks = [ ]
             captions = [ ]
 
             for caption, condition, block in self.entries:
-                if not eval(condition, globals): continue
+                if not eval(condition, locals): continue
                 blocks.append(block); captions.append(caption)
             
-            i = discussion.choice(captions, eval(self.delay, globals))
+            i = discussion.choice(captions, eval(self.delay, locals))
 
             for statement in blocks[i]:
                 statement.execute()
@@ -272,12 +272,12 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            globals = store.__dict__
+            locals = store.__dict__
             discussion.audio(
-                eval(self.sender, globals),
+                eval(self.sender, locals),
                 self.audio,
-                eval(self.time, globals),
-                eval(self.delay, globals)
+                eval(self.time, locals),
+                eval(self.delay, locals)
             )
         
         def lint(self):
@@ -357,22 +357,22 @@ python early in phone:
             self.image = image
 
         def execute(self, gc):
-            globals = store.__dict__
+            locals = store.__dict__
             discussion.register_image(
                 gc,
-                eval(self.sender, globals),
-                eval(self.image, globals)
+                eval(self.sender, locals),
+                eval(self.image, locals)
             )
         
         def lint(self):
-            globals = store.__dict__
+            locals = store.__dict__
             try:
-                character.character(eval(self.sender, globals))
+                character.character(eval(self.sender, locals))
             except Exception:
                 _phone_lint_error("'{}' is not a *character*.".format(self.sender))
 
             try:
-                image = eval(self.image, globals)
+                image = eval(self.image, locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.image))
             else:
@@ -400,13 +400,22 @@ python early in phone:
             self.kwargs = kwargs
         
         def execute(self, gc):
-            discussion.register_date(gc, **{k: eval(v, globals) for k, v in self.kwargs.items()})
+            locals = store.__dict__
+            kwargs = dict()
+
+            for k, v in self.kwargs.items():
+                v = eval(v, locals)
+                if v is None:
+                    v = getattr(gc.date, k)
+                kwargs[k] = v
+
+            discussion.register_date(gc, **kwargs)
         
         def lint(self):
-            globals = store.__dict__
+            locals = store.__dict__
 
             try:
-                month = eval(self.kwargs["month"], globals)
+                month = eval(self.kwargs["month"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["month"]))
             else:
@@ -414,7 +423,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid month.".format(month))
             
             try:
-                day = eval(self.kwargs["day"], globals)
+                day = eval(self.kwargs["day"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["day"]))
             else:
@@ -422,7 +431,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid day.".format(day))
 
             try:
-                minute = eval(self.kwargs["minute"], globals)
+                minute = eval(self.kwargs["minute"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["minute"]))
             else:
@@ -430,7 +439,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid minute.".format(minute))
 
             try:
-                hour = eval(self.kwargs["hour"], globals)
+                hour = eval(self.kwargs["hour"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["hour"]))
             else:
@@ -438,7 +447,7 @@ python early in phone:
                     _phone_lint_error("'{}' isn't a valid hour.".format(hour))
             
             try:
-                hour = eval(self.kwargs["year"], globals)
+                hour = eval(self.kwargs["year"], locals)
             except Exception:
                 _phone_lint_error("can't evaluate '{}'".format(self.kwargs["year"]))
 
@@ -449,9 +458,9 @@ python early in phone:
             self.entries = entries
         
         def execute(self, gc):
-            globals = store.__dict__
+            locals = store.__dict__
             for condition, statements in self.entries:
-                if eval(condition, globals):
+                if eval(condition, locals):
                     for statement in statements:
                         statement.execute(gc)
                     return
@@ -995,14 +1004,14 @@ python early in phone:
             renpy.config.start_callbacks.append(self.register)
         
         def register(self):
-            globals = store.__dict__
+            locals = store.__dict__
             if self.default_statement is not None:
                 gc = getattr(store, self.default_statement.varname)
             else:
-                gc = group_chat.GroupChat(self.name, eval(self.icon, globals), eval(self.key, globals))
+                gc = group_chat.GroupChat(self.name, eval(self.icon, locals), eval(self.key, locals))
             
             for char in self.chars:
-                gc.add_character(character.character(eval(char, globals)))
+                gc.add_character(character.character(eval(char, locals)))
     
     ############################
 

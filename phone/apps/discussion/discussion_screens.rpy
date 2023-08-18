@@ -135,7 +135,7 @@ screen _chat_message(p):
 screen _chat_messages():
     style_prefix "phone_messages"
 
-    default _label = False
+    $ _label = False
 
     viewport style "empty" at Flatten:
         yadjustment phone.discussion._yadjustment
@@ -160,11 +160,12 @@ screen _chat_messages():
                         )
                         bottom_margin 5
 
-                for p in phone.discussion._group_chat._get_messages():
+                for i, p in enumerate(phone.discussion._group_chat._get_messages()):
                     if p.type in (phone.discussion._PayloadTypes.LABEL, phone.discussion._PayloadTypes.DATE):
                         if not _label:
                             $ _label = True
-                            null height gui.phone_message_label_null_height
+                            if i != 0:
+                                null height gui.phone_message_label_null_height
 
                         text p.data style "phone_messages_text_label"
                     

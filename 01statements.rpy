@@ -83,7 +83,7 @@ python early in phone:
             globals = store.__dict__
             discussion.image(
                 eval(self.sender, globals),
-                self.image,
+                eval(self.image, globals),
                 eval(self.time, globals),
                 eval(self.delay, globals)
             )
@@ -118,32 +118,45 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            kwargs = dict(self.kwargs)
-
-            current_date = discussion._group_chat.date
-
-            for k, v in kwargs.items():
-                if v is None:
-                    kwargs[k] = getattr(current_date, k)
-
-            discussion.date(delay=eval(self.delay, store.__dict__), **kwargs)
+            discussion.date(delay=eval(self.delay, store.__dict__), **{k: eval(v) for k, v in self.kwargs.items()})
         
         def lint(self):
-            month = self.kwargs["month"]
-            if month is not None and not 1 <= month <= 12:
-                renpy.error("{} isn't a valid month.".format(month))
+            try:
+                month = eval(self.kwargs["month"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["month"]))
+            else:
+                if month not in (None, True) and not 1 <= month <= 12:
+                    renpy.error("{} isn't a valid month.".format(month))
             
-            day = self.kwargs["day"]
-            if day is not None and not 1 <= day <= 31:
-                renpy.error("{} isn't a valid day.".format(day))
+            try:
+                day = eval(self.kwargs["day"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["day"]))
+            else:
+                if day not in (None, True) and not 1 <= day <= 31:
+                    renpy.error("{} isn't a valid day.".format(day))
+
+            try:
+                minute = eval(self.kwargs["minute"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["minute"]))
+            else:
+                if minute not in (None, True) and not 0 <= minute <= 59:
+                    renpy.error("{} isn't a valid minute.".format(minute))
+
+            try:
+                hour = eval(self.kwargs["hour"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["hour"]))
+            else:
+                if hour not in (None, True) and not 0 <= hour <= 23:
+                    renpy.error("{} isn't a valid hour.".format(hour))
             
-            minute = self.kwargs["minute"]
-            if minute is not None and not 0 <= minute <= 59:
-                renpy.error("{} isn't a valid minute.".format(minute))
-            
-            hour = self.kwargs["hour"]
-            if hour is not None and not 0 <= hour <= 23:
-                renpy.error("{} isn't a valid hour.".format(hour))
+            try:
+                hour = eval(self.kwargs["year"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["year"]))
     
     class _RawPhoneTyping(cds_utils.Statement):
         __slots__ = ("sender", "value", "delay")
@@ -329,10 +342,11 @@ python early in phone:
             self.image = image
 
         def execute(self, gc):
+            globals = store.__dict__
             discussion.register_image(
                 gc,
-                eval(self.sender, store.__dict__),
-                self.image
+                eval(self.sender, globals),
+                eval(self.image, globals)
             )
         
         def lint(self):
@@ -363,32 +377,45 @@ python early in phone:
             self.kwargs = kwargs
         
         def execute(self, gc):
-            kwargs = dict(self.kwargs)
-
-            current_date = gc.date
-
-            for k, v in kwargs.items():
-                if v is None:
-                    kwargs[k] = getattr(current_date, k)
-
-            discussion.register_date(gc, **kwargs)
+            discussion.register_date(gc, **{k: eval(v) for k, v in self.kwargs.items()})
         
         def lint(self):
-            month = self.kwargs["month"]
-            if month is not None and not 1 <= month <= 12:
-                renpy.error("{} isn't a valid month.".format(month))
+            try:
+                month = eval(self.kwargs["month"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["month"]))
+            else:
+                if month not in (None, True) and not 1 <= month <= 12:
+                    renpy.error("{} isn't a valid month.".format(month))
             
-            day = self.kwargs["day"]
-            if day is not None and not 1 <= day <= 31:
-                renpy.error("{} isn't a valid day.".format(day))
+            try:
+                day = eval(self.kwargs["day"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["day"]))
+            else:
+                if day not in (None, True) and not 1 <= day <= 31:
+                    renpy.error("{} isn't a valid day.".format(day))
+
+            try:
+                minute = eval(self.kwargs["minute"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["minute"]))
+            else:
+                if minute not in (None, True) and not 0 <= minute <= 59:
+                    renpy.error("{} isn't a valid minute.".format(minute))
+
+            try:
+                hour = eval(self.kwargs["hour"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["hour"]))
+            else:
+                if hour not in (None, True) and not 0 <= hour <= 23:
+                    renpy.error("{} isn't a valid hour.".format(hour))
             
-            minute = self.kwargs["minute"]
-            if minute is not None and not 0 <= minute <= 59:
-                renpy.error("{} isn't a valid minute.".format(minute))
-            
-            hour = self.kwargs["hour"]
-            if hour is not None and not 0 <= hour <= 23:
-                renpy.error("{} isn't a valid hour.".format(hour))
+            try:
+                hour = eval(self.kwargs["year"])
+            except Exception:
+                renpy.error("can't evaluate {}".format(self.kwargs["year"]))
 
     class _RawPhoneRegisterIf(cds_utils.Statement):
         __slots__ = ("entries",)
@@ -482,7 +509,7 @@ python early in phone:
 
     def _parse_phone_image(ll, register):
         sender = ll.require(ll.simple_expression)
-        image = ll.require(ll.string)
+        image = ll.require(ll.simple_expression)
 
         if register: return sender, image
 
@@ -522,7 +549,8 @@ python early in phone:
         return label, delay
     
     def _parse_phone_date(ll, register):
-        kwargs = {time_thing: None for time_thing in ("month", "day", "year", "hour", "minute")}
+        kwargs = {time_thing: "None" for time_thing in ("month", "day", "year", "hour", "minute")}
+        seen = set()
 
         while True:
             state = ll.checkpoint()
@@ -532,11 +560,12 @@ python early in phone:
                 ll.revert(state)
                 ll.error("'{}' isn't a valid property for the 'time' statement".format(t))
 
-            if kwargs[t] is not None:
+            if t in seen:
                 ll.revert(state)
                 ll.error("'{}' already given".format(t))
 
-            kwargs[t] = int(ll.require(ll.integer))
+            kwargs[t] = ll.require(ll.simple_expression)
+            seen.add(t)
 
             if ll.eol():
                 break

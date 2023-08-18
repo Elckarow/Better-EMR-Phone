@@ -129,9 +129,6 @@ init -100 python in phone.discussion:
         pause(delay)
     
     def register_image(group, sender, image):
-        if not isinstance(image, basestring):
-            raise TypeError("a phone image expects a string")
-
         group = group_chat(group)
         sender = character(sender)
 
@@ -152,6 +149,24 @@ init -100 python in phone.discussion:
         group._save_payload(_Payload(None, label, _PayloadTypes.LABEL), False)
     
     def date(month, day, year, hour, minute, delay=0.5):
+        current_gc_date = _group_chat.date
+        current_date = phone.system.get_date()
+
+        if month is None:   month = current_gc_date.month
+        elif month is True: month = current_date.month
+
+        if day is None:   day = current_gc_date.day
+        elif day is True: day = current_date.day
+
+        if year is None:   year = current_gc_date.year
+        elif year is True: year = current_date.year
+
+        if hour is None:   hour = current_gc_date.hour
+        elif hour is True: hour = current_date.hour
+
+        if minute is None: minute = current_gc_date.minute
+        elif minute is True: minute = current_date.minute
+
         register_date(_group_chat, month, day, year, hour, minute)
         pause(delay)
 

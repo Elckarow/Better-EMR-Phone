@@ -43,7 +43,10 @@ python early in cds_utils:
         return rv.get_translatable_strings()
 
 python early in phone:
-    from renpy.store import cds_utils    
+    from renpy.store import cds_utils 
+
+    def _phone_lint_error(msg):
+        renpy.error("Better EMR Phone - {}".format(msg))   
 
     class _RawPhoneMessage(cds_utils.Statement):
         __slots__ = ("sender", "message", "delay")
@@ -65,7 +68,7 @@ python early in phone:
             try:
                 character.character(eval(self.sender, store.__dict__))
             except Exception:
-                renpy.error("{} is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
         
         def get_translatable_strings(self):
             return [self.message]
@@ -89,13 +92,22 @@ python early in phone:
             )
         
         def lint(self):
-            try:
-                character.character(eval(self.sender, store.__dict__))
-            except Exception:
-                renpy.error("'{}' is not a *character*.".format(self.sender))
+            globals = store.__dict__
 
-            if renpy.get_registered_image(self.image) is None and not renpy.loader.loadable(self.image):
-                renpy.error("'{}' is not a defined image nor a valid file path.".format(self.image))
+            try:
+                character.character(eval(self.sender, globals))
+            except Exception:
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
+            
+            try:
+                image = eval(self.image, globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.image))
+            else:
+                try:
+                    renpy.displayable(image)
+                except Exception:
+                    _phone_lint_error("'{}' is not a displayable.".format(self.image))                
 
     class _RawPhoneLabel(cds_utils.Statement):
         __slots__ = ("label", "delay")
@@ -118,45 +130,48 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            discussion.date(delay=eval(self.delay, store.__dict__), **{k: eval(v) for k, v in self.kwargs.items()})
+            globals = store.__dict__
+            discussion.date(delay=eval(self.delay, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
         
         def lint(self):
-            try:
-                month = eval(self.kwargs["month"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["month"]))
-            else:
-                if month not in (None, True) and not 1 <= month <= 12:
-                    renpy.error("{} isn't a valid month.".format(month))
-            
-            try:
-                day = eval(self.kwargs["day"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["day"]))
-            else:
-                if day not in (None, True) and not 1 <= day <= 31:
-                    renpy.error("{} isn't a valid day.".format(day))
+            globals = store.__dict__
 
             try:
-                minute = eval(self.kwargs["minute"])
+                month = eval(self.kwargs["month"], globals)
             except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["minute"]))
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["month"]))
             else:
-                if minute not in (None, True) and not 0 <= minute <= 59:
-                    renpy.error("{} isn't a valid minute.".format(minute))
-
-            try:
-                hour = eval(self.kwargs["hour"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["hour"]))
-            else:
-                if hour not in (None, True) and not 0 <= hour <= 23:
-                    renpy.error("{} isn't a valid hour.".format(hour))
+                if month not in (None, True) and (not isinstance(month, (int, float)) or not 1 <= month <= 12):
+                    _phone_lint_error("'{}' isn't a valid month.".format(month))
             
             try:
-                hour = eval(self.kwargs["year"])
+                day = eval(self.kwargs["day"], globals)
             except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["year"]))
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["day"]))
+            else:
+                if day not in (None, True) and (not isinstance(day, (int, float)) or not 1 <= day <= 31):
+                    _phone_lint_error("'{}' isn't a valid day.".format(day))
+
+            try:
+                minute = eval(self.kwargs["minute"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["minute"]))
+            else:
+                if minute not in (None, True) and (not isinstance(minute, (int, float)) or not 0 <= minute <= 59):
+                    _phone_lint_error("'{}' isn't a valid minute.".format(minute))
+
+            try:
+                hour = eval(self.kwargs["hour"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["hour"]))
+            else:
+                if hour not in (None, True) and (not isinstance(hour, (int, float)) or not 0 <= hour <= 23):
+                    _phone_lint_error("'{}' isn't a valid hour.".format(hour))
+            
+            try:
+                hour = eval(self.kwargs["year"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["year"]))
     
     class _RawPhoneTyping(cds_utils.Statement):
         __slots__ = ("sender", "value", "delay")
@@ -178,7 +193,7 @@ python early in phone:
             try:
                 character.character(eval(self.sender, store.__dict__))
             except Exception:
-                renpy.error("'{}' is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
     
     class _RawPhoneIf(cds_utils.Statement):
         __slots__ = ("entries",)
@@ -269,10 +284,10 @@ python early in phone:
             try:
                 character.character(eval(self.sender, store.__dict__))
             except Exception:
-                renpy.error("'{}' is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
 
             if not renpy.loader.loadable(self.audio):
-                renpy.error("audio '{}' isn't loadable.".format(self.audio))
+                _phone_lint_error("audio '{}' isn't loadable.".format(self.audio))
     
     class _RawPhonePass(cds_utils.Statement):
         def execute(self):
@@ -298,7 +313,7 @@ python early in phone:
                 try:
                     group_chat.group_chat(eval(self.gc, store.__dict__))
                 except Exception:
-                    renpy.error("'{}' is not a *group chat*.".format(self.gc))
+                    _phone_lint_error("'{}' is not a *group chat*.".format(self.gc))
 
             for statement in self.statements:
                 statement.lint()
@@ -329,7 +344,7 @@ python early in phone:
             try:
                 character.character(eval(self.sender, store.__dict__))
             except Exception:
-                renpy.error("{} is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
         
         def get_translatable_strings(self):
             return [self.message]
@@ -350,13 +365,21 @@ python early in phone:
             )
         
         def lint(self):
+            globals = store.__dict__
             try:
-                character.character(eval(self.sender, store.__dict__))
+                character.character(eval(self.sender, globals))
             except Exception:
-                renpy.error("'{}' is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
 
-            if renpy.get_registered_image(self.image) is None and not renpy.loader.loadable(self.image):
-                renpy.error("'{}' is not a defined image nor a valid file path.".format(self.image))
+            try:
+                image = eval(self.image, globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.image))
+            else:
+                try:
+                    renpy.displayable(image)
+                except Exception:
+                    _phone_lint_error("'{}' is not a displayable.".format(self.image)) 
     
     class _RawPhoneRegisterLabel(cds_utils.Statement):
         __slots__ = ("label",)
@@ -377,45 +400,47 @@ python early in phone:
             self.kwargs = kwargs
         
         def execute(self, gc):
-            discussion.register_date(gc, **{k: eval(v) for k, v in self.kwargs.items()})
+            discussion.register_date(gc, **{k: eval(v, globals) for k, v in self.kwargs.items()})
         
         def lint(self):
-            try:
-                month = eval(self.kwargs["month"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["month"]))
-            else:
-                if month not in (None, True) and not 1 <= month <= 12:
-                    renpy.error("{} isn't a valid month.".format(month))
-            
-            try:
-                day = eval(self.kwargs["day"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["day"]))
-            else:
-                if day not in (None, True) and not 1 <= day <= 31:
-                    renpy.error("{} isn't a valid day.".format(day))
+            globals = store.__dict__
 
             try:
-                minute = eval(self.kwargs["minute"])
+                month = eval(self.kwargs["month"], globals)
             except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["minute"]))
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["month"]))
             else:
-                if minute not in (None, True) and not 0 <= minute <= 59:
-                    renpy.error("{} isn't a valid minute.".format(minute))
-
-            try:
-                hour = eval(self.kwargs["hour"])
-            except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["hour"]))
-            else:
-                if hour not in (None, True) and not 0 <= hour <= 23:
-                    renpy.error("{} isn't a valid hour.".format(hour))
+                if month not in (None, True) and (not isinstance(month, (int, float)) or not 1 <= month <= 12):
+                    _phone_lint_error("'{}' isn't a valid month.".format(month))
             
             try:
-                hour = eval(self.kwargs["year"])
+                day = eval(self.kwargs["day"], globals)
             except Exception:
-                renpy.error("can't evaluate {}".format(self.kwargs["year"]))
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["day"]))
+            else:
+                if day not in (None, True) and (not isinstance(day, (int, float)) or not 1 <= day <= 31):
+                    _phone_lint_error("'{}' isn't a valid day.".format(day))
+
+            try:
+                minute = eval(self.kwargs["minute"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["minute"]))
+            else:
+                if minute not in (None, True) and (not isinstance(minute, (int, float)) or not 0 <= minute <= 59):
+                    _phone_lint_error("'{}' isn't a valid minute.".format(minute))
+
+            try:
+                hour = eval(self.kwargs["hour"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["hour"]))
+            else:
+                if hour not in (None, True) and (not isinstance(hour, (int, float)) or not 0 <= hour <= 23):
+                    _phone_lint_error("'{}' isn't a valid hour.".format(hour))
+            
+            try:
+                hour = eval(self.kwargs["year"], globals)
+            except Exception:
+                _phone_lint_error("can't evaluate '{}'".format(self.kwargs["year"]))
 
     class _RawPhoneRegisterIf(cds_utils.Statement):
         __slots__ = ("entries",)
@@ -456,10 +481,10 @@ python early in phone:
             try:
                 character.character(eval(self.sender, store.__dict__))
             except Exception:
-                renpy.error("'{}' is not a *character*.".format(self.sender))
+                _phone_lint_error("'{}' is not a *character*.".format(self.sender))
 
             if not renpy.loader.loadable(self.audio):
-                renpy.error("audio '{}' isn't loadable.".format(self.audio))
+                _phone_lint_error("audio '{}' isn't loadable.".format(self.audio))
     
     class _RawPhoneRegisterPass(cds_utils.Statement):
         def execute(self, gc):
@@ -485,7 +510,7 @@ python early in phone:
             try:
                 group_chat.group_chat(eval(self.gc, store.__dict__))
             except Exception:
-                renpy.error("'{}' is not a *group chat*.".format(self.gc))
+                _phone_lint_error("'{}' is not a *group chat*.".format(self.gc))
 
             for statement in self.statements:
                 statement.lint()

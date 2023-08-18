@@ -140,31 +140,32 @@ screen phone():
         )
         current_page = min(current_page, max_page)
 
-    frame style "empty":
-        align (1.0, 0.0) padding (10, 10)
-        background "#474747"
-        textbutton "Quit" action PhoneReturn()
+    fixed style_prefix "phone_main":
+        frame style "empty":
+            align (1.0, 0.0) padding (10, 10)
+            background "#474747"
+            textbutton "Quit" action PhoneReturn()
 
-    if coords_to_move is not None:
-        key "K_ESCAPE" action SetScreenVariable("coords_to_move", None)
+        if coords_to_move is not None:
+            key "K_ESCAPE" action SetScreenVariable("coords_to_move", None)
 
-    if current_page != 0:
-        button:
-            at transform:
-                subpixel True anchor (0.5, 0.5) pos (0.35, 0.45)
-                rotate -90 transform_anchor True
-                xysize (150, 30) matrixcolor TintMatrix("#474343ee")
-            action SetScreenVariable("current_page", current_page - 1)
-            add phone.config.basedir + "arrow_icon.png"
-    
-    if current_page != max_page:
-        button:
-            at transform:
-                subpixel True anchor (0.5, 0.5) pos (0.65, 0.45)
-                rotate 90 transform_anchor True
-                xysize (150, 30) matrixcolor TintMatrix("#474343ee")
-            action SetScreenVariable("current_page", current_page + 1)
-            add phone.config.basedir + "arrow_icon.png"
+        if current_page != 0:
+            button:
+                at transform:
+                    subpixel True anchor (0.5, 0.5) pos (0.35, 0.45)
+                    rotate -90 transform_anchor True
+                    xysize (150, 30) matrixcolor TintMatrix("#474343ee")
+                action SetScreenVariable("current_page", current_page - 1)
+                add phone.config.basedir + "arrow_icon.png"
+
+        if current_page != max_page:
+            button:
+                at transform:
+                    subpixel True anchor (0.5, 0.5) pos (0.65, 0.45)
+                    rotate 90 transform_anchor True
+                    xysize (150, 30) matrixcolor TintMatrix("#474343ee")
+                action SetScreenVariable("current_page", current_page + 1)
+                add phone.config.basedir + "arrow_icon.png"
 
     use _phone():
         style_prefix "phone_main"
@@ -204,8 +205,7 @@ style phone_main_text is empty:
     size 22
 
 style phone_main_button is empty                
-style phone_main_button_text is phone_main_text:
-    color "#4e4e4e"
+style phone_main_button_text is phone_main_text
 
 style phone_main_side is empty:
     xfill True yfill True

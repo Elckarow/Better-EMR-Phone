@@ -782,17 +782,21 @@ python early in phone:
         return statements
 
     def _parse_phone_discussion(l):
-        gc = None
+        gc = l.simple_expression()
 
-        if not l.match(":"):
-            gc = l.require(l.simple_expression)
-            l.require(":")
+        if l.eol():
+            l.expect_noblock("phone discussion")
+            statements = [_RawPhonePass()]
         
-        l.expect_eol()
-        l.expect_block("phone discussion")
+        else:
+            l.require(":")
+            l.expect_eol()
+            l.expect_block("phone discussion")
 
-        ll = l.subblock_lexer()
-        return _RawPhoneDiscussion(gc, _get_phone_statements(ll, True))
+            ll = l.subblock_lexer()
+            statements = _get_phone_statements(ll, True)
+
+        return _RawPhoneDiscussion(gc, statements)
     
     def _predict_phone_discussion(rd):
         renpy.predict_screen("phone_message")
@@ -805,7 +809,7 @@ python early in phone:
 
     renpy.register_statement(
         "phone discussion",
-        block=True,
+        block="possible",
         parse=_parse_phone_discussion,
         execute=cds_utils.execute,
         execute_init=_phone_execute_init,

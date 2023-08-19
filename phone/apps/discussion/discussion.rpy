@@ -71,30 +71,44 @@ init -100 python in phone.discussion:
         s = emojis.format_emoji_tag(s)
         return renpy.filter_text_tags(s, allow=())
 
-    def message(sender, message, delay=None):
+    def _discussion_coroutine():
         store._window_hide()
 
-        sender = character(sender)
-        formatted_message = remove_text_tags(message)
-
         global _current_payload
-        _current_payload = _Payload(sender.key, formatted_message, _PayloadTypes.TEXT)
+        _current_payload = yield
         if _group_chat._page == 0:
             _yadjustment.value = float("inf")
 
         _dismiss_pause = store._dismiss_pause
         store._dismiss_pause = True
-        pause(sender.get_typing_delay(formatted_message))
+        p = yield
+        pause(p)
         store._dismiss_pause = _dismiss_pause
 
-        register_message(_group_chat, sender, message)
         if _group_chat._page == 0:
             _yadjustment.value = float("inf")
 
         _current_payload = None
 
         store._window_auto = True
+        delay = yield
         pause(delay)
+
+        yield None
+
+    def message(sender, message, delay=None):
+        dc = _discussion_coroutine()
+        dc.send(None)
+
+        sender = character(sender)
+        formatted_message = remove_text_tags(message)
+
+        dc.send(_Payload(sender.key, formatted_message, _PayloadTypes.TEXT))
+        dc.send(sender.get_typing_delay(formatted_message))
+
+        register_message(_group_chat, sender, message)
+        
+        dc.send(delay)
 
     def register_message(group, sender, text):
         _check_for_tags(text)
@@ -105,28 +119,17 @@ init -100 python in phone.discussion:
         group._save_payload(_Payload(sender.key, text, _PayloadTypes.TEXT))
 
     def image(sender, image, time=2.0, delay=None):
-        store._window_hide()
+        dc = _discussion_coroutine()
+        dc.send(None)
 
         sender = character(sender)
 
-        global _current_payload
-        _current_payload = _Payload(sender.key, image, _PayloadTypes.IMAGE)
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
-
-        _dismiss_pause = store._dismiss_pause
-        store._dismiss_pause = True
-        pause(time)
-        store._dismiss_pause = _dismiss_pause
+        dc.send(_Payload(sender.key, image, _PayloadTypes.IMAGE))
+        dc.send(time)
 
         register_image(_group_chat, sender, image)
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
         
-        _current_payload = None
-        
-        store._window_auto = True
-        pause(delay)
+        dc.send(delay)
     
     def register_image(group, sender, image):
         group = group_chat(group)
@@ -180,70 +183,40 @@ init -100 python in phone.discussion:
         group._save_payload(_Payload(None, format_time(hour, minute), _PayloadTypes.DATE), False)
 
     def typing(sender, value, delay=None):
-        sender = character(sender)
+        dc = _discussion_coroutine()
+        dc.send(None)
 
         if isinstance(value, basestring):
             value = sender.get_typing_delay(value)
 
-        global _current_payload
-        _current_payload = _Payload(sender.key, "", _PayloadTypes._DUMMY)
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
-
-        _dismiss_pause = store._dismiss_pause
-        store._dismiss_pause = True
-        pause(value)
-        store._dismiss_pause = _dismiss_pause
-
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
-        
-        _current_payload = None
-        
-        store._window_auto = True
-        pause(delay)
+        dc.send(_Payload(sender.key, "", _PayloadTypes._DUMMY))
+        dc.send(value)
+        dc.send(delay)
     
     def choice(captions, delay=0.3):
-        store._window_hide()
-
-        global _current_payload
-        _current_payload = _Payload(None, captions, _PayloadTypes._MENU)
-
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
+        dc = _discussion_coroutine()
+        dc.send(None)
+        dc.send(_Payload(None, captions, _PayloadTypes._MENU))
 
         rv = ui.interact()
 
-        _current_payload = None
-
-        pause(delay)
-        store._window_auto = True
+        dc.send(delay)
+        dc.send(-1)
 
         return captions.index(rv)
 
     def audio(sender, audio, time=2.0, delay=None):
-        store._window_hide()
+        dc = _discussion_coroutine()
+        dc.send(None)
 
         sender = character(sender)
 
-        global _current_payload
-        _current_payload = _Payload(sender.key, audio, _PayloadTypes.AUDIO)
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
-
-        _dismiss_pause = store._dismiss_pause
-        store._dismiss_pause = True
-        pause(time)
-        store._dismiss_pause = _dismiss_pause
+        dc.send(_Payload(sender.key, audio, _PayloadTypes.AUDIO))
+        dc.send(time)
 
         register_audio(_group_chat, sender, audio)
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
         
-        _current_payload = None
-        
-        store._window_auto = True
-        pause(delay)
+        dc.send(delay)
     
     def register_audio(group, sender, audio):
         if not isinstance(audio, basestring):

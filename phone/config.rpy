@@ -24,7 +24,7 @@ python early in phone.config:
     # A string used to format a time. Passed to `time.strftime`.
     time_format = _("%H:%M")
 
-    # A string used to format a date. Passed to `datetime.date.strftime`.
+    # A string used to format a date. Passed to `datetime.datetime.strftime`.
     date_format = _("%m/%d/%Y")
 
     # The radius of the rounded corners of the textboxes.
@@ -78,6 +78,28 @@ python early in phone.config:
 
     # From 0.0 (complete darkness) to 1.0 (normal), how low can the brightness go?
     lowest_brightness = 0.3
+
+    # A list of functions that are called whenever a phone discussion function executes.
+    # They are called with three arguments:
+    #     -the *group chat* the interaction is taking place in.
+    #     -an event:
+    #          `"start"` is delivered at the start of the interaction.
+    #          `"end"` is delivered just before the data has been saved.
+    #          `"save"` is delivered after the data has been saved (called after the `register_` function associated to what's happening). 
+    #     -an object representing the data, which has the following fields:
+    #          `source`, the *character* that's sending the data, or `None`.
+    #          `type`, one of the following constants (in the `phone.discussion` namespace):
+    #               `TYPING`, `TEXT`, `IMAGE`, `LABEL`, `DATE`, `MENU`, `AUDIO`, `VIDEO` (if it ever gets implemented).
+    #          `data`:
+    #               -For a typing, the time to wait for.             
+    #               -For a text message, the text that's been formatted by `phone.discussion.remove_text_tags`.             
+    #               -For an image, the displayable.
+    #               -For a label, the text.
+    #               -For a date, a tuple of (`month`, `day`, `year`, `hours`, `minutes`, `seconds`).
+    #               -For a menu, a list of all the captions.
+    #               -For an audio, the string of the audio.
+    #               -For a video, `None`.
+    discussion_callbacks = [ ]
 
 init -1400 python in phone.config:
     from store import BrightnessMatrix

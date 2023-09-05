@@ -41,7 +41,7 @@ init python in phone.system:
         return datetime.now()
 
 # If any of these "If not `None`" values are `None`, they're taken from the player's device.
-default phone.system.date = None # If not `None`, a `datetime.date` object.
+default phone.system.date = None # If not `None`, a `datetime.datetime` object.
 default phone.system.battery_level = None # If not `None`, an integer.
 default phone.system.wifi = None # If not `None`, a boolean.
 

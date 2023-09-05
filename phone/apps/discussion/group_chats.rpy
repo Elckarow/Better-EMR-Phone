@@ -149,9 +149,9 @@ init -100 python in phone.group_chat:
             if check_source and p.source not in self._characters:
                 raise Exception("sender '{}' isn't in group chat".format(p.source))
 
-            if p.type == _PayloadTypes._DUMMY:
-                raise Exception("can't save dummy message")
-            elif p.type == _PayloadTypes._MENU:
+            if p.type == _PayloadTypes.TYPING:
+                raise Exception("can't save typing")
+            elif p.type == _PayloadTypes.MENU:
                 raise Exception("can't save menu")
 
             self._payloads.append(p)

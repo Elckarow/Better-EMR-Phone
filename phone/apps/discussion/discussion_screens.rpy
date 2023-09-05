@@ -203,7 +203,7 @@ screen _chat_messages():
 
                 if phone.discussion._group_chat._page == 0:
                     if phone.discussion._current_payload is not None:
-                        if phone.discussion._current_payload.type == phone.discussion._PayloadTypes._MENU:
+                        if phone.discussion._current_payload.type == phone.discussion._PayloadTypes.MENU:
                             if _label:
                                 $ _label = False
                                 null height gui.phone_message_label_null_height

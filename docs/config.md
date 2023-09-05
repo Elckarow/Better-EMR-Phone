@@ -60,3 +60,24 @@ The following keys are defined in the dictionnary:
 - `"background_image"`
 - `"calendars"`
 - `"applications"`
+
+`discussion_callbacks` *(defaults to `[...]`)*
+A list of functions that are called whenever a phone discussion function executes.
+They are called with three arguments:
+- the \*group chat\* the interaction is takingplace in.
+- an event:
+    - `"start"` is delivered at the start of the interaction.
+    - `"end"` is delivered just before the data has been saved.
+    - `"save"` is delivered after the data has been saved (called after the `register_` function associated to what's happening).
+- an object representing the data, which has thefollowing fields:
+    - `source`, the \*character\* that's sending the data, or `None`.
+    - `type`, one of the following constants (in the `phone.discussion` namespace): `TYPING`, `TEXT`, `IMAGE`, `LABEL`, `DATE`, `MENU`, `AUDIO`, `VIDEO` (if it ever gets implemented).
+    - `data`:
+        - For a typing, the time to wait for.             
+        - For a text message, the text that's been formatted by `phone.discussion.remove_text_tags`.             
+        - For an image, the displayable.
+        - For a label, the text.
+        - For a date, a tuple of (`month`, `day`, `year`, `hours`, `minutes`, `seconds`).
+        - For a menu, a list of all the captions.
+        - For an audio, the string of the audio.
+        - For a video, `None`.

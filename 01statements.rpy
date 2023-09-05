@@ -88,7 +88,7 @@ python early in phone._lint:
         a = eval(a, log)
         if a is not cant_evaluate:
             if not renpy.loader.loadable(a):
-                error("audio '{}' isn't loadable.".format(a))            
+                error("audio '{}' isn't loadable.".format(a))      
 
 python early in phone:
     from renpy.store import cds_utils 
@@ -157,15 +157,16 @@ python early in phone:
             return [self.label]
     
     class _RawPhoneDate(cds_utils.Statement):
-        __slots__ = ("kwargs", "delay")
+        __slots__ = ("kwargs", "delay", "auto")
 
-        def __init__(self, kwargs, delay):
+        def __init__(self, kwargs, delay, auto):
             self.kwargs = kwargs
             self.delay = delay
+            self.auto = auto
         
         def execute(self):
             globals = store.__dict__
-            discussion.date(delay=eval(self.delay, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
+            discussion.date(delay=eval(self.delay, globals), auto=eval(self.auto, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
         
         def lint(self):
             month = _lint.eval(self.kwargs["month"])
@@ -188,8 +189,14 @@ python early in phone:
                 if hour not in (None, True) and (not isinstance(hour, (int, float)) or not 0 <= hour <= 23):
                     _lint.error("'{}' isn't a valid hour.".format(hour))
             
+            second = _lint.eval(self.kwargs["second"])
+            if second is not _lint.cant_evaluate:
+                if second not in (None, True) and (not isinstance(second, (int, float)) or not 0 <= second <= 59):
+                    _lint.error("'{}' isn't a valid second.".format(second))
+            
             _lint.eval(self.kwargs["year"])
             _lint.eval(self.delay)
+            _lint.eval(self.auto)
     
     class _RawPhoneTyping(cds_utils.Statement):
         __slots__ = ("sender", "value", "delay")
@@ -313,6 +320,64 @@ python early in phone:
     class _RawPhonePass(cds_utils.Statement):
         def execute(self):
             store.pause()
+    
+    # class _RawPhoneRenpy(cds_utils.Statement):
+    #     __slots__ = ("nodes",)
+
+    #     def __init__(self, nodes):
+    #         self.nodes = nodes
+        
+    #     def execute(self):
+    #         for node in self.nodes:
+    #             node.execute()
+        
+    #     def translation_strings(self):
+    #         Say = renpy.ast.Say
+    #         UserStatement = renpy.ast.UserStatement
+    #         Menu = renpy.ast.Menu
+    #         If = renpy.ast.If
+    #         While = renpy.ast.While
+
+    #         # assumes `node` is translation relevant
+    #         def get_translatable_strings(node):
+    #             if isinstance(node, Say):
+    #                 yield node.what
+
+    #             elif isinstance(node, UserStatement):
+    #                 for s in node.call("translation_strings"):
+    #                     yield s
+
+    #             elif isinstance(node, Menu):
+    #                 # renpy.translation.ScriptTranslator.take_translates
+    #                 for i in node.items:
+    #                     s = i[0]
+
+    #                     if renpy.config.old_substitutions:
+    #                         s = s.replace("%%", "%")
+
+    #                     if s is None: continue
+    #                     yield s
+
+    #             else:
+    #                 print("Better EMR Phone - type '{}' is translation relevant, but isn't used".format(type(node).__name__))
+
+    #         def get_strings(nodes):
+    #             for node in nodes:
+    #                 if isinstance(node, If):
+    #                     for s in get_strings(entry[1] for entry in node.entries):
+    #                         yield s
+                    
+    #                 elif isinstance(node, While):
+    #                     for s in get_strings(node.block):
+    #                         yield s
+
+    #                 if not node.translation_relevant: continue
+
+    #                 for s in get_translatable_strings(node):
+    #                     yield s 
+
+    #         for string in get_strings(self.nodes):
+    #             yield string
 
     class _RawPhoneDiscussion(cds_utils.Statement):
         __slots__ = ("gc", "statements")
@@ -396,22 +461,15 @@ python early in phone:
             return [self.label]
     
     class _RawPhoneRegisterDate(cds_utils.Statement):
-        __slots__ = ("kwargs",)
+        __slots__ = ("kwargs", "auto")
 
-        def __init__(self, kwargs):
+        def __init__(self, kwargs, auto):
             self.kwargs = kwargs
+            self.auto = auto
         
         def execute(self, gc):
             globals = store.__dict__
-            kwargs = dict()
-
-            for k, v in self.kwargs.items():
-                v = eval(v, globals)
-                if v is None:
-                    v = getattr(gc.date, k)
-                kwargs[k] = v
-
-            discussion.register_date(gc, **kwargs)
+            discussion.register_date(gc, auto=eval(self.auto, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
         
         def lint(self):
             month = _lint.eval(self.kwargs["month"])
@@ -434,7 +492,13 @@ python early in phone:
                 if hour not in (None, True) and (not isinstance(hour, (int, float)) or not 0 <= hour <= 23):
                     _lint.error("'{}' isn't a valid hour.".format(hour))
             
+            second = _lint.eval(self.kwargs["second"])
+            if second is not _lint.cant_evaluate:
+                if second not in (None, True) and (not isinstance(second, (int, float)) or not 0 <= second <= 59):
+                    _lint.error("'{}' isn't a valid second.".format(second))
+            
             _lint.eval(self.kwargs["year"])
+            _lint.eval(self.auto)
 
     class _RawPhoneRegisterIf(cds_utils.Statement):
         __slots__ = ("entries",)
@@ -514,16 +578,16 @@ python early in phone:
         sender = ll.require(ll.simple_expression)
         message = ll.require(ll.string)
 
-        if register: return sender, message
+        if register: return _RawPhoneRegisterMessage(sender, message)
 
         delay = "None" if not ll.keyword("delay") else ll.require(ll.simple_expression)
-        return sender, message, delay    
+        return _RawPhoneMessage(sender, message, delay)
 
     def _parse_phone_image(ll, register):
         sender = ll.require(ll.simple_expression)
         image = ll.require(ll.simple_expression)
 
-        if register: return sender, image
+        if register: return _RawPhoneRegisterImage(sender, image)
 
         time = None
         delay = None
@@ -550,18 +614,19 @@ python early in phone:
 
         if time is None: time = "2.0"
         if delay is None: delay = "None"
-        return sender, image, time, delay
+        return _RawPhoneImage(sender, image, time, delay)
     
     def _parse_phone_label(ll, register):
         label = ll.require(ll.string)
 
-        if register: return label
+        if register: return _RawPhoneRegisterLabel(label)
 
         delay = "0.5" if not ll.keyword("delay") else ll.require(ll.simple_expression)
-        return label, delay
+        return _RawPhoneLabel(label, delay)
     
     def _parse_phone_date(ll, register):
-        kwargs = {time_thing: "None" for time_thing in ("month", "day", "year", "hour", "minute")}
+        kwargs = {time_thing: "None" for time_thing in ("month", "day", "year", "hour", "minute", "second")}
+        kwargs["auto"] = "False"
         seen = set()
 
         while True:
@@ -575,18 +640,24 @@ python early in phone:
             if t in seen:
                 ll.revert(state)
                 ll.error("'{}' already given".format(t))
+            
+            if t == "auto" and ll.init:
+                ll.revert(state)
+                ll.error("'auto' can't be used in the `init phone register` statement")
 
             kwargs[t] = ll.require(ll.simple_expression)
             seen.add(t)
 
             if ll.eol():
                 break
+        
+        auto = kwargs.pop("auto")
 
         if register:
-            return kwargs
+            return _RawPhoneRegisterDate(kwargs, auto)
 
         delay = "0.5" if not ll.keyword("delay") else ll.require(ll.simple_expression)
-        return kwargs, delay
+        return _RawPhoneDate(kwargs, delay, auto)
     
     def _parse_phone_typing(ll):
         sender = ll.require(ll.simple_expression)
@@ -619,7 +690,7 @@ python early in phone:
         
         if value is None: ll.error("expected 'value' property not found")
         if delay is None: delay = "None"
-        return sender, value, delay
+        return _RawPhoneTyping(sender, value, delay)
     
     def _parse_phone_if(ll, register): # literally renpy.parser.if_statement
         entries = [ ]
@@ -654,7 +725,10 @@ python early in phone:
 
             ll.advance()
         
-        return entries
+        if register:
+            return _RawPhoneRegisterIf(entries)
+        else:
+            return _RawPhoneIf(entries)
 
     def _parse_phone_menu(ll):
         ll.require(":")
@@ -686,14 +760,14 @@ python early in phone:
             entries.append((caption, condition, _get_phone_statements(menu_l.subblock_lexer(), True)))
             menu_l.advance()
         
-        return entries, delay
+        return _RawPhoneMenu(entries, delay)
     
     def _parse_phone_one_line_python(ll):
         code = ll.rest_statement()
         if not code: ll.error("expected python code")
         ll.expect_noblock("one-line python statement")
 
-        return code, False, "store"
+        return _RawPhonePython(code, False, "store")
     
     def _prase_phone_python(ll):
         hide = False
@@ -710,13 +784,14 @@ python early in phone:
 
         ll.expect_block("python block")
 
-        return ll.python_block(), hide, store
+        return _RawPhonePython(ll.python_block(), hide, store)
     
     def _parse_phone_audio(ll, register):
         sender = ll.require(ll.simple_expression)
         audio = ll.require(ll.simple_expression)
 
-        if register: return sender, audio
+        if register:
+            return _RawPhoneRegisterAudio(sender, audio)
 
         time = None
         delay = None
@@ -743,7 +818,15 @@ python early in phone:
 
         if time is None: time = "2.0"
         if delay is None: delay = "None"
-        return sender, audio, time, delay
+        return _RawPhoneAudio(sender, audio, time, delay)
+
+    # def _parse_phone_renpy(ll):
+    #     ll.require(":")
+    #     ll.expect_eol()
+    #     ll.expect_block("phone renpy")
+
+    #     rl = ll.subblock_lexer()
+    #     return renpy.parser.parse_block(rl)
 
     def _get_phone_statements(ll, discussion):
         statements = [ ]
@@ -751,37 +834,40 @@ python early in phone:
         if discussion:
             while ll.advance():
                 if ll.keyword("image"):
-                    statement = _RawPhoneImage(*_parse_phone_image(ll, False))
+                    statement = _parse_phone_image(ll, False)
 
                 elif ll.keyword("label"):
-                    statement = _RawPhoneLabel(*_parse_phone_label(ll, False))
+                    statement = _parse_phone_label(ll, False)
 
                 elif ll.keyword("time"):
-                    statement = _RawPhoneDate(*_parse_phone_date(ll, False))
+                    statement = _parse_phone_date(ll, False)
 
                 elif ll.keyword("type"):
-                    statement = _RawPhoneTyping(*_parse_phone_typing(ll))
+                    statement = _parse_phone_typing(ll)
                 
                 elif ll.keyword("if"):
-                    statement = _RawPhoneIf(_parse_phone_if(ll, False))
+                    statement = _parse_phone_if(ll, False)
                 
                 elif ll.keyword("menu"):
-                    statement = _RawPhoneMenu(*_parse_phone_menu(ll))
+                    statement = _parse_phone_menu(ll)
                 
                 elif ll.match("\$"):
-                    statement = _RawPhonePython(*_parse_phone_one_line_python(ll))
+                    statement = _parse_phone_one_line_python(ll)
                 
                 elif ll.keyword("python"):
-                    statement = _RawPhonePython(*_prase_phone_python(ll))
+                    statement = _prase_phone_python(ll)
                 
                 elif ll.keyword("audio"):
-                    statement = _RawPhoneAudio(*_parse_phone_audio(ll, False))
+                    statement = _parse_phone_audio(ll, False)
                 
                 elif ll.keyword("pass"):
                     statement = _RawPhonePass()
+                
+                # elif ll.keyword("renpy"):
+                #     statement = _parse_phone_renpy(ll)
 
                 else:
-                    statement = _RawPhoneMessage(*_parse_phone_message(ll, False))
+                    statement = _parse_phone_message(ll, False)
 
                 statements.append(statement)
 
@@ -790,31 +876,31 @@ python early in phone:
         else:
             while ll.advance():
                 if ll.keyword("image"):
-                    statement = _RawPhoneRegisterImage(*_parse_phone_image(ll, True))
+                    statement = _parse_phone_image(ll, True)
 
                 elif ll.keyword("label"):
-                    statement = _RawPhoneRegisterLabel(_parse_phone_label(ll, True))
+                    statement = _parse_phone_label(ll, True)
 
                 elif ll.keyword("time"):
-                    statement = _RawPhoneRegisterDate(_parse_phone_date(ll, True))
+                    statement = _parse_phone_date(ll, True)
                 
                 elif ll.keyword("if"):
-                    statement = _RawPhoneRegisterIf(*_parse_phone_if(ll, True))
+                    statement = _parse_phone_if(ll, True)
                 
                 elif ll.match("\$"):
-                    statement = _RawPhonePython(*_parse_phone_one_line_python(ll))
+                    statement = _parse_phone_one_line_python(ll)
                 
                 elif ll.keyword("python"):
-                    statement = _RawPhonePython(*_prase_phone_python(ll))
+                    statement = _prase_phone_python(ll)
                 
                 elif ll.keyword("audio"):
-                    statement = _RawPhoneRegisterAudio(*_parse_phone_audio(ll, True))
+                    statement = _parse_phone_audio(ll, True)
                 
                 elif ll.keyword("pass"):
                     statement = _RawPhoneRegisterPass()
 
                 else:
-                    statement = _RawPhoneRegisterMessage(*_parse_phone_message(ll, True))
+                    statement = _parse_phone_message(ll, True)
 
                 statements.append(statement)
 
@@ -1014,7 +1100,7 @@ python early in phone:
         l.require(":")
         l.expect_eol()
         l.expect_block("init phone register")
-        ll = l.subblock_lexer()
+        ll = l.subblock_lexer(init=True)
         
         define = None
 

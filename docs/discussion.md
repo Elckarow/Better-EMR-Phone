@@ -30,8 +30,8 @@ The python equivalent of the `image` discussion statement.
 Adds a label to the current group chat.
 The python equivalent of the `label` discussion statement.
 
-`def date(month, day, year, hour, minute, delay=0.5):`
-Adds a date as label to the current group chat. The date is saved to the group chat using `datetime.datetime`. If any of these values are `None`, they are taken from the currently saved date. If any of these values are `True`, they are taken from the date returned by `phone.system.get_date()`.
+`def date(month, day, year, hour, minute, second, delay=0.5, auto=False):`
+Adds a date as label to the current group chat. The date is saved to the group chat using `datetime.datetime`. If any of these values are `None`, they are taken from the currently saved date. If any of these values are `True`, they are taken from the date returned by `phone.system.get_date()`. If `auto` is true, sets every values to `True`.
 The python equivalent of the `time` discussion statement.
 
 `def typing(sender, value, delay=None)`
@@ -60,7 +60,7 @@ Saves a label in the `*group chat*` `group`.
 This is called automatically by the `phone.discussion.label` function.
 The python equivalent of the `label` register statement.
 
-`def register_date(group, month, day, year, hour, minute)`
+`def register_date(group, month, day, year, hour, minute, second, auto=False)`
 Saves a date in the `*group chat*` `group`.
 This is called automatically by the `phone.discussion.date` function.
 The python equivalent of the `time` register statement.
@@ -104,7 +104,7 @@ It also accepts the `delay` property (defaults to `0.5`).
     
 - `time`
 The equivalent of the `phone.discussion.date` function.
-It expects at least one of the following property; `year`, `month`, `day`, `hour`, `minute`; which can be a number, `None` or `True`.
+It expects at least one of the following property; `year`, `month`, `day`, `hour`, `minute`, `second`; which can be a number, `None` or `True`, as well as the `auto` property.
 If one of these is missing, it is retrieved from the current date registered.
 It also accepts the `delay` property (defaults to 0.5).
     

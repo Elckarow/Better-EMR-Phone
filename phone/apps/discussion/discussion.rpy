@@ -71,19 +71,38 @@ init -100 python in phone.discussion:
         s = emojis.format_emoji_tag(s)
         return renpy.filter_text_tags(s, allow=())
 
+    def _run_callbacks(gc, event, payload):
+        callback_object = object()
+
+        callback_object.source = payload.source
+        callback_object.type = payload.type
+
+        if payload.type == VIDEO:
+            callback_object.data = None
+        else:
+            callback_object.data = payload.data
+
+        for i in config.discussion_callbacks:
+            i(gc, event, callback_object)
+
     def _discussion_coroutine():
         store._window_hide()
 
         global _current_payload
-        _current_payload = yield
+        _current_payload = payload = yield
+
         if _group_chat._page == 0:
             _yadjustment.value = float("inf")
+        
+        _run_callbacks(_group_chat, "start", payload)
 
         _dismiss_pause = store._dismiss_pause
         store._dismiss_pause = True
         p = yield
         pause(p)
         store._dismiss_pause = _dismiss_pause
+
+        _run_callbacks(_group_chat, "end", payload)
 
         if _group_chat._page == 0:
             _yadjustment.value = float("inf")
@@ -103,7 +122,7 @@ init -100 python in phone.discussion:
         sender = character(sender)
         formatted_message = remove_text_tags(message)
 
-        dc.send(_Payload(sender.key, formatted_message, _PayloadTypes.TEXT))
+        dc.send(_Payload(sender.key, formatted_message, TEXT))
         dc.send(sender.get_typing_delay(formatted_message))
 
         register_message(_group_chat, sender, message)
@@ -116,7 +135,9 @@ init -100 python in phone.discussion:
         group = group_chat(group)
         sender = character(sender)
 
-        group._save_payload(_Payload(sender.key, text, _PayloadTypes.TEXT))
+        p = _Payload(sender.key, text, TEXT)
+        group._save_payload(p)
+        _run_callbacks(group, "save", p)
 
     def image(sender, image, time=2.0, delay=None):
         dc = _discussion_coroutine()
@@ -124,7 +145,7 @@ init -100 python in phone.discussion:
 
         sender = character(sender)
 
-        dc.send(_Payload(sender.key, image, _PayloadTypes.IMAGE))
+        dc.send(_Payload(sender.key, image, IMAGE))
         dc.send(time)
 
         register_image(_group_chat, sender, image)
@@ -135,25 +156,48 @@ init -100 python in phone.discussion:
         group = group_chat(group)
         sender = character(sender)
 
-        group._save_payload(_Payload(sender.key, image, _PayloadTypes.IMAGE))
+        p = _Payload(sender.key, image, IMAGE)
+        group._save_payload(p)
+        _run_callbacks(group, "save", p)
     
     def label(label, delay=0.5):
+        dc = _discussion_coroutine()
+        dc.send(None)
+        dc.send(_Payload(None, label, LABEL))
+        dc.send(-1)
+
         register_label(_group_chat, label)
 
-        if _group_chat._page == 0:
-            _yadjustment.value = float("inf")
-
-        pause(delay)
+        dc.send(delay)
     
     def register_label(group, label):
         _check_for_tags(label)
 
         group = group_chat(group)
-        group._save_payload(_Payload(None, label, _PayloadTypes.LABEL), False)
+
+        p = _Payload(None, label, LABEL)
+        group._save_payload(p, False)
+        _run_callbacks(group, "save", p)
     
-    def date(month, day, year, hour, minute, delay=0.5):
-        current_gc_date = _group_chat.date
+    def _register_date(group, month, day, year, hour, minute, second):
+        group = group_chat(group)
+
+        if (group.date.year, group.date.month, group.date.day) < (year, month, day):
+            group._save_payload(_Payload(None, format_date(month, day, year), DATE), False)
+        
+        group.date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second)
+        group._save_payload(_Payload(None, format_time(hour, minute), DATE), False)
+
+        _run_callbacks(group, "save", _Payload(None, (month, day, year, hour, minute, second), LABEL))
+    
+    def _get_date(group, month, day, year, hour, minute, second, auto):
+        group = group_chat(group)
+
+        current_gc_date = group.date
         current_date = phone.system.get_date()
+
+        if auto:
+            month = year = day = hour = minute = second = True
 
         if month is None:   month = current_gc_date.month
         elif month is True: month = current_date.month
@@ -167,20 +211,29 @@ init -100 python in phone.discussion:
         if hour is None:   hour = current_gc_date.hour
         elif hour is True: hour = current_date.hour
 
-        if minute is None: minute = current_gc_date.minute
+        if minute is None:   minute = current_gc_date.minute
         elif minute is True: minute = current_date.minute
 
-        register_date(_group_chat, month, day, year, hour, minute)
-        pause(delay)
+        if second is None:   second = current_gc_date.second
+        elif second is True: second = current_date.second
 
-    def register_date(group, month, day, year, hour, minute):
-        group = group_chat(group)
-
-        if (group.date.year, group.date.month, group.date.day) < (year, month, day):
-            group._save_payload(_Payload(None, format_date(month, day, year), _PayloadTypes.DATE), False)
+        return (month, day, year, hour, minute, second)
         
-        group.date = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minute)
-        group._save_payload(_Payload(None, format_time(hour, minute), _PayloadTypes.DATE), False)
+    def date(month, day, year, hour, minute, second, delay=0.5, auto=False):
+        dc = _discussion_coroutine()
+        dc.send(None)
+
+        date_tuple = _get_date(_group_chat, month, day, year, hour, minute, second, auto)
+
+        dc.send(_Payload(None, date_tuple, DATE))
+        dc.send(-1)
+
+        _register_date(_group_chat, *date_tuple)
+        
+        dc.send(delay)
+
+    def register_date(group, month, day, year, hour, minute, second, auto=False):
+        _register_date(group, *_get_date(group, month, day, year, hour, minute, second, auto))
 
     def typing(sender, value, delay=None):
         dc = _discussion_coroutine()
@@ -189,14 +242,14 @@ init -100 python in phone.discussion:
         if isinstance(value, basestring):
             value = sender.get_typing_delay(value)
 
-        dc.send(_Payload(sender.key, "", _PayloadTypes._DUMMY))
+        dc.send(_Payload(sender.key, value, TYPING))
         dc.send(value)
         dc.send(delay)
     
     def choice(captions, delay=0.3):
         dc = _discussion_coroutine()
         dc.send(None)
-        dc.send(_Payload(None, captions, _PayloadTypes._MENU))
+        dc.send(_Payload(None, captions, MENU))
 
         rv = ui.interact()
 
@@ -211,7 +264,7 @@ init -100 python in phone.discussion:
 
         sender = character(sender)
 
-        dc.send(_Payload(sender.key, audio, _PayloadTypes.AUDIO))
+        dc.send(_Payload(sender.key, audio, AUDIO))
         dc.send(time)
 
         register_audio(_group_chat, sender, audio)
@@ -225,7 +278,9 @@ init -100 python in phone.discussion:
         group = group_chat(group)
         sender = character(sender)
 
-        group._save_payload(_Payload(sender.key, audio, _PayloadTypes.AUDIO))
+        p = _Payload(sender.key, audio, AUDIO)
+        group._save_payload(p)
+        _run_callbacks(group, "save", p)
     
     _yadjustment = ui.adjustment()
 
@@ -233,16 +288,25 @@ default -100 phone.discussion._current_payload = None
 default -100 phone.discussion._group_chat = None
 
 python early in phone.discussion._PayloadTypes: # fake enum because of the module not existing in python 2.7 (it's a 3.4 thing)
-    _DUMMY = 0
+    TYPING = 0
     TEXT = 1
     IMAGE = 2
     LABEL = 3
     DATE = 4
-    _MENU = 5
+    MENU = 5
     AUDIO = 6
     VIDEO = 7
 
-    ALL = (_DUMMY, TEXT, IMAGE, LABEL, DATE, _MENU, AUDIO, VIDEO)
+    ALL = (TYPING, TEXT, IMAGE, LABEL, DATE, MENU, AUDIO, VIDEO)
+
+    renpy.store.phone.discussion.TYPING = TYPING
+    renpy.store.phone.discussion.TEXT = TEXT
+    renpy.store.phone.discussion.IMAGE = IMAGE
+    renpy.store.phone.discussion.LABEL = LABEL
+    renpy.store.phone.discussion.DATE = DATE
+    renpy.store.phone.discussion.MENU = MENU
+    renpy.store.phone.discussion.AUDIO = AUDIO
+    renpy.store.phone.discussion.VIDEO = VIDEO
 
     _constant = True
 

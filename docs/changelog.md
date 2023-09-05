@@ -2,11 +2,13 @@
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
-## 3.0.4
+## 3.1.0
 - Improved lint.
-- `phone.discussion.date` now accepts `None` and `True` values (before, only the `date` phone statement could use `None` values).
+- `phone.discussion.date` and `phone.discussion.register_date` now accept `None` and `True` values (before, only the `date` phone statement could use `None` values).
+- `phone.discussion.date` and `phone.discussion.register_date` now accept two new arguments: `second` and `auto`.
 - The `image` phone statement and `phone.discussion.image` can now take any displayable.
 - Fixed an issue with `gui.phone_message_label_null_height`.
+- Added `phone.config.discussion_callbacks`.
 
 ## 3.0.3
 - Fixed the `calendar` app layout.

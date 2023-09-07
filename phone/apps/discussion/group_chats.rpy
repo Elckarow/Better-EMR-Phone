@@ -175,15 +175,14 @@ init -100 python in phone.group_chat:
     
     def group_chat(x):
         if isinstance(x, GroupChat): return x
-        global _group_chats
+        if not has_group_chat(x):
+            raise KeyError("no group chat with the key %r exists (check your definitions)" % x)
         return _group_chats[x]
     
     def has_group_chat(key):
-        global _group_chats
         return key in _group_chats
 
     def get_all():
-        global _group_chats
         return list(_group_chats.values())
     
 default -100 phone.group_chat._group_chats = { }

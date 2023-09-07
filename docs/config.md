@@ -25,7 +25,7 @@ A transition used when going from a phone screen to another.
 A string used to format a time. Passed to `time.strftime`.
 
 `date_format` *(defaults to `_("%m/%d/%Y")`)*
-A string used to format a date. Passed to `datetime.date.strftime`.
+A string used to format a date. Passed to `datetime.datetime.strftime`.
 
 `textbox_radius` *(defaults to `15`)*
 The radius of the rounded corners of the text messages' textboxes.

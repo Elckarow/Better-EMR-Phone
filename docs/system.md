@@ -17,7 +17,7 @@ Returns the state of the internet connection, represented by the following const
 Returns the date. If the variable `date` is `None`, the date used is the player's.
 
 `date` *(defaults to `None`)*
-If not `None`, a `datetime.date` object.
+If not `None`, a `datetime.datetime` object.
 
 `battery_level` *(defaults to `None`)*
 If not `None`, an integer.

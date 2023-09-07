@@ -20,7 +20,7 @@ Took a few tries but here we are I guess.
     characters
     emojis
     discussion
-    calls
+    phone_calls
 
 .. toctree:: 
     :maxdepth: 1

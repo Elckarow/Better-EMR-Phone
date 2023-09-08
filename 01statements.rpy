@@ -997,6 +997,13 @@ python early in phone:
     ########################################################
     
     def _parse_phone_register(l):
+        if l.init:
+            # set the pos to the beginning of the statement
+            # makes the error message clearer
+            l.unadvance()
+            l.advance()
+            l.error("the `phone register` statement can't be used during init. see the `init phone register` statement instead.")
+        
         gc = l.require(l.simple_expression)
 
         l.require(":")
@@ -1024,7 +1031,6 @@ python early in phone:
                     get_strings(block[1] for block in statement.blocks)
         
         get_strings(rpr.statements)
-
         return rv
 
     renpy.register_statement(

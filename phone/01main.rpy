@@ -172,12 +172,8 @@ init -500 python in phone:
     def register(f):
         raise Exception("The `phone.register` decorator isn't used anymore. (function being decorated: {})".format(f.__name__))
 
-    # hlep
-    _ran_on_start = set()
-
     def _run_on_start(f, id):
         def run(load):
-            _ran_on_start.add(id)
             if id not in _id_ran_on_start:
                 _id_ran_on_start.add(id)
                 f()
@@ -187,13 +183,6 @@ init -500 python in phone:
         renpy_config.after_load_callbacks.append(renpy.partial(run, load=True))
 
 default -1000 phone._id_ran_on_start = set()
-
-init 1500 python hide in phone:
-    @renpy_config.after_load_callbacks.append
-    def _clean_id_ran_on_start():
-        for id in (_id_ran_on_start - _ran_on_start):
-            _id_ran_on_start.remove(id)
-        _ran_on_start.clear()
 
 init 1500: 
     # narrator is guarenteed to exist at init 1400

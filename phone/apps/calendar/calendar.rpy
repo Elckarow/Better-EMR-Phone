@@ -12,6 +12,14 @@ init -100 python in phone.calendar:
     SATURDAY = calendar.SATURDAY
     SUNDAY = calendar.SUNDAY
 
+    renpy.const("phone.calendar.MONDAY")
+    renpy.const("phone.calendar.TUESDAY")
+    renpy.const("phone.calendar.WEDNESDAY")
+    renpy.const("phone.calendar.THURSDAY")
+    renpy.const("phone.calendar.FRIDAY")
+    renpy.const("phone.calendar.SATURDAY")
+    renpy.const("phone.calendar.SUNDAY")
+
     days = (
         _("Monday"),
         _("Tuesday"),
@@ -21,6 +29,8 @@ init -100 python in phone.calendar:
         _("Saturday"),
         _("Sunday")
     )
+
+    renpy.const("phone.calendar.days")
 
     months = (
         "",
@@ -37,6 +47,8 @@ init -100 python in phone.calendar:
         _("November"),
         _("December")
     )
+
+    renpy.const("phone.calendar.months")
     
     class _CalendarEntry(object):
         def __init__(self, day):

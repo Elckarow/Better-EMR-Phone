@@ -165,13 +165,35 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
 label _phone_register:
     $ raise Exception("The label '_phone_register' isn't needed anymore")
 
-init -100 python in phone:
+init -500 python in phone:
     def register_group_chat(group, *keys):
         raise Exception("The 'phone.register_group_chat' function isn't needed anymore")
     
     def register(f):
         raise Exception("The `phone.register` decorator isn't used anymore. (function being decorated: {})".format(f.__name__))
 
+    # hlep
+    _ran_on_start = set()
+
+    def _run_on_start(f, id):
+        def run(load):
+            _ran_on_start.add(id)
+            if id not in _id_ran_on_start:
+                _id_ran_on_start.add(id)
+                f()
+                if load: renpy.block_rollback()
+
+        renpy_config.start_callbacks.append(renpy.partial(run, load=False))
+        renpy_config.after_load_callbacks.append(renpy.partial(run, load=True))
+
+default -1000 phone._id_ran_on_start = set()
+
+init 1500 python hide in phone:
+    @renpy_config.after_load_callbacks.append
+    def _clean_id_ran_on_start():
+        for id in (_id_ran_on_start - _ran_on_start):
+            _id_ran_on_start.remove(id)
+        _ran_on_start.clear()
 
 init 1500: 
     # narrator is guarenteed to exist at init 1400

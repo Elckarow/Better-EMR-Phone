@@ -1045,49 +1045,45 @@ python early in phone:
 
     ########################################################
 
+    # soooooooooooooooooooooooooooooooooooooooooooooooo clunky
     class _RawInitPhoneRegister(_RawPhoneRegister):
-        __slots__ = ("define",)
-
-        def __init__(self, gc, statements, define):
-            super(_RawInitPhoneRegister, self).__init__(gc, statements)
-            self.define = define
-        
-        def execute(self):
-            if self.define is not None:
-                self.define.execute()
-            renpy.config.start_callbacks.append(super(_RawInitPhoneRegister, self).execute)
-        
-        def get_translatable_strings(self):
-            rv = super(_RawInitPhoneRegister, self).get_translatable_strings()
-            if self.define is not None:
-                rv.insert(0, self.define.name)
-            return rv
-    
-    class _RawDefineGroupChat(cds_utils.Statement):
         __slots__ = ("name", "icon", "key", "chars", "default_statement")
 
-        def __init__(self, name, icon, key, chars, default_statement):
+        def __init__(self, gc, statements, name, icon, key, chars, default_statement):
+            super(_RawInitPhoneRegister, self).__init__(gc, statements)
             self.name = name
             self.icon = icon
             self.key = key
             self.chars = chars
             self.default_statement = default_statement
-        
+
         def execute(self):
             if self.default_statement is not None:
                 self.default_statement.execute()
-            renpy.config.start_callbacks.append(self.register)
+            _run_on_start(self._execute, ("phone define gc", self.gc if self.gc is not None else str(self.key)))
         
-        def register(self):
+        def _execute(self):
+            gc = None
+
             globals = store.__dict__
             if self.default_statement is not None:
                 gc = getattr(store, self.default_statement.varname)
             else:
-                gc = group_chat.GroupChat(self.name, eval(self.icon, globals), eval(self.key, globals))
+                if self.name is not None:
+                    gc = group_chat.GroupChat(self.name, eval(self.icon, globals), eval(self.key, globals))
             
-            for char in self.chars:
-                gc.add_character(character.character(eval(char, globals)))
+            if gc is not None:
+                for char in self.chars:
+                    gc.add_character(character.character(eval(char, globals)))
+
+            super(_RawInitPhoneRegister, self).execute()
         
+        def get_translatable_strings(self):
+            rv = super(_RawInitPhoneRegister, self).get_translatable_strings()
+            if self.name is not None:
+                rv.insert(0, self.name)
+            return rv
+    
         def lint(self):
             _lint.eval(self.icon)
             _lint.eval(self.key)
@@ -1108,7 +1104,12 @@ python early in phone:
         l.expect_block("init phone register")
         ll = l.subblock_lexer(init=True)
         
-        define = None
+        name = None
+        key = None
+        icon = None
+        chars = [ ]
+        _as = None
+        default_statement = None
 
         if no_gc:
             ll.advance()
@@ -1121,11 +1122,6 @@ python early in phone:
             ll.expect_block("define group chat")
 
             dl = ll.subblock_lexer()
-
-            key = None
-            icon = None
-            chars = [ ]
-            _as = None
 
             while dl.advance():
                 while not dl.eol():
@@ -1159,10 +1155,7 @@ python early in phone:
 
             if key is None:
                 dl.error("expected 'key' property")
-            
-            if len(chars) == 0:
-                dl.error("expected at least 1 'add' statements")
-            
+                        
             if icon is None:
                 icon = 'phone.config.basedir + "default_icon.png"'
             
@@ -1185,23 +1178,18 @@ python early in phone:
                 lexer.advance()
 
                 default_statement = renpy.parser.default_statement(lexer, (filename, linenumber))
-            
-            else:
-                default_statement = None
-
-            define = _RawDefineGroupChat(name, icon, key, chars, default_statement)
 
         statements = _get_phone_statements(ll, False)
         
         if not statements and not no_gc:
             ll.error("expected at least one statement")
         
-        return _RawInitPhoneRegister(gc, statements, define)
+        return _RawInitPhoneRegister(gc, statements, name, icon, key, chars, default_statement)
     
     def _translation_strings_init_phone_register(ripr):
         rv = _translation_strings_phone_register(ripr)
-        if ripr.define is not None:
-            rv.insert(0, ripr.define.name)
+        if ripr.name is not None:
+            rv.insert(0, ripr.name)
         return rv
 
     renpy.register_statement(

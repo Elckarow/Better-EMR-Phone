@@ -4,11 +4,11 @@ Credit Elckarow#8399 [Official documentation can be found here](https://better-e
 
 This framework was originally intended for DDLC modding. If you are not making a DDLC mod, you are not allowed to use MC's, Natsuki's, Sayori's, Monika's and Yuri's phone icon.
 
-![image](https://user-images.githubusercontent.com/101005497/221384281-11861f1a-1784-414d-a2aa-3aadf08ee5d6.png)
+![](https://github.com/Elckarow/Better-EMR-Phone/assets/101005497/63bda61b-ea12-436f-bf00-078b6bc85851)
 
-![image](https://user-images.githubusercontent.com/101005497/221384283-d21dcabc-6286-49f8-a4e6-594c273c1c2f.png)
+![](https://github.com/Elckarow/Better-EMR-Phone/assets/101005497/6f6f3f7d-1a74-40fd-9b24-2310221f381b)
 
-![image](https://user-images.githubusercontent.com/101005497/225970680-6fef56ff-cd3c-49e9-96e6-23ee9bc87fae.png)
+![](https://github.com/Elckarow/Better-EMR-Phone/assets/101005497/b7586874-8919-4888-a31d-53006e7426dd)
 
 ---
 

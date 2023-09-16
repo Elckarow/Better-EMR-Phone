@@ -75,6 +75,11 @@ init -100 python in phone:
         global _stack_depth
         first_call = _stack_depth == 0
 
+        needs_rollback = first_call and renpy.game.context().interacting
+
+        if needs_rollback:
+            renpy.checkpoint()
+
         renpy.transition(config.enter_transition if first_call else config.intra_transition)
         store._window_hide(None, True)
 
@@ -91,6 +96,9 @@ init -100 python in phone:
         _stack_depth -= 1
 
         menu = not first_call
+
+        if needs_rollback:
+            renpy.rollback(True)
 
         return rv
     
@@ -128,10 +136,10 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
         )
 
         if not horizontal:
-            padding (15, 81, 15, 94)
+            padding gui.phone_margin
             xysize (gui.phone_xsize, gui.phone_ysize)
         else:
-            padding (81, 15, 94, 15)
+            padding (gui.phone_margin[1], gui.phone_margin[0], gui.phone_margin[2], gui.phone_margin[3])
             xysize (gui.phone_ysize, gui.phone_xsize)
 
         fixed style "empty":

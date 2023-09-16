@@ -3,17 +3,18 @@ init -999:
     define config.early_start_store = False
 
 init -200:
+    define gui.phone_margin = (15, 81, 15, 94)
     define gui.phone_zoom = 0.8
     define gui.phone_xsize = 389
     define gui.phone_ysize = 803
+
+    define gui.phone_status_bar_height = 22
 
     define gui.phone_call_xpos = 0.07
 
     define gui.phone_message_frame_padding = (8, 8, 8, 8)
 
     define gui.phone_message_label_null_height = 4
-
-    define gui.phone_status_bar_height = 22
 
     define gui.phone_application_frame_padding = 16
     define gui.phone_application_icon_size = 65

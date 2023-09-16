@@ -2,6 +2,12 @@
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+## 3.1.1
+- Clearer error messages when a group chat / phone character isn't defined.
+- Document some GUI variables.
+- Phone definitions will now work on an already existing save. Before, if you had a save where no group chat was defined (this is just an example), that you created a group chat, and then loaded that save, the group chat wouldn't be registered. This change replicates the behavior of the `default` statement, allowing creators to, for instance, add this framework to an already released game.
+- Fixed an issue where running `PhoneMenu` during an interaction would block the player from advancing after returning.
+
 ## 3.1.0
 - Improved lint.
 - `phone.discussion.date` and `phone.discussion.register_date` now accept `None` and `True` values (before, only the `date` phone statement could use `None` values).

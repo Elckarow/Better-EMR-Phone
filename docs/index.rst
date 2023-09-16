@@ -39,6 +39,7 @@ Took a few tries but here we are I guess.
     :maxdepth: 1
 
     functions_and_actions
+    gui_variables
     config
     system
     click_effects

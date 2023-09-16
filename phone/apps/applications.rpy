@@ -78,7 +78,7 @@ init -100 python in phone.application:
         Returns `True` if added, `False` if it failed, or `None` if renpy is still init phase and we can't know.
         """
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_application, app, page, key), (app.name, page, key))
+            phone._run_on_start(renpy.partial(add_application, app, page, key), ("_phone_add_app", app.name, page, key))
             return None
 
         if not isinstance(app, Application):
@@ -111,7 +111,7 @@ init -100 python in phone.application:
 
     def add_app_to_all_characters(app, page=0):
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_app_to_all_characters, app, page), (app.name, page))
+            phone._run_on_start(renpy.partial(add_app_to_all_characters, app, page), ("_phone_add_app", app.name, page))
             return None
         
         rv = False

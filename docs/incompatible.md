@@ -4,7 +4,7 @@ A list of all changes that may require you to modify some of your code.
 
 ## 3.1.1
 - The `phone register` statement can't be ran during init phase anymore. Use the `init phone register` statement instead.
-- `auto` can't be used anymore for the `time` statement during the `init phone register` statement.
+- `auto` can't be used anymore for the `time` statement in the `init phone register` statement.
 
 ## 3.1.0
 - None

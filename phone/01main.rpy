@@ -98,7 +98,7 @@ init -100 python in phone:
         menu = not first_call
 
         if needs_rollback:
-            renpy.rollback(True)
+            renpy.rollback(force=True, greedy=False)
 
         return rv
     

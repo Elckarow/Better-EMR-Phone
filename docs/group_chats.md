@@ -7,10 +7,11 @@
 `class GroupChat(object)`
 The core of the discussion part of this framework.
 
-`def __init__(self, name, icon, key)`
+`def __init__(self, name, icon, key, ephemeral = False)`
 - `name`: a string, the name of the character.
 - `icon`: a displayable.
 - `key`: any hashable object that is not `None`. this must be a unique object proper to this `phone.group_chat.GroupChat` object.
+- `ephemeral`: boolean, determines if the group chat should be cleared once the discussion is over.
 
 Once created, the following fields can be read and safely modified:
 `name`

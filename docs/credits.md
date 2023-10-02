@@ -6,7 +6,7 @@ I'd like to thank to following people for their contributions:
 - -2#6177 (Shader code for the `CircleDisplayable` displayable)
 
 as well as the project's contributors on GitHub:
-- None (for now (I hope))
+- Galo223344
 
 Various ressources used:
 - [Wintermute's `Gradient` displayable](https://github.com/WretchedTeam/WintermuteV3/blob/68415d2e1dd0e9b404361f1bd300084fa39fbfc0/game/mod_code/definitions/shaders/gradient.rpy)

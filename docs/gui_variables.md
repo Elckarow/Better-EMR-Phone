@@ -2,10 +2,10 @@
 
 *Please note that this framework was developed on a 1280x720 project.*
 
-`gui.phone_xsize` *(defaults to `803`)*
+`gui.phone_xsize` *(defaults to `389`)*
 The width available for the phone screens.
 
-`gui.phone_ysize` *(defaults to `389`)*
+`gui.phone_ysize` *(defaults to `803`)*
 The height available for the phone screens.
 
 `gui.phone_margin` *(defaults to `(15, 81, 15, 94)`)*

@@ -18,6 +18,7 @@ Took a few tries but here we are I guess.
     :maxdepth: 1
 
     characters
+    group_chats
     emojis
     discussion
     phone_calls

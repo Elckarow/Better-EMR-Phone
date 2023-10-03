@@ -52,3 +52,8 @@ default eileen_gc = phone.group_chat.GroupChat("Eileen", phone.config.basedir + 
 ```
 or
 use the `define` clause of the `init phone register` statement.
+```
+init phone register:
+    define "Hello":
+        icon "icon.png" add "eileen" key "hello"
+```

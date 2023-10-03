@@ -1047,14 +1047,15 @@ python early in phone:
 
     # soooooooooooooooooooooooooooooooooooooooooooooooo clunky
     class _RawInitPhoneRegister(_RawPhoneRegister):
-        __slots__ = ("name", "icon", "key", "chars", "default_statement")
+        __slots__ = ("name", "icon", "key", "chars", "transient", "default_statement")
 
-        def __init__(self, gc, statements, name, icon, key, chars, default_statement):
+        def __init__(self, gc, statements, name, icon, key, chars, transient, default_statement):
             super(_RawInitPhoneRegister, self).__init__(gc, statements)
             self.name = name
             self.icon = icon
             self.key = key
             self.chars = chars
+            self.transient = transient
             self.default_statement = default_statement
 
         def execute(self):
@@ -1070,7 +1071,7 @@ python early in phone:
                 gc = getattr(store, self.default_statement.varname)
             else:
                 if self.name is not None:
-                    gc = group_chat.GroupChat(self.name, eval(self.icon, globals), eval(self.key, globals))
+                    gc = group_chat.GroupChat(self.name, eval(self.icon, globals), eval(self.key, globals), transient=self.transient)
             
             if gc is not None:
                 for char in self.chars:
@@ -1146,7 +1147,7 @@ python early in phone:
                         chars.append(char)
 
                     elif p == "transient":
-                        if transient != False:
+                        if transient:
                             dl.error("'transient' property already given")
                         transient = True
 
@@ -1191,7 +1192,7 @@ python early in phone:
         if not statements and not no_gc:
             ll.error("expected at least one statement")
         
-        return _RawInitPhoneRegister(gc, statements, name, icon, key, chars, default_statement)
+        return _RawInitPhoneRegister(gc, statements, name, icon, key, chars, transient, default_statement)
     
     def _translation_strings_init_phone_register(ripr):
         rv = _translation_strings_phone_register(ripr)

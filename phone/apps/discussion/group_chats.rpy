@@ -74,6 +74,9 @@ init -100 python in phone.group_chat:
         @property
         def number_of_messages(self):
             return self.number_of_messages_sent(None)
+    
+        def clear(self):
+            self._payloads.clear()
         
         def _can_load_more(self):
             if not self._payloads: return False         
@@ -170,9 +173,6 @@ init -100 python in phone.group_chat:
         
         def __len__(self):
             return len(self._payloads)
-
-        def clear(self):
-            self._payloads=[]
 
         def __hash__(self):
             return hash(self.key)

@@ -49,8 +49,10 @@ init -100 python in phone.discussion:
             
         for key in _group_chat._characters:
             sort_messages(key)
-        if _group_chat.ephemeral:
+
+        if _group_chat.transient:
             _group_chat.clear()
+            
         _group_chat = None
 
         show_layer_at([], reset=True)

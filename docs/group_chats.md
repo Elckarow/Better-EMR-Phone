@@ -11,7 +11,7 @@ The core of the discussion part of this framework.
 - `name`: a string, the name of the character.
 - `icon`: a displayable.
 - `key`: any hashable object that is not `None`. this must be a unique object proper to this `phone.group_chat.GroupChat` object.
-- `transient`: boolean, determines if the group chat should be cleared once the discussion is over.
+- `transient`: boolean. If true, the group chat is cleared once the discussion is over.
 
 Once created, the following fields can be read and safely modified:
 `name`
@@ -30,7 +30,7 @@ Removes the `*character*` `char` from this group chat, and removes the group cha
 Returns the number of messages sent by the `*character*` `char`. If `None` is passed, returns the total number of messages sent.
 
 `def clear(self)`
-Clears the GroupChat's history
+Clears the group chat's history.
 
 These objects are *hashable* (their key will be hashed).
 

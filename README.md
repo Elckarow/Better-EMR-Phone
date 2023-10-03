@@ -1,4 +1,4 @@
-A Ren'Py 7.4.9+ phone framework inspired by EMR's phone.
+A Ren'Py 7.4.9+ phone framework inspired by the phone used in the DDLC mod, Doki Doki Exit Music Redux.
 
 Credit Elckarow#8399 [Official documentation can be found here](https://better-emr-phone.readthedocs.io/en/latest/).
 

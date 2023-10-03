@@ -1108,6 +1108,7 @@ python early in phone:
         key = None
         icon = None
         chars = [ ]
+        transient = False
         _as = None
         default_statement = None
 
@@ -1144,6 +1145,11 @@ python early in phone:
                             dl.error("character '{}' already given".format(char))
                         chars.append(char)
 
+                    elif p == "transient":
+                        if transient != False:
+                            dl.error("'transient' property already given")
+                        transient = True
+
                     elif p == "as":
                         if _as is not None:
                             dl.error("'as' property already given")
@@ -1163,13 +1169,14 @@ python early in phone:
                 filename, linenumber = l.get_location()
 
                 global _INIT_PHONE_REGISTER_PRIORITY
-                string = "{init} {_as} = phone.group_chat.GroupChat('{name}', {icon}, {key})" \
+                string = "{init} {_as} = phone.group_chat.GroupChat('{name}', {icon}, {key}, transient={transient})" \
                         .format(
                             init=_INIT_PHONE_REGISTER_PRIORITY,
                             _as=_as,
                             name=name,
                             icon=icon,
                             key=key,
+                            transient=transient,
                         )
 
                 lexer = cds_utils.Lexer(

@@ -168,6 +168,9 @@ Expects a displayable. The icon of the group chat.
 - `as`
 Expects a dotted name. The group chat will be saved in the global store under this name (as if the group chat was manually created using the `default` statement).
 
+- `transient`
+Optional. If present, the group chat becomes transient. Transient group chats get cleared once the discussion end.
+
 ---
 ## Example
 
@@ -185,6 +188,7 @@ init phone register:
     define "goofy ahh chat":
         icon phone.config.basedir + "sayori_icon.png" key "goofy"
         add "mc" add "s" as goofy
+        transient
  
     time month 1 day 26 year 2013 hour 14 minute 31
     "mc" "Ah!"

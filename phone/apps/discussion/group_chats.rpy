@@ -13,14 +13,14 @@ init -100 python in phone.group_chat:
     messages_fill_if_lower = 15
 
     class GroupChat(object):    
-        def __init__(self, name, icon, key, ephemeral=False):
+        def __init__(self, name, icon, key, transient=False):
             global _group_chats
             _group_chats[key] = self
 
             self.name = name
             self.icon = icon
             self.date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
-            self.ephemeral = ephemeral
+            self.transient = transient
 
             self.unread = True
 
@@ -171,7 +171,7 @@ init -100 python in phone.group_chat:
         def __len__(self):
             return len(self._payloads)
 
-        def clear_payload(self):
+        def clear(self):
             self._payloads=[]
 
         def __hash__(self):

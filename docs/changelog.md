@@ -2,6 +2,9 @@
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+## 3.1.2
+- Group chats can now be transient. A transient group chat will be cleared once a discussion is over.
+
 ## 3.1.1
 - Clearer error messages when a group chat / phone character isn't defined.
 - Document some GUI variables.

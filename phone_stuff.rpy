@@ -41,8 +41,8 @@ python early:
         current_version = renpy.version_tuple[:3]
 
         if not renpy.compat.PY2:
-            r8version = (major + 1, minor - 5, patch)
-            return current_version >= r8version
+            major += 1
+            minor -= 5
 
         return current_version >= (major, minor, patch)
         

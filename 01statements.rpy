@@ -1,6 +1,7 @@
 python early in cds_utils:
     from renpy import store
 
+                            # if store.is_renpy_version_or_above(7, 6, 0)
     Lexer = renpy.lexer.Lexer if renpy.version_tuple >= ((7, 6) if renpy.compat.PY2 else (8, 1)) else renpy.parser.Lexer
 
     def null_parser(l):

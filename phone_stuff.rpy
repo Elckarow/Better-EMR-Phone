@@ -30,6 +30,22 @@ init -200:
 python early:
     import collections, pygame_sdl2 as pygame
 
+    @renpy.pure
+    def is_renpy_version_or_above(major, minor, patch):
+        """
+        Checks if the current version of renpy is at least `(major, minor, patch)`.
+        If renpy is on a py3 / r8 version, `(major + 1, minor - 5, patch)` is checked.
+
+        I.e., if the game runs on renpy 8 and that this function is called to check for `7.5.0`, `8.0.0` (the py3 / r8 equivalent of `7.5.0`) is checked for.
+        """
+        current_version = renpy.version_tuple[:3]
+
+        if not renpy.compat.PY2:
+            r8version = (major + 1, minor - 5, patch)
+            return current_version >= r8version
+
+        return current_version >= (major, minor, patch)
+        
     def hyperlink_functions_style(name):
         """
         Hyperlink functions but the style `name` is used.
@@ -40,7 +56,7 @@ python early:
         style_object = getattr(style, name)
         return (lambda target: style_object,) + style.default.hyperlink_functions[1:]
 
-    if renpy.version_tuple[:2] >= ((7, 6) if renpy.compat.PY2 else (8, 1)):
+    if is_renpy_version_or_above(7, 6, 0):
         def get_mixer(mixer):
             return preferences.get_mixer(mixer)
     else:

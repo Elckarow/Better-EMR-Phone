@@ -293,7 +293,7 @@ screen _phone_status_bar():
 
 screen _phone_control_center_block(cols=1, rows=1, layout="empty"):
     frame at Flatten:
-        # https://github.com/renpy/renpy/issues/4666 >=
+        # https://github.com/renpy/renpy/issues/4666
         if is_renpy_version_or_above(7, 6, 1):
             xysize (
                 absolute((gui.phone_control_center_block_size * cols) + (gui.phone_control_center_spacing * (cols - 1))),

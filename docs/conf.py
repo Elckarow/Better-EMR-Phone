@@ -24,7 +24,7 @@ copyright = '2023, Elckarow'
 author = 'Elckarow'
 
 # The full version, including alpha/beta/rc tags
-release = 'v3.0'
+release = 'v3.2.0'
 
 
 # -- General configuration ---------------------------------------------------

@@ -10,6 +10,7 @@ init -100 python in phone.status_bar:
     def battery_text_displayable(st, at):
         return Text("{}%".format(system.get_battery_level()), style="_phone_status_bar_text"), 0.1
     
+    EMPTY = 0
     ONE_FOURTH = 1
     HALF = 2
     THREE_FOURTH = 3
@@ -17,6 +18,7 @@ init -100 python in phone.status_bar:
     FULL = 5
 
     _battery_displayables = {
+        EMPTY:        renpy.displayable(config.basedir + "status_bar_battery_empty.png"),
         ONE_FOURTH:   renpy.displayable(config.basedir + "status_bar_battery_one_fourth.png"),
         HALF:         renpy.displayable(config.basedir + "status_bar_battery_half.png"),
         THREE_FOURTH: renpy.displayable(config.basedir + "status_bar_battery_three_fourth.png"),
@@ -28,6 +30,9 @@ init -100 python in phone.status_bar:
         battery_level = system.get_battery_level()
 
         REDRAW = 0.5
+
+        if battery_level == 0:
+            return _battery_displayables[EMPTY], REDRAW
 
         if battery_level <= 33: # bamboozled
             return _battery_displayables[ONE_FOURTH], REDRAW

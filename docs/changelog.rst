@@ -7,7 +7,8 @@ A list of all the changes throughout the versions, starting from 3.0.0.
 -----
 
 * Group chats can now be transient. A transient group chat will be cleared once a discussion is over.
-* Added video phone calls.
+* Added video phone calls
+* A battery level of 0% will now display an empty battery (as it should).
 
 3.1.1
 -----

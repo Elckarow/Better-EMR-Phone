@@ -81,3 +81,9 @@ They are called with three arguments:
         - For a menu, a list of all the captions.
         - For an audio, the string of the audio.
         - For a video, `None`.
+
+`video_call_layer` *(defaults to `"phone_video_call"`)*
+The name of the layer usied in video calls. It is appended to `config.detached_layers`
+
+`video_call_layer_transform_properties` *(defaults to `{...}`)*
+A dict of transform properties applied to the `Layer` displayable (not the layer itself) used during a video call. The default dict centers the displayable and makes it fit the phone vertically.

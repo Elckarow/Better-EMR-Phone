@@ -14,14 +14,14 @@ define phone_eileen = Character("Eileen", screen="phone_say", who_style="phone_s
 
 ## Functions
 
-`def call(caller)`
-Starts a phone call with the `*character*` `caller`. 
+`def call(caller, video=False)`
+Starts a phone call with the `*character*` `caller`. If `video` is true, a video call is started (this is ignored if the game is on a version prior to 7.5.0).
 Replaces the `narrator` with a special narrator.
 The python equivalent of the `phone call` statement.
 
 `def end_call()`
 Ends the current phone call, and registers it for both `*character*`s (the caller and the current pov).
-Sets the `narrator` back.
+Sets the `narrator` back and clears the video call layer.
 The python equivalent of the `phone end call` statement.
 
 `def register_call(char1, char2, duration=None)`
@@ -30,7 +30,7 @@ Saves a call between the `*character*`s `char1` and `char2`. If `duration` is no
 ## Statements
 
 `phone call`
-Used to start a phone call. It expects a `*character*`.
+Used to start a phone call. It expects a `*character*`. If the `video` clause is given, a video call is started. 
 
 `phone end call`
 Used to end a phone call. It doesn't expect anything.

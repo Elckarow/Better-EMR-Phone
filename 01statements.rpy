@@ -961,7 +961,7 @@ python early in phone:
 
     def _parse_phone_call(l):
         rv = l.require(l.simple_expression)
-        video = l.keyword("video")
+        video = bool(l.keyword("video"))
         l.expect_eol()
         l.expect_noblock("phone call")
         return rv, video

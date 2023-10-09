@@ -2,7 +2,7 @@
 
 A list of all changes that may require you to modify some of your code.
 
-## 3.1.2
+## 3.2.0
 - None
 
 ## 3.1.1

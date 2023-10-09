@@ -12,10 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
-sys.path.append(os.path.abspath('.'))
-on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
+sys.path.append(os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
@@ -26,49 +24,30 @@ author = 'Elckarow'
 # The full version, including alpha/beta/rc tags
 release = 'v3.2.0'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-# Add napoleon to the extensions list
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',
-    'myst_parser', 'sphinx_rtd_theme',
-    'sphinx_markdown_tables',
-    'sphinx.ext.autosectionlabel',
+extensions = [
     'sphinx.ext.todo',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.ifconfig',
     'renpydoc',
-    'sphinx.ext.githubpages',]
-napoleon_google_docstring = False
-napoleon_numpy_docstring = True
-napoleon_include_init_with_doc = False
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = False
-napoleon_use_admonition_for_notes = False
-napoleon_use_admonition_for_references = False
-napoleon_use_ivar = False
-napoleon_use_param = True
-napoleon_use_rtype = True
-napoleon_type_aliases = None
-
+    'sphinx.ext.intersphinx',
+    'sphinx_rtd_theme',
+    'sphinx_rtd_dark_mode',
+    ]
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = [ ]
 
 # The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-#
-# source_parsers = {
-#     '.md': 'recommonmark.parser.CommonMarkParser',
-# }
-
-source_suffix = ['.rst', '.md']
+source_suffix = ".rst"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = [ ]
 
 # The name of the Pygments (syntax highlighting) style to use.
 # pygments_style = 'sphinx'
@@ -81,25 +60,17 @@ pygments_style = 'default'
 # a list of builtin themes.
 #
 html_static_path = ['_static']
-import sphinx_nervproject_theme
+
 html_context = {
-    'css_files': [
-        '_static/theme_overrides.css',  # override wide tables in RTD theme
-        ],
-    }
-if True or on_rtd:
-    html_theme = "sphinx_rtd_theme"
-else:
-    html_theme = "nervproject"
+  'display_github': True,
+  'github_user': 'Elckarow',
+  'github_repo': 'Better-EMR-Phone',
+}
+
+html_theme = "sphinx_rtd_theme"
+
 #html_theme_path = [sphinx_nervproject_theme.get_html_theme_path()]
 #html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
-
-html_sidebars = { '**': ['globaltoc.html',
-                        'relations.html',
-                        'sourcelink.html',
-                        'searchbox.html'
-                        ] }
-
 # sets the darker appearence
 # html_theme_options = {
 #     'style': 'darker'

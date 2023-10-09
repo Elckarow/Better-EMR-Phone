@@ -207,4 +207,8 @@ init 1500:
             raise Exception("store.PhoneReturn is a reserved name. (value is %r)" % store.PhoneReturn)
         store.PhoneReturn = PhoneReturn
 
-    
+        if store.is_renpy_version_or_above(7, 5, 0):
+            renpy_config.detached_layers.append(config.video_call_layer)
+        
+        # https://github.com/renpy/renpy/issues/5044
+        renpy_config.layer_clipping[config.video_call_layer] = (0, 0, renpy_config.screen_width, renpy_config.screen_height)

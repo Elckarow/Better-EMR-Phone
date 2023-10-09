@@ -961,20 +961,21 @@ python early in phone:
 
     def _parse_phone_call(l):
         rv = l.require(l.simple_expression)
+        video = l.keyword("video")
         l.expect_eol()
         l.expect_noblock("phone call")
-        return rv
+        return rv, video
 
-    def _execute_phone_call(c):
-        c = character.character(eval(c, store.__dict__))
-        calls.call(c)
+    def _execute_phone_call(tu):
+        c = character.character(eval(tu[0], store.__dict__))
+        calls.call(c, tu[1])
     
-    def _predict_phone_call(c):
-        renpy.predict_screen("phone_call")
+    def _predict_phone_call(tu):
+        renpy.predict_screen("phone_call", video=tu[1])
         return [ ]
 
-    def _lint_phone_call(c):
-        _lint.character(c)
+    def _lint_phone_call(tu):
+        _lint.character(tu[0])
 
     renpy.register_statement(
         "phone call",

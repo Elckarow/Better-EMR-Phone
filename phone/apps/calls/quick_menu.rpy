@@ -1,8 +1,5 @@
 screen phone_quick_menu():
-    grid 3 2:
-        style_prefix "phone_quick_menu"
-        xalign 0.5 ypos 0.45
-
+    grid 3 2 style_prefix "phone_quick_menu":
         vbox:
             imagebutton:
                 idle phone.config.basedir + "quick_menu_history_idle.png"
@@ -57,3 +54,46 @@ style phone_quick_menu_grid is empty:
 style phone_quick_menu_vbox is empty
 style phone_quick_menu_text is phone_call_time:
     size 14
+
+screen phone_quick_menu_video():
+    default qm = False
+    default anim_time = 0.35
+
+    showif qm:
+        add "#000":
+            at transform:
+                alpha 0.0
+                on show:
+                    ease anim_time alpha 0.35
+                on hide:
+                    ease anim_time alpha 0.0
+
+    vbox style "empty" yalign 1.0 xsize 1.0 xfill True:
+        button style "empty" padding (5, 7, 5, 4) xalign 0.5:
+            at transform:
+                ease anim_time matrixtransform RotateMatrix(0, 0, 180 * qm) matrixcolor OpacityMatrix(0.8 if qm else 0.6)
+            
+            action ToggleLocalVariable("qm")
+
+            add phone.config.basedir + "arrow_icon.png":
+                at transform:
+                    subpixel True xysize (70, 18)
+                        
+        showif qm:
+            frame style "empty" top_padding 30 bottom_padding 15 xsize 1.0 modal True:
+                at transform:
+                    subpixel True crop (0, 0, 1.0, 0.0)
+                    on show:
+                        ease anim_time crop (0, 0, 1.0, 1.0) alpha 1.0
+                    on hide:
+                        ease anim_time crop (0, 0, 1.0, 0.0) alpha 0.0
+
+                background "#00000060"
+
+                vbox style "empty" xalign 0.5:
+                    use phone_quick_menu()
+
+                    null height 15
+
+                    add phone.config.basedir + "hang_up.png":
+                        subpixel True xysize (63, 63) xalign 0.5

@@ -7,7 +7,7 @@ init -100 python in phone.calls:
     config.layer_at_transforms["phone_call"] = Transform(matrixcolor=BrightnessMatrix(-0.21), blur=20)
     config.hide_status_bar_screens.append("phone_call")
 
-    def call(caller):
+    def call(caller, video=False):
         store._window_hide()
 
         global _current_caller
@@ -19,7 +19,7 @@ init -100 python in phone.calls:
         set_current_screen("phone_call")
         show_layer_at("phone_call")
 
-        renpy.show_screen("phone_call")
+        renpy.show_screen("phone_call", video=video)
         renpy.with_statement(config.enter_transition)
     
     def end_call():
@@ -37,6 +37,8 @@ init -100 python in phone.calls:
 
         show_layer_at([], reset=True)
         renpy.hide_screen("phone_call")
+        if store.is_renpy_version_or_above(7, 5, 0):
+            renpy.scene(config.video_call_layer)
         renpy.with_statement(config.exit_transition)
 
         set_current_screen(None)

@@ -101,6 +101,16 @@ python early in phone.config:
     #               -For a video, `None`.
     discussion_callbacks = [ ]
 
+    # The name of the layer usied in video calls. It is appended to `config.detached_layers`
+    video_call_layer = "phone_video_call"
+
+    # A dict of transform properties applied to the `Layer` displayable used during a video call. 
+    video_call_layer_transform_properties = {
+        "align": (0.5, 1.0),
+        "ysize": 1.0,
+        "fit": "contain"
+    }
+
 init -1400 python in phone.config:
     from store import BrightnessMatrix
     layer_at_transforms[None] = Transform(matrixcolor=BrightnessMatrix(-0.03), blur=5)

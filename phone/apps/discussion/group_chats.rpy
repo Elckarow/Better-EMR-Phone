@@ -13,6 +13,8 @@ init -100 python in phone.group_chat:
     messages_fill_if_lower = 15
 
     class GroupChat(object):    
+        transient = False
+        
         def __init__(self, name, icon, key, transient=False):
             global _group_chats
             _group_chats[key] = self

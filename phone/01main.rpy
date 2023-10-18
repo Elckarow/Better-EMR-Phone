@@ -121,7 +121,7 @@ default -100 phone._current_screen = None
 
 # The base screen for all phone screens.
 screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
-    frame style "empty":
+    frame style "empty" modal True:
         at transform:
             subpixel True zoom gui.phone_zoom * (1.3 if horizontal else 1.0)
             xpos xpos xanchor xanchor

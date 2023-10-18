@@ -169,17 +169,7 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
         SetVariable("phone.system.at_list", []),
     )
 
-# Deprecated stuff
-label _phone_register:
-    $ raise Exception("The label '_phone_register' isn't needed anymore")
-
 init -500 python in phone:
-    def register_group_chat(group, *keys):
-        raise Exception("The 'phone.register_group_chat' function isn't needed anymore")
-    
-    def register(f):
-        raise Exception("The `phone.register` decorator isn't used anymore. (function being decorated: {})".format(f.__name__))
-
     def _run_on_start(f, id):
         def run(load):
             if id not in _id_ran_on_start:

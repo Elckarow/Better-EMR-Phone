@@ -141,10 +141,7 @@ screen phone():
         current_page = min(current_page, max_page)
 
     fixed style_prefix "phone_main":
-        frame style "empty":
-            align (1.0, 0.0) padding (10, 10)
-            background "#474747"
-            textbutton "Quit" action PhoneReturn()
+        button style "empty" xysize (1.0, 1.0) action PhoneReturn()
 
         if coords_to_move is not None:
             key "K_ESCAPE" action SetScreenVariable("coords_to_move", None)

@@ -320,7 +320,19 @@ python early in phone:
     
     class _RawPhonePass(cds_utils.Statement):
         def execute(self):
-            store.pause()
+            pass
+    
+    class _RawPhonePause(cds_utils.Statement):
+        __slots__ = ("duration",)
+
+        def __init__(self, duration):
+            self.duration = duration
+
+        def execute(self):
+            store.pause(eval(self.duration, store.__dict__))
+        
+        def lint(self):
+            _lint.eval(self.duration)
     
     # class _RawPhoneRenpy(cds_utils.Statement):
     #     __slots__ = ("nodes",)
@@ -821,6 +833,10 @@ python early in phone:
         if delay is None: delay = "None"
         return _RawPhoneAudio(sender, audio, time, delay)
 
+    def _parse_phone_pause(ll):
+        duration = ll.simple_expression()
+        return _RawPhonePause(duration or "None")
+
     # def _parse_phone_renpy(ll):
     #     ll.require(":")
     #     ll.expect_eol()
@@ -863,6 +879,9 @@ python early in phone:
                 
                 elif ll.keyword("pass"):
                     statement = _RawPhonePass()
+                
+                elif ll.keyword("pause"):
+                    statement = _parse_phone_pause(ll)
                 
                 # elif ll.keyword("renpy"):
                 #     statement = _parse_phone_renpy(ll)

@@ -19,9 +19,6 @@ init -100 python in phone.discussion:
                 return
             else:
                 raise Exception("group chat not given (no previous group chat was found)")
-
-        if _group_chat is not None:
-            raise Exception("preparing group chat while another convesation is going on")
         
         gc = group_chat(gc)
 

@@ -10,6 +10,7 @@ A list of all the changes throughout the versions, starting from 3.0.0.
 * Added video phone calls
 * A battery level of 0% will now display an empty battery (as it should).
 * Added the ``pause`` phone discussion statement.
+* Can now start a phone discussion when another discussion is going on.
 
 3.1.1
 -----

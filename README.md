@@ -1,6 +1,6 @@
 A Ren'Py 7.4.9+ phone framework inspired by the phone used in the DDLC mod, Doki Doki Exit Music Redux.
 
-Credit Elckarow#8399 [Official documentation can be found here](https://better-emr-phone.readthedocs.io/en/latest/).
+Credit elckarow (formerly Elckarow#8399) [Official documentation can be found here](https://better-emr-phone.readthedocs.io/en/latest/).
 
 This framework was originally intended for DDLC modding. If you are not making a DDLC mod, you are not allowed to use MC's, Natsuki's, Sayori's, Monika's and Yuri's phone icon.
 

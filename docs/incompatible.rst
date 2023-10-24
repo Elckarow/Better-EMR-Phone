@@ -7,6 +7,7 @@ A list of all changes that may require you to modify some of your code.
 -----
 
 * The `Quit` button in the `phone` screen has been removed in place of a dismiss-like button.
+* The `pass` phone discussion statement now doesn't do anything, like a regular `pass` statement. To wait for a user input, see the `pause` phone discussion statement.
 
 3.1.1
 -----

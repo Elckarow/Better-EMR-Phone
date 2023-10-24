@@ -36,7 +36,7 @@ Once the object has been created, the ``name``, ``icon`` and ``cps`` fields can 
 
 These objects are *hashable* (their key will be hashed).
 
-**When creating a phone ``Character`` object, you must use ``default`` and not ``define``.**
+**When creating a phone** ``Character`` **object, you must use** ``default`` **and not** ``define`` **.**
 
 Functions
 ---------

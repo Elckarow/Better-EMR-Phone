@@ -28,7 +28,7 @@ while following fields should be read only:
 * ``transient``
 
 ``def add_character(self, char)``
-    Adds the ``*character*`` ``char`` to this group chat, saves the group chat in the ``character``'s list of known group chats, and returns the group chat.
+    Adds the ``*character*`` ``char`` to this group chat, saves the group chat in the ``*character*``'s list of known group chats, and returns the group chat.
 
 ``def remove_character(self, char)``
     Removes the ``*character*`` ``char`` from this group chat, and removes the group chat from the ``*character*``'s known group chats.

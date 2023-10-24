@@ -28,7 +28,7 @@ Once you've coded your screen, simply call it with ``phone.call_screen`` or the 
 Applications
 ------------
 
-If you want your app to appear on the ``phone`` screen, you need to create a ``phone.application.Application`` object and add it to the ``*character\*``\s.
+If you want your app to appear on the ``phone`` screen, you need to create a ``phone.application.Application`` object and add it to your ``*character*``\s.
 
 *The following functions and classes are defined in the* **phone.application** *namespace.*
 
@@ -62,7 +62,7 @@ Example
             PhoneMenu("my_phone_screen")
         ) 
 
-Now that you've done this, it's time to add the app to the ``\*character\*``\s you've defined, using those two functions.
+Now that you've done this, it's time to add the app to the ``*character*``\s you've defined, using those two functions.
 
 ``def add_application(app, page=0, key=None)``
     Adds the application ``app`` to the known applications for ``*character*`` ``key``. Returns ``True`` if it succesfully added the app, ``False`` if it failed, or ``None`` if Ren'Py is still in init phase.

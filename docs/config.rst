@@ -1,14 +1,15 @@
 Configuration Variables
 =======================
 
-*The following variables are defined in the* **``phone.config``** *namespace.*
+*The following variables are defined in the* **phone.config** *namespace.*
+
 **This namespace is considered *constant* and should not be modified outside of init time.**
 
 ``basedir = "phone/assets/"``
     A path from the game folder to the directory where the assets are located.
 
 ``overlay_screens = [...]``
-    A list of screen names shown above the phone screens (but still inside the phone). As the framework uses it internally, creators should *``append``* their screen name to the list rather than replacing it entirely.
+    A list of screen names shown above the phone screens (but still inside the phone). As the framework uses it internally, creators should ``append`` their screen name to the list rather than replacing it entirely.
 
 ``quick_menu = True``
     If true, the framework's quick menu is used during phone calls. If false, the game's quick menu is used.
@@ -67,7 +68,7 @@ Configuration Variables
     A list of functions that are called whenever a phone discussion function executes.
     They are called with three arguments:
 
-    * the \*group chat\* the interaction is taking place in.
+    * the ``\*group chat\*`` the interaction is taking place in.
     * an event:
   
       * ``"start"`` is delivered at the start of the interaction.
@@ -76,7 +77,7 @@ Configuration Variables
 
     * an object representing the data, which has thefollowing fields:
         
-      * ``source``, the \*character\* that's sending the data, or ``None``.
+      * ``source``, the ``\*character\*`` that's sending the data, or ``None``.
       * ``type``, one of the following constants (in the ``phone.discussion`` namespace): ``TYPING``, ``TEXT``, ``IMAGE``, ``LABEL``, ``DATE``, ``MENU``, ``AUDIO``, ``VIDEO`` (if it ever gets implemented).
       * ``data``:
   

@@ -22,12 +22,12 @@ Functions
     The python equivalent of the ``phone call`` statement.
 
 ``def end_call()``
-    Ends the current phone call, and registers it for both ``*character*``s (the caller and the current pov).
+    Ends the current phone call, and registers it for both ``*character*``\s (the caller and the current pov).
     Sets the ``narrator`` back and clears the video call layer.
     The python equivalent of the ``phone end call`` statement.
 
 ``def register_call(char1, char2, duration=None)``
-    Saves a call between the ``*character*``s ``char1`` and ``char2``. If ``duration`` is not ``None``, it's a float, a number of seconds the call lasted. This is called automatically by the ``phone.calls.end_call`` function.
+    Saves a call between the ``*character*``\s ``char1`` and ``char2``. If ``duration`` is not ``None``, it's a float, a number of seconds the call lasted. This is called automatically by the ``phone.calls.end_call`` function.
 
 Statements
 ----------

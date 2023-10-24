@@ -47,7 +47,7 @@ Functions and Variables
 ``months = (...)``
     A tuple containing strings corresponding to the months name (similar to ``calendar.month_name``, it follows normal convention of January being month number 1, so it has a length of 13 and ``months[0]`` is the empty string). The strings are flagged as translatable.
 
-``MONDAY``, ``TUESDAY``, ``WEDNESDAY``, ``THURSDAY``, ``FRIDAY``, ``SATURDAY``, ``SUNDAY`` all represent a week day.
+The constants ``MONDAY``, ``TUESDAY``, ``WEDNESDAY``, ``THURSDAY``, ``FRIDAY``, ``SATURDAY``, ``SUNDAY`` all represent a week day.
 
 ``def get_week_days(first_day=_default_first_day)``
     Returns an generator iterating over the days of the week (that are strings, so ``"Monday"``, ``"Tuesday"``, ``etc...``).

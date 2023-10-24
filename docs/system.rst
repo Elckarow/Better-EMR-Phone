@@ -16,7 +16,7 @@ System
     * ``CELLULAR_DATA`` wifi is off and cellular data is on
 
 ``def get_date()``
-    Returns the date. If the variable ``date`` is ``None``, the date used is the player's.
+    Returns the date. If the variable ``date`` is ``None``, the date used is ``datetime.datetime.now()``.
 
 ``date = None``
     If not ``None``, a ``datetime.datetime`` object.

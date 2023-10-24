@@ -3,6 +3,8 @@ GUI Variables
 
 *Please note that this framework was developed on a 1280x720 project.*
 
+These variables can be found in the ``phone_stuff.rpy`` file.
+
 ``gui.phone_xsize = 389``
     The width available for the phone screens.
 

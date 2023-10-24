@@ -20,19 +20,19 @@ Functions
     The python equivalent of the ``phone end discussion`` statement.
 
 ``def message(sender, message, delay=None)``
-    Sends a message by the ``*character*`` sender to the current group chat. Text tags should not be used.
+    Sends a message by the ``*character*`` ``sender`` to the current group chat. Text tags should not be used.
     Pauses for ``delay`` seconds after the message's been saved.
     The python equivalent of the default discussion statement.
 
 ``def image(sender, image, time=2.0, delay=None)``
-    Sends an image by the ``*character*`` sender to the current group chat. ``time`` is the time the image is being sent for.
+    Sends an image by the ``*character*`` ``sender`` to the current group chat. ``time`` is the time the image is being sent for.
     The python equivalent of the ``image`` discussion statement.
 
 ``def label(label, delay=0.5)``
     Adds a label to the current group chat.
     The python equivalent of the ``label`` discussion statement.
 
-``def date(month, day, year, hour, minute, second, delay=0.5, auto=False):``
+``def date(month, day, year, hour, minute, second, delay=0.5, auto=False)``
     Adds a date as label to the current group chat. The date is saved to the group chat using ``datetime.datetime``. If any of these values are ``None``, they are taken from the currently saved date. If any of these values are ``True``, they are taken from the date returned by ``phone.system.get_date()``. If ``auto`` is true, sets every values to ``True``.
     The python equivalent of the ``time`` discussion statement.
 
@@ -45,7 +45,7 @@ Functions
     The python equivalent of the ``menu`` discussion statement.
 
 ``def audio(sender, audio, time=2.0, delay=None)``
-    Sends an audio by the ``*character*`` sender to the current group chat. ``time`` is the time the audio is being sent for.
+    Sends an audio by the ``*character*`` ``sender`` to the current group chat. ``time`` is the time the audio is being sent for.
 
 ``def register_message(group, sender, text)``
     Saves a message sent by the ``*character*`` ``sender`` in the ``*group chat*`` ``group``.
@@ -135,7 +135,10 @@ The discussion statements
         If the ``in`` clause is given, the substore is created at init 0, unlike the regular ``python`` statement which does it at early time.
     
     * ``pass``
-        Does nothing and waits for user input. Can be used to display the phone screen without actually sending any message.
+        Does nothing.
+    
+    * ``pause``
+        Same as the regular ``pause`` statement.
 
     If no block is given, it behaves as if a single ``pass`` statement was given.
 
@@ -150,7 +153,6 @@ The register statements
     Used to register messages in a group chat.
     It expects a ``*group chat*`` and a block (see the part above).
     It doesn't accept the ``type``, ``menu``, ``$`` nor ``python`` statements, nor the properties related to time (``delay``, ``time``, ``cps`` ...).
-    If the ``pass`` statement is used, does nothing.
 
 ``init phone register``
     Used to register messages in a group chat at init time and / or create a new group chat.
@@ -174,7 +176,7 @@ The register statements
         Expects a dotted name. The group chat will be saved in the global store under this name (as if the group chat was manually created using the ``default`` statement).
 
     * ``transient``
-        Optional. If present, the group chat becomes transient. Transient group chats get cleared once the discussion end.
+        Optional. If present, the group chat becomes transient. Transient group chats are cleared once the discussion is over.
 
 Example
 -------
@@ -213,7 +215,7 @@ Example
         "A message from Sayori?"
 
         phone discussion "mc_sayo": # using the gc's key
-            pass
+            pause
 
         "..."
         "... Really now?"

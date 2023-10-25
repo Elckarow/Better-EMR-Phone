@@ -3,6 +3,11 @@ Incompatible Changes
 
 A list of all changes that may require you to modify some of your code.
 
+3.2.1
+-----
+
+* None
+
 3.2.0
 -----
 

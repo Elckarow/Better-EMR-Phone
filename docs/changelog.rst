@@ -5,6 +5,11 @@ Changelog
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+3.2.1
+-----
+
+* Checks for the correct version before appending to ``config.detached_layers``.
+
 3.2.0
 -----
 

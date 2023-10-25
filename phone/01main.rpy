@@ -2,7 +2,7 @@ python early in phone:
     from renpy import store
     from store import config as renpy_config # phone.config is a substore
 
-    __version__ = (3, 2, 0)
+    __version__ = (3, 2, 1)
     __author__ = "Elckarow#8399" # smh my head my head
 
 init -150 python in phone:
@@ -197,7 +197,7 @@ init 1500:
             raise Exception("store.PhoneReturn is a reserved name. (value is %r)" % store.PhoneReturn)
         store.PhoneReturn = PhoneReturn
 
-        if store.is_renpy_version_or_above(7, 5, 0):
+        if store.is_renpy_version_or_above(7, 6, 0):
             renpy_config.detached_layers.append(config.video_call_layer)
         
         # https://github.com/renpy/renpy/issues/5044

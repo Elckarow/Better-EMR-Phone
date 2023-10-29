@@ -115,7 +115,15 @@ init -100 python in phone.calendar:
             phone._run_on_start(renpy.partial(add_calendar, calendar, key), ("_phone_add_calendar", calendar.month, calendar.year, key))
         else:
             key = character.character(key).key
-            store.phone.data[key]["calendars"].append(calendar)
+
+            if get_calendar(year=calendar.year, month=calendar.month, key=key) is not None:
+                raise Exception("a calendar for the year {} and month {} already exists for the *character* {}" \
+                    .format(calendar.year, calendar.month, key))
+
+            calendars = store.phone.data[key]["calendars"]
+            calendars.append(calendar)
+
+            calendars.sort(key=lambda c: (c.year, c.month))
 
     def add_calendar_to_all_characters(calendar):
         if renpy.is_init_phase():

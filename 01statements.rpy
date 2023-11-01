@@ -946,7 +946,7 @@ python early in phone:
         return _RawPhoneDiscussion(gc, statements)
     
     def _predict_phone_discussion(rd):
-        renpy.predict_screen("phone_message")
+        renpy.predict_screen("phone_discussion")
         return [ ]
     
     def _phone_execute_init(rv):

@@ -17,7 +17,7 @@ init -100 python in phone.character:
             self.key = key
 
             # deprecated
-            self.short_name = short_name
+            self.short_name = name
 
         def get_textbox(self):
             return get_textbox(self.color)

@@ -26,7 +26,7 @@ init -100 python in phone.group_chat:
             self.key = key
 
             # deprecated
-            self.short_name = short_name
+            self.short_name = name
                 
         def add_character(self, char):
             if isinstance(char, list):

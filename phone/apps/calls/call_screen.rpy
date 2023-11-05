@@ -22,7 +22,7 @@ screen _phone_call():
     style_prefix "phone_call"
 
     vbox:
-        text phone.calls._current_caller.name
+        text phone.short_name(phone.calls._current_caller.name, 12)
         add DynamicDisplayable(phone.calls._call_time)
 
     frame:            

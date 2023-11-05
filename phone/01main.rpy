@@ -2,7 +2,7 @@ python early in phone:
     from renpy import store
     from store import config as renpy_config # phone.config is a substore
 
-    __version__ = (3, 2, 1)
+    __version__ = (3, 2, 2)
     __author__ = "Elckarow#8399" # smh my head my head
 
 init -150 python in phone:
@@ -26,7 +26,7 @@ init -150 python in phone:
     
     import time
     def format_time(hour, minute):
-        return time.strftime(__(config.time_format), time.struct_time((1, 1, 1, hour, minute, 0, 1, 0, 0)))
+        return time.strftime(__(config.time_format), time.gmtime(hour * 3600 + minute * 60))
 
 transform -150 _fits(size):
     subpixel True xysize (size, size) fit "contain"
@@ -115,6 +115,13 @@ init -100 python in phone:
             at_list = [at_list]
         
         renpy.show_layer_at(at_list=at_list, layer=layer, camera=camera, reset=reset)
+    
+    def short_name(s, length):
+        s = __(s)
+        if len(s) > length:
+            s = s[:length - 3] + "..."
+        
+        return s
 
 default -100 phone._stack_depth = 0
 default -100 phone._current_screen = None

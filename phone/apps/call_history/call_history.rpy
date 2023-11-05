@@ -35,7 +35,7 @@ screen phone_call_history():
 
                                         fixed:
                                             hbox style "empty" yalign 0.2 spacing 10:
-                                                text char.short_name 
+                                                text phone.short_name(char.name, 26) 
                                                 if entry.duration is not None:
                                                     text "-"
                                                     text entry._duration_to_str()

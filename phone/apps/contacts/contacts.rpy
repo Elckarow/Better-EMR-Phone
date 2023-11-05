@@ -34,21 +34,20 @@ screen phone_contacts():
                                         PhoneMenu("phone_discussion")
                                     )
 
-                                    $ sender, message = group_chat._get_display_last_message()
-
                                     hbox:
                                         add group_chat.icon at _fits(46) yalign 0.5
 
                                         fixed:
-                                            text message yalign 0.2:
+                                            text phone.short_name(group_chat.name, 26) yalign 0.2:
                                                 if group_chat.unread:
                                                     color "#000"
-                                                
-                                            text _("The [group_chat._date_text] at [group_chat._hour_text]"):
-                                                style "phone_contacts_date_text" yalign 1.0
 
-                                    if sender is not None:
-                                        text sender.short_name style "phone_contacts_date_text" align (1.0, 1.0)
+                                            text (
+                                                _("The [group_chat._date_text] at [group_chat._hour_text]")
+                                                if group_chat.number_of_messages != 0
+                                                else _("Empty group chat")
+                                            ):
+                                                style "phone_contacts_date_text" yalign 1.0
 
 style phone_contacts_side is empty:
     xfill True

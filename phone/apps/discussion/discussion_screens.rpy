@@ -6,7 +6,7 @@ screen phone_discussion():
 
                 hbox:
                     add phone.discussion._group_chat.icon at _fits(36) yalign 0.5
-                    text phone.discussion._group_chat.short_name
+                    text phone.short_name(phone.discussion._group_chat.name, 9)
 
             use _chat_textbox()
             use _chat_messages()

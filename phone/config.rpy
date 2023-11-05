@@ -48,8 +48,14 @@ python early in phone.config:
     # A dictionary mapping screen names to transforms or lists of transforms.
     # When a phone screen is shown, the screen name is looked up in the map (None is used if not found),
     # and the layer "master" is shown at those transforms.
-    layer_at_transforms = { }
-    # `None` is set later
+    layer_at_transforms = {
+        None: Transform(matrixcolor=renpy.display.matrix.Matrix([1, 0, 0, -0.03, # BrightnessMatrix(-0.03)
+                                                                0, 1, 0, -0.03,
+                                                                0, 0, 1, -0.03,
+                                                                0, 0, 0, 1]),
+                        blur=2
+                )
+    }
 
     # How many "pages" of application we use in the `phone` screen.
     applications_pages = 4
@@ -110,7 +116,15 @@ python early in phone.config:
         "ysize": 1.0,
         "fit": "contain"
     }
+    
+    # How many messages we display at the same time.
+    messages_displayed = 100
 
-init -1400 python in phone.config:
-    from store import BrightnessMatrix
-    layer_at_transforms[None] = Transform(matrixcolor=BrightnessMatrix(-0.03), blur=5)
+    # If the next "load" of messages contains this many or less messages, add those messages to the current load.
+    messages_fill_if_lower = 30
+
+    # A number of seconds added to the pause before each message.
+    message_delay = 0.6
+
+python early: # prevent "default"
+    config.special_namespaces["store.phone.config"] = type(config.special_namespaces["store.config"])(phone.config, "phone.config")

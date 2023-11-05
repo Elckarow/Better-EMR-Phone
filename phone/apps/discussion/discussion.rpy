@@ -30,6 +30,8 @@ init -100 python in phone.discussion:
         _group_chat = gc
         _group_chat.unread = False
 
+        _yadjustment.value = float("inf")
+
         set_current_screen("phone_discussion")
         show_layer_at("phone_discussion")
         renpy.show_screen("phone_discussion")

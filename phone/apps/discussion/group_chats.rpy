@@ -1,16 +1,8 @@
 init -100 python in phone.group_chat:
-    from renpy import store
-    from store import __, phone
+    from renpy.store import store, phone
     import datetime
 
-    # The max lenght of a *group chat*'s name shortened.
-    short_name_length = 9
-
-    # How many messages we display at the same time.
-    messages_displayed = 175
-
-    # If the next "load" of messages contains this many or less messages, add those messages to the current load.
-    messages_fill_if_lower = 15
+    config = phone.config
 
     class GroupChat(object):    
         transient = False
@@ -32,16 +24,10 @@ init -100 python in phone.group_chat:
             
             if key is None: raise ValueError("key may not be 'None'")
             self.key = key
-        
-        @property
-        def short_name(self):
-            global short_name_length
-            name = __(self.name)
-            if len(name) > short_name_length:
-                name = name[:short_name_length - 3] + "..."
-            
-            return name
-        
+
+            # deprecated
+            self.short_name = short_name
+                
         def add_character(self, char):
             if isinstance(char, list):
                 for c in char:
@@ -82,64 +68,21 @@ init -100 python in phone.group_chat:
         
         def _can_load_more(self):
             if not self._payloads: return False         
-            return next(self._get_messages()) is not self._payloads[0]
-        
-        def _get_display_last_message(self):
-            italic = True
-
-            if not self._payloads:
-                sender = None
-                message = __("Empty group chat")
-            
-            else:
-                p = self._payloads[-1]
-
-                sender = p.source
-                if sender is not None: sender = character(sender)
-
-                _type = p.type
-
-                if _type == _PayloadTypes.TEXT:
-                    message = renpy.substitute(p.data)
-                    italic = False
-
-                elif _type == _PayloadTypes.IMAGE:
-                    message = __("Image sent")
-                
-                elif _type == _PayloadTypes.LABEL:
-                    message = renpy.substitute(p.data)
-                
-                elif _type == _PayloadTypes.DATE:
-                    message = p.data
-                
-                elif _type == _PayloadTypes.AUDIO:
-                    message = __("Audio sent")
-                
-                elif _type == _PayloadTypes.VIDEO:
-                    message = __("Video sent")
-
-            message = remove_text_tags(message)
-
-            LIMIT = 27
-            if len(message) >= LIMIT:
-                message = message[:LIMIT - 3] + "..."
-            
-            if italic:
-                message = "{i}" + message + "{/i}"
-            
-            return (sender, message)
+            return self._get_messages()[0] is not self._payloads[0]
         
         def _get_messages(self):
-            global messages_displayed
+            messages_displayed = config.messages_displayed
+
             min_x = self._page * messages_displayed
             max_x = min_x + messages_displayed
 
-            global messages_fill_if_lower
-            remaining = len(self._payloads) - max_x
-            if remaining <= messages_fill_if_lower:
+            l = len(self._payloads)
+
+            remaining = l - max_x
+            if remaining <= config.messages_fill_if_lower:
                 max_x += remaining
 
-            return reversed(self._payloads[::-1][min_x:max_x])
+            return self._payloads[l-max_x:l-min_x]
         
         @property
         def _date_text(self):

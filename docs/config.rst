@@ -95,3 +95,12 @@ Configuration Variables
 
 ``video_call_layer_transform_properties = {...}``
     A dict of transform properties applied to the ``Layer`` displayable (not the layer itself) used during a video call. The default dict centers the displayable and makes it fit the phone vertically.
+
+``messages_displayed = 100``
+    How many messages we display at the same time.
+
+``messages_fill_if_lower = 30``
+    If the next "load" of messages contains this many or less messages, add those messages to the current load.
+    
+``message_delay = 0.6``
+    A number of seconds added to the pause before each message.

@@ -35,19 +35,18 @@ init -100 python in phone.character:
         
     def character(x):
         if isinstance(x, Character): return x
-        global _characters
         if x is None: x = store.pov_key
+        if not has_character(x):
+            raise KeyError("nno phone Character with the key %r exists (check your definitions)" % x)
         return _characters[x]
     
     def has_character(key):
-        global _characters
         return key in _characters
     
     def get_textbox(color):
         return RoundedFrame(color, radius=config.textbox_radius)
 
     def get_all():
-        global _characters
         return list(_characters.values())
 
 default phone.character._characters = { }

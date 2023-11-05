@@ -5,6 +5,14 @@ Changelog
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+3.2.2
+-----
+
+* ``GroupChat.short_name`` and ``Character.short_name`` are now deprecated. See the new ``phone.short_name`` function.
+* Reworked a bit the ``phone_contacts`` screen.
+* Reset the yadjustment when starting a phone discussion.
+* 3 new phone config variables.
+
 3.2.1
 -----
 

@@ -15,6 +15,9 @@ Utility Functions
 ``def show_layer_at(at_list, layer="master", camera=True, reset=False)``
     A wrapper around ``renpy.show_layer_at``. If ``at_list`` is a string (or ``None``), it is looked up in ``phone.config.layer_at_transform``. The transform or list of transforms is then passed to ``renpy.show_layer_at`` along with the other parameters.
 
+``def short_name(s, length)``
+    Shortens the string ``s`` after translating it. The string is sliced to ``length - 3`` and ``"..."`` is appended to it.
+
 ``data = {...}``
     The dictionnary that's storing all of the phone's in-game data. Each ``*character*`` has an entry (their key) in this dict and will return another dictionnary as described in ``phone.config.data``.
 

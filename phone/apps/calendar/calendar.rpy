@@ -152,6 +152,7 @@ screen phone_calendars():
     default m = len(calendars) - 1
     default n = m
     default selected_entry = None
+    default yadj = ui.adjustment()
 
     $ calendar = calendars[n]
 
@@ -193,6 +194,7 @@ screen phone_calendars():
                                     SetScreenVariable("selected_entry", entry),
                                     SetScreenVariable("selected_entry", None)
                                 ),
+                                Function(yadj.change, 0),
                                 SelectedIf(selected_entry is entry)
                             )
                                 
@@ -219,6 +221,7 @@ screen phone_calendars():
 
                     viewport:
                         draggable True mousewheel True
+                        yadjustment yadj
 
                         if selected_entry is not None:
                             if selected_entry.description is not None:

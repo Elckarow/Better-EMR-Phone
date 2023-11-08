@@ -10,7 +10,7 @@ screen phone_call(video=False):
     use _phone(xpos=gui.phone_call_xpos, xanchor=0.0):
         add Solid("#302D29")
 
-        if video and is_renpy_version_or_above(7, 5, 0): # _phone_video_call uses the `Layer` displayable
+        if video and is_renpy_version_or_above(7, 6, 0): # _phone_video_call uses the `Layer` displayable
             use _phone_video_call()
         else:
             use _phone_call()

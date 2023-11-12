@@ -181,8 +181,8 @@ screen _chat_messages():
                                     text p.data alt ""
                                 else:
                                     # Only self-voice the last message sent
-                                    $ sender = __(sender.name)
-                                    text p.data alt sender + ": " + p.data
+                                    $ sender_name = __(sender.name)
+                                    text p.data alt sender_name + ": " + p.data
 
                         elif p.type == phone.discussion._PayloadTypes.IMAGE:
                             use _chat_message(p):

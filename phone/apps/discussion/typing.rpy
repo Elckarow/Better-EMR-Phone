@@ -28,10 +28,12 @@ style phone_typing_frame is phone_messages_frame:
     background phone.character.get_textbox("#f2f2f2")
 
 style phone_typing_text is phone_messages_text:
+    alt ""
     color "#000"
     font "DejaVuSans.ttf"
 
 style phone_typing_istyping is empty:
+    alt ""
     color "#626262"
     outlines [ ]
     size 16

@@ -22,8 +22,8 @@ screen _phone_call():
     style_prefix "phone_call"
 
     vbox:
-        text phone.short_name(phone.calls._current_caller.name, 12)
-        add DynamicDisplayable(phone.calls._call_time)
+        text phone.short_name(phone.calls._current_caller.name, 12) alt ""
+        add DynamicDisplayable(phone.calls._call_time) alt ""
 
     frame:            
         add phone.calls._current_caller.icon at _fits(None)
@@ -70,8 +70,8 @@ screen _phone_video_call():
         at Transform(**phone.config.video_call_layer_transform_properties)
     
     vbox:
-        text _("Facetime - [phone.calls._current_caller.name!t]")
-        add DynamicDisplayable(phone.calls._call_time)
+        text _("Facetime - [phone.calls._current_caller.name!t]") alt ""
+        add DynamicDisplayable(phone.calls._call_time) alt ""
     
     use phone_quick_menu_video()
 

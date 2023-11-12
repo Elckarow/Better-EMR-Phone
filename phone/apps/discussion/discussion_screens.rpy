@@ -6,7 +6,7 @@ screen phone_discussion():
 
                 hbox:
                     add phone.discussion._group_chat.icon at _fits(36) yalign 0.5
-                    text phone.short_name(phone.discussion._group_chat.name, 9)
+                    text phone.short_name(phone.discussion._group_chat.name, 9) alt ""
 
             use _chat_textbox()
             use _chat_messages()
@@ -78,12 +78,12 @@ screen _chat_textbox():
                                         None
                                     )
                 else:
-                    text _("Type a message.") color "#666"
+                    text _("Type a message.") color "#666" alt ""
                 # ugly ahh
             else:
-                text _("Type a message.") color "#666"
+                text _("Type a message.") color "#666" alt ""
 
-            text _("Send") color "#0094FF" xalign 1.0
+            text _("Send") color "#0094FF" xalign 1.0 alt ""
             
 
 style phone_textbox_frame is empty:
@@ -176,7 +176,13 @@ screen _chat_messages():
 
                         if p.type == phone.discussion._PayloadTypes.TEXT:                        
                             use _chat_message(p):
-                                text p.data
+                                # If this is not the last message or if something's been said rn don't self-voice it
+                                if i != phone.discussion._group_chat.number_of_messages-1 or renpy.get_screen("say"):
+                                    text p.data alt ""
+                                else:
+                                    # Only self-voice the last message sent
+                                    $ sender = __(phone.character.character(p.source).short_name)
+                                    text p.data alt sender + ": " + p.data
 
                         elif p.type == phone.discussion._PayloadTypes.IMAGE:
                             use _chat_message(p):

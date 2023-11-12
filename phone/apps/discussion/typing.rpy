@@ -19,7 +19,7 @@ screen _phone_message_typing(sender):
                 text "⚫" at _phone_message_typing(0.2)
                 text "⚫" at _phone_message_typing(0.4)
         
-        text _("[sender.short_name!t] is typing...") style "phone_typing_istyping" yalign 0.5
+        text __("{short_name} is typing...").format(short_name=phone.short_name(sender.name, 9)) style "phone_typing_istyping" yalign 0.5
 
 style phone_typing_hbox is empty:
     spacing 3

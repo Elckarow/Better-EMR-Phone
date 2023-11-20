@@ -17,9 +17,9 @@ init 100 python in phone.application:
     add_app_to_all_characters(calendar_app)
 
 init 100 python in phone.calendar:
-    june_2023_calendar = Calendar(6, 2023, MONDAY)
-    add_calendar_to_all_characters(june_2023_calendar)
-    june_2023_calendar[30].description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus libero vel ligula dictum eleifend. Fusce pellentesque, lacus a venenatis bibendum, neque lacus pretium arcu, eu porttitor nunc neque ut justo. Cras ornare semper ligula, non sodales nibh tincidunt sit amet. Cras ornare, ligula id pulvinar bibendum, sem lacus malesuada augue, lobortis lobortis lorem nisl eget ante. Morbi turpis purus, semper sed semper sed, pretium vel lectus. Mauris quis ipsum id eros scelerisque pellentesque eu a quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam justo odio, vehicula ut tellus vitae, consequat commodo tellus. Curabitur blandit lorem sed nulla tempor, viverra malesuada felis finibus. Sed imperdiet ultricies mi et aliquet. Donec facilisis eget augue eu finibus."
+    add_calendar_to_all_characters(2023, 6, MONDAY)
+    mc_june_2023_calendar = get_calendar(2023, 6)
+    mc_june_2023_calendar[30].description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus libero vel ligula dictum eleifend. Fusce pellentesque, lacus a venenatis bibendum, neque lacus pretium arcu, eu porttitor nunc neque ut justo. Cras ornare semper ligula, non sodales nibh tincidunt sit amet. Cras ornare, ligula id pulvinar bibendum, sem lacus malesuada augue, lobortis lobortis lorem nisl eget ante. Morbi turpis purus, semper sed semper sed, pretium vel lectus. Mauris quis ipsum id eros scelerisque pellentesque eu a quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam justo odio, vehicula ut tellus vitae, consequat commodo tellus. Curabitur blandit lorem sed nulla tempor, viverra malesuada felis finibus. Sed imperdiet ultricies mi et aliquet. Donec facilisis eget augue eu finibus."
 
 init phone register:
     define "Welcome":

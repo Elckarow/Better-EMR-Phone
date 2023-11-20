@@ -110,33 +110,27 @@ init -100 python in phone.calendar:
     def day_name(year, month, day):
         return days[calendar.weekday(year, month, day)]
     
-    def add_calendar(calendar, key=None):
+    def add_calendar(year, month, key=None, first_day=SUNDAY):
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_calendar, calendar, key), ("_phone_add_calendar", calendar.month, calendar.year, key))
+            phone._run_on_start(renpy.partial(add_calendar, year=year, month=month, key=key, first_day=first_day), ("_phone_add_calendar", month, year, key))
         else:
             key = character.character(key).key
 
-            if get_calendar(year=calendar.year, month=calendar.month, key=key) is not None:
+            if get_calendar(year=year, month=month, key=key) is not None:
                 raise Exception("a calendar for the year {} and month {} already exists for the *character* {}" \
-                    .format(calendar.year, calendar.month, key))
+                    .format(year, month, key))
 
             calendars = store.phone.data[key]["calendars"]
-            calendars.append(calendar)
+            calendars.append(Calendar(year=year, month=month, first_day=first_day))
 
             calendars.sort(key=lambda c: (c.year, c.month))
 
-    def add_calendar_to_all_characters(calendar):
+    def add_calendar_to_all_characters(year, month, first_day=SUNDAY):
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_calendar_to_all_characters, calendar), ("_phone_add_calendar", calendar.month, calendar.year))
+            phone._run_on_start(renpy.partial(add_calendar_to_all_characters, year=year, month=month, first_day=first_day), ("_phone_add_calendar", month, year))
         else:
-            l = calendar.lenght(False)
-
             for key in character._characters:
-                _calendar = Calendar(calendar.month, calendar.year, calendar.firstweekday)
-                for i in range(l):
-                    _calendar[i].description = calendar[i].description
-                
-                add_calendar(_calendar, key)
+                add_calendar(year=year, month=month, first_day=first_day, key=key)
 
     _calendar_button_background = At(config.basedir + "circle.png", store._fits(None))
 

@@ -55,11 +55,11 @@ The constants ``MONDAY``, ``TUESDAY``, ``WEDNESDAY``, ``THURSDAY``, ``FRIDAY``, 
 ``def day_name(year, month, day)``
     Returns the day name of the corresponding date.
 
-``def add_calendar(calendar, key=None)``
-    Adds the ``phone.calendar.Calendar`` ``calendar`` to the list of calendars for the ``*character*`` ``key``.
+``def add_calendar(year, month, key=None, first_day=SUNDDAY)``
+    Creates and adds a calendar to the list of calendars for the ``*character*`` ``key``.
 
-``def add_calendar_to_all_characters(calendar)``
-    Same as above but for every ``*character*`` known at execution time. A copy of the calendar passed is used each time. The original calendar isn't added anywhere.
+``def add_calendar_to_all_characters(year, month, first_day=SUNDAY)``
+    Same as above but for every ``*character*`` known at execution time.
 
 ``def get_calendar(year, month, key=None)``
     Returns the calendar for the ``*character*`` ``key`` that has the corresponding year and month number. ``None`` is returned if no such calendar was found.

@@ -12,6 +12,7 @@ A list of all the changes throughout the versions, starting from 3.0.0.
 * Reworked a bit the ``phone_contacts`` screen.
 * Reset the yadjustment when starting a phone discussion.
 * 3 new phone config variables.
+* Fixed an issue where changes applied to a calendar would persist when going back to the main menu.
 
 3.2.1
 -----

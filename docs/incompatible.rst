@@ -6,7 +6,8 @@ A list of all changes that may require you to modify some of your code.
 3.2.2
 -----
 
-* The ``phone.config`` namespace now behaves the same way as renpy's ``config``. The ``default`` statement cannot be used to declare a variable.
+* The ``phone.config`` namespace now behaves the same way as renpy's ``config``. The ``default`` statement cannot be used to declare a variable in this namespace.
+* The ``phone.calendar.add_calendar`` and ``phone.calendar.add_calendar_to_all_characters`` functions have had their signature changed.
 
 3.2.1
 -----

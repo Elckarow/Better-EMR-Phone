@@ -40,11 +40,10 @@ init -100 python in phone.discussion:
         store._window_auto = True
     
     def end_discussion():
-        store._window_hide()
-
         global _group_chat
-        if _group_chat is None:
-            raise Exception("ending discussion, but no discussion ever started")
+        if _group_chat is None: return
+
+        store._window_hide()
             
         for key in _group_chat._characters:
             sort_messages(key)

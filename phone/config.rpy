@@ -126,5 +126,9 @@ python early in phone.config:
     # A number of seconds added to the pause before each message.
     message_delay = 0.6
 
+    # An index. The default calendar used when the `phone_calendars` screen is shown.
+    # If `True`, tries to retrieve the calendar that's in concordance to `phone.system.get_date()`.
+    default_calendar_index = -1
+
 python early: # prevent "default"
     config.special_namespaces["store.phone.config"] = type(config.special_namespaces["store.config"])(phone.config, "phone.config")

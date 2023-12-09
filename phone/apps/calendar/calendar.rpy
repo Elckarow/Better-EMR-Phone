@@ -141,10 +141,29 @@ init -100 python in phone.calendar:
                 return calendar
         return None
 
+    def _calendar_default_index(m):
+        n = config.default_calendar_index
+
+        if n is True:
+            pov_key = store.pov_key
+            date = system.get_date()
+
+            c = get_calendar(year=date.year, month=date.month, key=pov_key)
+
+            if c is None:
+                raise Exception("no calendar with the year {} and month {} exists for the *character* {}".format(year, month, pov_key))
+
+            n = phone.data[pov_key]["calendars"].index(c)
+
+        elif n < 0:
+            n = m - n
+        
+        return n
+
 screen phone_calendars():
     default calendars = phone.data[pov_key]["calendars"]
     default m = len(calendars) - 1
-    default n = m
+    default n = phone.calendar._calendar_default_index(m + 1)
     default selected_entry = None
     default yadj = ui.adjustment()
 

@@ -117,7 +117,7 @@ init -100 python in phone:
         renpy.show_layer_at(at_list=at_list, layer=layer, camera=camera, reset=reset)
     
     def short_name(s, length):
-        s = __(s)
+        s = renpy.substitute(s)
         if len(s) > length:
             s = s[:length - 3] + "..."
         

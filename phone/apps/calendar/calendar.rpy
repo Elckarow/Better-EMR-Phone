@@ -156,8 +156,8 @@ init -100 python in phone.calendar:
             n = phone.data[pov_key]["calendars"].index(c)
 
         elif n < 0:
-            n = m - n
-        
+            n = m + n
+                
         return n
 
 screen phone_calendars():
@@ -228,7 +228,7 @@ screen phone_calendars():
                 text _("[calendar.month_name]-[calendar.year]") size 25 xalign 0.5 text_align 0.5
                 textbutton ">" action If(n != m, (SetScreenVariable("n", n + 1), SetScreenVariable("selected_entry", None)))
             
-            frame:
+            frame at CurriedRoundedCorners(radius=(0, 25, 0, 25)):
                 vbox spacing 3 at Flatten:
                     text _("Notes:") size 22
 
@@ -278,7 +278,7 @@ style phone_calendar_notes_button_text is phone_calendar_notes_text:
     size 21
 
 style phone_calendar_notes_frame is empty:
-    background RoundedFrame("#e0e0e0", radius=(0, 25, 0, 25))
+    background "#e0e0e0"
     padding (13, 7, 13, 0)
     xfill True ysize 180
 

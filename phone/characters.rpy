@@ -1,5 +1,5 @@
 init -100 python in phone.character:
-    from renpy.store import store, Color, __, RoundedFrame, phone
+    from renpy.store import store, Color, __, RoundedCorners, phone
     from store.phone import config
 
     class Character(object):
@@ -44,7 +44,7 @@ init -100 python in phone.character:
         return key in _characters
     
     def get_textbox(color):
-        return RoundedFrame(color, radius=config.textbox_radius)
+        return RoundedCorners(color, radius=config.textbox_radius)
 
     def get_all():
         return list(_characters.values())

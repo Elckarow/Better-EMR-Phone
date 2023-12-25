@@ -209,13 +209,15 @@ screen _chat_messages():
                                 null height gui.phone_message_label_null_height
                             
                             for i, caption in enumerate(phone.discussion._current_payload.data):
-                                textbutton caption:
-                                    style_prefix "phone_messages_choice"
-                                    action Return(caption)
-                                    at transform:
+                                frame style "empty":
+                                    at transform: # support for versions that can't have `at` and `at transform` at the same time
                                         subpixel True alpha 0.0 xoffset -20 xalign 1.0
                                         i / 9
                                         ease_quad 0.35 alpha 1.0 xoffset 0
+
+                                    textbutton caption at CurriedRoundedCorners(radius=phone.config.textbox_radius):
+                                        style_prefix "phone_messages_choice"
+                                        action Return(caption)
                                                 
                         else:
                             $ sender = phone.character.character(phone.discussion._current_payload.source)
@@ -303,8 +305,8 @@ style phone_messages_text_label is phone_messages_text:
     xsize 0.8
 
 style phone_messages_choice_button is phone_messages_frame:
-    background RoundedFrame(Solid("#eeeeee"), radius=phone.config.textbox_radius, outline_width=2.0, outline_color="#9b9b9b")
-    hover_background RoundedFrame(Solid("#b4b4b4"), radius=phone.config.textbox_radius, outline_width=2.0, outline_color="#4d4d4d")
+    background "#eeeeee"
+    hover_background "#b4b4b4"
     padding (12, 8)
 
 style phone_messages_choice_button_text is phone_messages_text:

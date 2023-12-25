@@ -25,7 +25,7 @@ init -200:
     define gui.phone_control_center_spacing = 10
     define gui.phone_control_center_block_size = 70
     define gui.phone_control_center_block_scaling_factor = 0.75
-    define gui.phone_control_center_block_rounded_corners_radius = 20
+    define gui.phone_control_center_block_rounded_corners_radius = 22
 
 python early:
     import collections, pygame_sdl2 as pygame
@@ -81,42 +81,24 @@ python early:
         b = a * col[2] / 255.0        
         return (r, g, b, a)
 
-    # RoundedFrame by pseurae
-    # https://gist.github.com/Pseurae/661e6084f756fc917b2889a386b16664
-    # modified by yours truly (i don't know shit about OpenGL)
-    class RoundedFrame(renpy.display.image.Frame):
-        def __init__(self, image, *args, **kwargs):
-            radius = kwargs.pop("radius", 0.0)
-            outline_width = kwargs.pop("outline_width", 0.0)
-            outline_color = kwargs.pop("outline_color", "#fff")
+    _rounded_corners_relative = {
+        None: 0.0,
+        "min": 1.0,
+        "max": 2.0,
+        "width": 3.0,
+        "height": 4.0,
+    }
+    def RoundedCorners(child, radius, relative=None, **kwargs):
+        if not isinstance(radius, tuple): radius = (radius,) * 4
+        relative = _rounded_corners_relative[relative]
 
-            super(RoundedFrame, self).__init__(image, *args, **kwargs)
-            
-            if not isinstance(radius, tuple): radius = (radius,) * 4
-            self.radius = radius    
+        return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, style=Style(None, kwargs))
 
-            self.outline_width = outline_width
-            self.outline_color = normalize_color(Color(outline_color))
-
-        def render(self, w, h, st, at):
-            rv = super(RoundedFrame, self).render(w, h, st, at)
-
-            if self.radius:
-                rv.mesh = True
-                rv.add_property("gl_pixel_perfect", True)
-                rv.add_property("gl_mipmap", False)
-                rv.add_property("texture_scaling", "nearest")
-                rv.add_shader("shader.rounded_corners")
-                rv.add_uniform("u_radius", self.radius)
-                rv.add_uniform("u_outline_width", self.outline_width)
-                rv.add_uniform("u_outline_color", self.outline_color)
-
-            return rv
+    CurriedRoundedCorners =  renpy.curry(RoundedCorners)
 
     renpy.register_shader("shader.rounded_corners", variables="""
         uniform vec4 u_radius;
-        uniform float u_outline_width;
-        uniform vec4 u_outline_color;
+        uniform float u_relative;
         uniform sampler2D tex0;
         attribute vec2 a_tex_coord;
         varying vec2 v_tex_coord;
@@ -125,35 +107,42 @@ python early:
     """, vertex_200="""
         v_tex_coord = a_tex_coord;
     """, fragment_functions="""
-        // https://www.iquilezles.org/www/articles/distfunctions/distfunctions2d.htm
-        float rounded_rectangle(in vec2 p, in vec2 b, in vec4 r) {
-            r.xy = (p.x > 0.0) ? r.xy : r.zw;
-            r.x  = (p.y > 0.0) ? r.x  : r.y;
-            vec2 q = abs(p) - b + r.x;
-            return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r.x;
+        float rounded_rectangle(vec2 p, vec2 b, float r) {
+            return length(max(abs(p) - b + r, 0.0)) - r;
+        }
+
+        float get_radius(vec2 uv_minus_center, vec4 radius) {
+            vec2 xy =      (uv_minus_center.x > 0.0) ? radius.xy : radius.zw;
+            float r = (uv_minus_center.y > 0.0) ? xy.x : xy.y;
+            return r;
         }
     """, fragment_200="""
         vec2 center = u_model_size.xy / 2.0;
         vec2 uv = (v_tex_coord.xy * u_model_size.xy);
-        vec4 color = texture2D(tex0, v_tex_coord);
 
-        if (u_outline_width > 0.0) {
-            vec2 center_outline = center - u_outline_width;
+        vec2 uv_minus_center = uv - center;
+        float radius = get_radius(uv_minus_center, u_radius);
 
-            float crop1 = rounded_rectangle(uv - center, center, vec4(u_radius));
-            float crop2 = rounded_rectangle(uv - center, center_outline, vec4(u_radius - u_outline_width));
+        if (u_relative != 0.0) {
+            float side_size;
+            if (u_relative == 1.0) {
+                side_size = u_model_size.x;
+            } else if (u_relative == 2.0) {
+                side_size = u_model_size.y;
+            } else if (u_relative == 3.0) {
+                side_size = min(u_model_size.x, u_model_size.y);
+            } else {
+                side_size = max(u_model_size.x, u_model_size.y);
+            }
 
-            float coeff1 = smoothstep(1.0, -1.0, crop1);
-            float coeff2 = smoothstep(1.0, -1.0, crop2);
-
-            float outline_coeff = (coeff1 - coeff2);
-
-            gl_FragColor = mix(vec4(0.0), mix(color, u_outline_color, outline_coeff), coeff1);
-        } 
-        else {
-            float crop = rounded_rectangle(uv - center, center, vec4(u_radius));
-            gl_FragColor = mix(vec4(0.0), color, smoothstep(1.0, 0.0, crop));
+            radius *= side_size;
         }
+
+        float crop = rounded_rectangle(uv_minus_center, center, radius);
+
+        vec4 color = texture2D(tex0, v_tex_coord);
+        gl_FragColor = mix(color, vec4(0.0), smoothstep(0.0, 1.0, crop));
+
     """)
 
     # taken from

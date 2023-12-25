@@ -1,13 +1,13 @@
 init -100 python in phone.application:
     from renpy import store
     from store import (
-        Gradient, RoundedFrame, Transform,
+        Gradient, RoundedCorners, Transform,
         Text, phone, NullAction, Fixed, gui, Null, Flatten
     )
     from store.phone import config
 
     def IconBackground(d, **kwargs):
-        return RoundedFrame(
+        return RoundedCorners(
             d, radius=gui.phone_application_rounded_corners_radius,
             xysize=(gui.phone_application_icon_size, gui.phone_application_icon_size),
             **kwargs

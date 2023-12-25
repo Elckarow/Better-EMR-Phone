@@ -297,7 +297,7 @@ screen _phone_status_bar():
                                     padding (30, 30) hover_background None
 
 screen _phone_control_center_block(cols=1, rows=1, layout="empty"):
-    frame at Flatten:
+    frame at (CurriedRoundedCorners(radius=gui.phone_control_center_block_rounded_corners_radius), Flatten):
         # https://github.com/renpy/renpy/issues/4666
         if is_renpy_version_or_above(7, 6, 1):
             xysize (
@@ -371,7 +371,7 @@ style _phone_control_center_hbox is empty:
 style _phone_control_center_vbox is empty:
     spacing gui.phone_control_center_spacing
 
-image _phone_control_center_bar = RoundedFrame("#fafafa", radius=gui.phone_control_center_block_rounded_corners_radius, outline_color="#f7f7f7d8", outline_width=1)
+image _phone_control_center_bar = "#fafafa"
 
 style _phone_control_center_bar is empty:
     left_bar "_phone_control_center_bar"
@@ -389,7 +389,7 @@ style _phone_control_center_button is empty:
 
 style _phone_control_center_block_frame is empty:
     modal True
-    background RoundedFrame("#000000d0", radius=gui.phone_control_center_block_rounded_corners_radius, outline_color="#00000093", outline_width=1)
+    background "#000000d0"
 
 style _phone_control_center_block_base_box is empty:
     spacing int(gui.phone_control_center_spacing + (gui.phone_control_center_block_size * (1.0 - gui.phone_control_center_block_scaling_factor) * 0.5))

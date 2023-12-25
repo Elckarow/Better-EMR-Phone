@@ -113,7 +113,7 @@ python early:
         }
 
         float get_radius(vec2 uv_minus_center, vec4 radius) {
-            vec2 xy =      (uv_minus_center.x > 0.0) ? radius.xy : radius.zw;
+            vec2 xy = (uv_minus_center.x > 0.0) ? radius.xy : radius.zw;
             float r = (uv_minus_center.y > 0.0) ? xy.x : xy.y;
             return r;
         }

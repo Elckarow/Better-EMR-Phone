@@ -49,7 +49,7 @@ If you want your app to appear on the ``phone`` screen, you need to create a ``p
     Retuns a ``phone.application.IconBackground`` object with a ``Gradient`` as displayable.
 
 ``def IconBackground(d, **kwargs)``
-    Returns a ``RoundedFrame`` of ``d`` of size ``gui.phone_application_icon_size``.
+    Returns ``d`` with rounded corners of size ``gui.phone_application_icon_size``.
 
 Example
 -------

@@ -26,7 +26,7 @@ The phone ``Character`` class
 Once the object has been created, the ``name``, ``icon`` and ``cps`` fields can be safely changed. The ``key`` and ``color`` fields are read-only.
 
 ``def get_textbox(self)``
-    Returns a ``RoundedFrame`` of the character's color and the radius given by ``phone.config.textbox_radius``.
+    Returns a solid with rounded corners of the character's color and the radius given by ``phone.config.textbox_radius``.
 
 ``def is_pov(self)`` *(property)*
     Returns whether the character's key is equal to the store variable ``store.pov_key``.
@@ -48,7 +48,7 @@ Functions
     Returns true if there is a phone ``Character`` with the key ``key``, or fals if there is not.
 
 ``def get_textbox(color)``
-    Returns a ``RoundedFrame`` with the of the color ``color`` and the radius given by ``phone.config.textbox_radius``.
+    Returns a solid with rounded corners of color ``color`` and the radius given by ``phone.config.textbox_radius``.
 
 ``def get_all()``
     Returns a list of all phone ``Character`` objects defined.

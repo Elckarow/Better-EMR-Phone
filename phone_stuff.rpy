@@ -92,7 +92,7 @@ python early:
         if not isinstance(radius, tuple): radius = (radius,) * 4
         relative = _rounded_corners_relative[relative]
 
-        return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, style=Style(None, kwargs))
+        return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, **kwargs)
 
     CurriedRoundedCorners =  renpy.curry(RoundedCorners)
 

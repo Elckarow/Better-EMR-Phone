@@ -88,13 +88,14 @@ python early:
         "width": 3.0,
         "height": 4.0,
     }
+
     def RoundedCorners(child, radius, relative=None, **kwargs):
         if not isinstance(radius, tuple): radius = (radius,) * 4
         relative = _rounded_corners_relative[relative]
 
         return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, **kwargs)
 
-    CurriedRoundedCorners =  renpy.curry(RoundedCorners)
+    CurriedRoundedCorners = renpy.curry(RoundedCorners)
 
     renpy.register_shader("shader.rounded_corners", variables="""
         uniform vec4 u_radius;

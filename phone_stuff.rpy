@@ -103,7 +103,6 @@ python early:
         uniform sampler2D tex0;
         attribute vec2 a_tex_coord;
         varying vec2 v_tex_coord;
-        uniform vec2 res0;
         uniform vec2 u_model_size;
     """, vertex_200="""
         v_tex_coord = a_tex_coord;
@@ -143,7 +142,6 @@ python early:
 
         vec4 color = texture2D(tex0, v_tex_coord);
         gl_FragColor = mix(color, vec4(0.0), smoothstep(0.0, 1.0, crop));
-
     """)
 
     # taken from

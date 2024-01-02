@@ -2,49 +2,49 @@ screen phone_quick_menu():
     grid 3 2 style_prefix "phone_quick_menu":
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_history_idle.png"
-                hover phone.config.basedir + "quick_menu_history_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_history_selected.png"
+                idle phone.asset("quick_menu_history_idle.png")
+                hover phone.asset("quick_menu_history_selected.png")
+                selected_idle phone.asset("quick_menu_history_selected.png")
                 action ShowMenu("history")
             text _("History")
 
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_afm_idle.png"
-                hover phone.config.basedir + "quick_menu_afm_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_afm_selected.png"
+                idle phone.asset("quick_menu_afm_idle.png")
+                hover phone.asset("quick_menu_afm_selected.png")
+                selected_idle phone.asset("quick_menu_afm_selected.png")
                 action Preference("auto-forward", "toggle")
             text _("Auto")
 
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_skip_idle.png"
-                hover phone.config.basedir + "quick_menu_skip_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_skip_selected.png"
+                idle phone.asset("quick_menu_skip_idle.png")
+                hover phone.asset("quick_menu_skip_selected.png")
+                selected_idle phone.asset("quick_menu_skip_selected.png")
                 action Skip()
             text _("Skip")
 
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_settings_idle.png"
-                hover phone.config.basedir + "quick_menu_settings_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_settings_selected.png"
+                idle phone.asset("quick_menu_settings_idle.png")
+                hover phone.asset("quick_menu_settings_selected.png")
+                selected_idle phone.asset("quick_menu_settings_selected.png")
                 action ShowMenu("preferences")
             text _("Settings")
 
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_save_idle.png"
-                hover phone.config.basedir + "quick_menu_save_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_save_selected.png"
+                idle phone.asset("quick_menu_save_idle.png")
+                hover phone.asset("quick_menu_save_selected.png")
+                selected_idle phone.asset("quick_menu_save_selected.png")
                 action ShowMenu("save")
             text _("Save")
 
         vbox:
             imagebutton:
-                idle phone.config.basedir + "quick_menu_load_idle.png"
-                hover phone.config.basedir + "quick_menu_load_selected.png"
-                selected_idle phone.config.basedir + "quick_menu_load_selected.png"
+                idle phone.asset("quick_menu_load_idle.png")
+                hover phone.asset("quick_menu_load_selected.png")
+                selected_idle phone.asset("quick_menu_load_selected.png")
                 action ShowMenu("load")
             text _("Load")
 
@@ -75,7 +75,7 @@ screen phone_quick_menu_video():
             
             action ToggleLocalVariable("qm")
 
-            add phone.config.basedir + "arrow_icon.png":
+            add phone.asset("arrow_icon.png"):
                 at transform:
                     subpixel True xysize (70, 18)
                         
@@ -95,5 +95,5 @@ screen phone_quick_menu_video():
 
                     null height 15
 
-                    add phone.config.basedir + "hang_up.png":
+                    add phone.asset("hang_up.png"):
                         subpixel True xysize (63, 63) xalign 0.5

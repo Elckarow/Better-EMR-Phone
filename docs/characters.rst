@@ -58,4 +58,4 @@ Example
 ::
 
     # default /!\
-    default p_eileen = phone.character.Character("Eileen", phone.config.basedir + "default_icon.png", "eileen", 20, "#fff")
+    default p_eileen = phone.character.Character("Eileen", phone.asset("default_icon.png"), "eileen", 20, "#fff")

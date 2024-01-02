@@ -1,10 +1,10 @@
 # /!\ default
 # pc as in phone character :monikk:
-default pc_sayori  = phone.character.Character("Sayori", phone.config.basedir + "sayori_icon.png", "s", 21, "#22Abf8")
-default pc_mc      = phone.character.Character("MC", phone.config.basedir + "mc_icon.png", "mc", 35, "#484848")
-default pc_yuri    = phone.character.Character("Yuri", phone.config.basedir + "yuri_icon.png", "y", 20, "#a327d6")
-default pc_monika  = phone.character.Character("Monika", phone.config.basedir + "monika_icon.png", "m", 40, "#0a0")
-default pc_natsuki = phone.character.Character("Natsuki", phone.config.basedir + "natsuki_icon.png", "n", 45, "#fbb")
+default pc_sayori  = phone.character.Character("Sayori", phone.asset("sayori_icon.png"), "s", 21, "#22Abf8")
+default pc_mc      = phone.character.Character("MC", phone.asset("mc_icon.png"), "mc", 35, "#484848")
+default pc_yuri    = phone.character.Character("Yuri", phone.asset("yuri_icon.png"), "y", 20, "#a327d6")
+default pc_monika  = phone.character.Character("Monika", phone.asset("monika_icon.png"), "m", 40, "#0a0")
+default pc_natsuki = phone.character.Character("Natsuki", phone.asset("natsuki_icon.png"), "n", 45, "#fbb")
 
 default pov_key = "mc"
 
@@ -22,7 +22,7 @@ init 100 python in phone.calendar:
 init phone register:
     define "Welcome":
         add "s" add "mc" add "y" add "m" add "n"
-        icon phone.config.basedir + "default_icon.png"
+        icon phone.asset("default_icon.png")
         as thanks_for_using_my_framework key "ddu"
 
 label phone_discussion_test:

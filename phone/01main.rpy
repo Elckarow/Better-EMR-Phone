@@ -123,6 +123,15 @@ init -100 python in phone:
         
         return s
 
+    import os
+    @renpy.pure
+    def path_join(*paths):
+        return os.path.join(*paths).replace("\\", "/")
+
+    @renpy.pure
+    def asset(path):
+        return path_join(config.basedir, path)
+
 default -100 phone._stack_depth = 0
 default -100 phone._current_screen = None
 
@@ -135,7 +144,7 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
             ypos ypos yanchor yanchor
         
         background Transform(
-            phone.config.basedir + "background.png",
+            phone.asset("background.png"),
             subpixel=True,
             align=(0.5, 0.5),
             rotate=-90 * horizontal,

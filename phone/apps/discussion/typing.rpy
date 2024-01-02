@@ -35,4 +35,4 @@ style phone_typing_istyping is empty:
     color "#626262"
     outlines [ ]
     size 16
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")

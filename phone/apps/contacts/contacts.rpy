@@ -73,7 +73,7 @@ style phone_contacts_text is empty:
     outlines [ ]
     color "#525252"
     size 18
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
 
 style phone_contacts_no_friends is phone_contacts_text:
     color "#000"

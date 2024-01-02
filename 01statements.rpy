@@ -1185,7 +1185,7 @@ python early in phone:
                 dl.error("expected 'key' property")
                         
             if icon is None:
-                icon = 'phone.config.basedir + "default_icon.png"'
+                icon = 'phone.asset("default_icon.png")'
             
             if _as is not None:
                 filename, linenumber = l.get_location()

@@ -256,7 +256,7 @@ style phone_calendar_button_text is empty:
     outlines []
     size 16
     align (0.5, 0.5) text_align 0.5 
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
 
 style phone_calendar_button_text_special is phone_calendar_button_text:
     size 12

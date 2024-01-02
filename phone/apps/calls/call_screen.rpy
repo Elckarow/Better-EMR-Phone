@@ -32,7 +32,7 @@ screen _phone_call():
         frame style "empty" xalign 0.5 ypos 0.45:
             use phone_quick_menu()
 
-    add phone.config.basedir + "hang_up.png":
+    add phone.asset("hang_up.png"):
         subpixel True xysize (63, 63)
         xalign 0.5 ypos 0.8
 
@@ -47,7 +47,7 @@ style phone_call_text is empty:
     outlines [ ]
     line_spacing 0
     size 24
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
     hyperlink_functions hyperlink_functions_style("phone_call_text_hyperlink")
 
 style phone_call_text_hyperlink is phone_call_text:

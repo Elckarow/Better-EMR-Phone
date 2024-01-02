@@ -1,5 +1,5 @@
 init -150 python in phone.emojis:
-    from renpy.store import store, Transform
+    from renpy.store import store, Transform, phone
     from store.phone import config
 
     import string
@@ -36,12 +36,12 @@ init 1000 python hide in phone.emojis:
     if config.auto_emojis:
         import os
 
-        emoji_base_path = os.path.join(config.basedir, "emojis").replace("\\", "/")
+        emoji_base_path = phone.asset("emojis")
 
-        for emoji in os.listdir(os.path.join(store.config.basedir, "game", emoji_base_path).replace("\\", "/")):
+        for emoji in os.listdir(phone.path_join(store.config.basedir, "game", emoji_base_path)):
             name, extension = emoji.split(".")
 
             if extension.lower() not in ("png", "jpg", "jpeg", "svg"):
                 continue
 
-            add(name, os.path.join(emoji_base_path, emoji).replace("\\", "/"))
+            add(name, phone.path_join(emoji_base_path, emoji))

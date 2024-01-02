@@ -153,7 +153,7 @@ screen phone():
                     rotate -90 transform_anchor True
                     xysize (150, 30) matrixcolor TintMatrix("#474343ee")
                 action SetScreenVariable("current_page", current_page - 1)
-                add phone.config.basedir + "arrow_icon.png"
+                add phone.asset("arrow_icon.png")
 
         if current_page != max_page:
             button:
@@ -162,7 +162,7 @@ screen phone():
                     rotate 90 transform_anchor True
                     xysize (150, 30) matrixcolor TintMatrix("#474343ee")
                 action SetScreenVariable("current_page", current_page + 1)
-                add phone.config.basedir + "arrow_icon.png"
+                add phone.asset("arrow_icon.png")
 
     use _phone():
         style_prefix "phone_main"
@@ -184,7 +184,7 @@ screen phone():
             vbox:
                 hbox xalign 0.5 spacing 13:
                     for i in range(max_page + 1):
-                        add phone.config.basedir + "circle.png":
+                        add phone.asset("circle.png"):
                             at transform:
                                 subpixel True xysize (10, 10)
                                 matrixcolor TintMatrix("#4e4e4e")
@@ -295,7 +295,7 @@ style _phone_application_button_vbox is empty:
 style _phone_application_button_text is empty:
     text_align 0.5 xalign 0.5
     outlines [ ] color "#000"
-    size 12 font phone.config.basedir + "Metropolis-Regular.otf"
+    size 12 font phone.asset("Metropolis-Regular.otf")
     line_spacing 0
 
 style _phone_application_button_fixed is empty:

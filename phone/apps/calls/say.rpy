@@ -30,8 +30,8 @@ style phone_say_dialogue is empty:
     ypos 0.0
     outlines [ ]
     color "#fff"
-    font phone.config.basedir + "JetBrainsMono-Regular.ttf"
+    font phone.asset("JetBrainsMono-Regular.ttf")
 
 style phone_say_label is phone_say_dialogue:
-    font phone.config.basedir + "JetBrainsMono-ExtraBold.ttf"
+    font phone.asset("JetBrainsMono-ExtraBold.ttf")
     size 27

@@ -101,7 +101,7 @@ style phone_textbox_text is empty:
     color "#000"
     line_leading 0
     line_spacing 0
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
     yalign 0.5
     layout "nobreak"
 
@@ -195,7 +195,7 @@ screen _chat_messages():
                                         add DynamicDisplayable(phone.discussion.audio_messages.button_image, p=p)
                                         action Function(phone.discussion.audio_messages.play_audio, p, p.data),
                                     
-                                    add phone.config.basedir + "audio_message_wave_icon.png":
+                                    add phone.asset("audio_message_wave_icon.png"):
                                         at _fits(None), phone.discussion.audio_messages.AudioWave(p)
 
                         else:
@@ -288,7 +288,7 @@ style phone_messages_text is empty:
     line_leading 0
     line_spacing 0
     layout "greedy"
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
     hyperlink_functions hyperlink_functions_style("phone_messages_text_hyperlink")
 
 style phone_messages_text_hyperlink is phone_messages_text:

@@ -184,17 +184,17 @@ Example
 ::
 
     # create two phone Character objects
-    default phone_sayori = phone.character.Character("Sayori", phone.config.basedir + "sayori_icon.png", "s", 21,   "#22Abf8")
-    default phone_mc = phone.character.Character("MC", phone.config.basedir + "mc_icon.png", "mc", 35, "#484848")
+    default phone_sayori = phone.character.Character("Sayori", phone.asset("sayori_icon.png"), "s", 21,   "#22Abf8")
+    default phone_mc = phone.character.Character("MC", phone.asset("mc_icon.png"), "mc", 35, "#484848")
 
     # create a group chat manually
-    default mc_sayo_gc = phone.group_chat.GroupChat("Sayori", phone.config.basedir + "sayori_icon.png", "mc_sayo"). add_character("mc").add_character("s")
+    default mc_sayo_gc = phone.group_chat.GroupChat("Sayori", phone.asset("sayori_icon.png"), "mc_sayo"). add_character("mc").add_character("s")
 
     # create another group chat using `init phone register`
     # and add a few messages
     init phone register:
         define "goofy ahh chat":
-            icon phone.config.basedir + "sayori_icon.png" key "goofy"
+            icon phone.asset("sayori_icon.png") key "goofy"
             add "mc" add "s" as goofy
             transient
     

@@ -24,7 +24,7 @@ style app_base_text is empty:
     outlines [ ]
     yalign 0.5
     color "#000" size 19
-    font phone.config.basedir + "Aller_Rg.ttf"
+    font phone.asset("Aller_Rg.ttf")
 
 style app_base_button is empty:
     yalign 0.5

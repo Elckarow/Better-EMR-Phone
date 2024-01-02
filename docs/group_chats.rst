@@ -58,7 +58,7 @@ Example
 ::
 
     # default /!\
-    default eileen_gc = phone.group_chat.GroupChat("Eileen", phone.config.basedir + "default_icon.png", "eileen_gc").add_character("eileen")
+    default eileen_gc = phone.group_chat.GroupChat("Eileen", phone.asset("default_icon.png"), "eileen_gc").add_character("eileen")
 
 or use the ``define`` clause of the ``init phone register`` statement. ::
 

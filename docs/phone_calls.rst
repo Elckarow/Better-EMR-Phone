@@ -47,8 +47,8 @@ Example
     define phone_mc = Character("MC", screen="phone_say", who_style="phone_say_label", what_style="phone_say_dialogue")
 
     # create the two phone characters
-    default pc_sayori = phone.character.Character("Sayori", phone.config.basedir + "sayori_icon.png", "s", 21, "#22Abf8")
-    default pc_mc     = phone.character.Character("MC", phone.config.basedir + "mc_icon.png", "mc", 35, "#484848")
+    default pc_sayori = phone.character.Character("Sayori", phone.asset("sayori_icon.png"), "s", 21, "#22Abf8")
+    default pc_mc     = phone.character.Character("MC", phone.asset("mc_icon.png"), "mc", 35, "#484848")
 
     label phone_call_test:
         phone call "s"

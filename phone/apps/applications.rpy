@@ -13,13 +13,6 @@ init -100 python in phone.application:
             **kwargs
         )
     
-    def Borders(color, width):
-        return IconBackground(
-            Null(gui.phone_application_icon_size, gui.phone_application_icon_size),
-            outline_color=color,
-            outline_width=width
-        )
-
     def GradientBackground(start_color, end_color, theta=0):
         return IconBackground(Gradient(start_color, end_color, theta))
     
@@ -252,10 +245,7 @@ screen _phone_application_button(app, app_coords, coords_to_move):
             button:
                 at (_phone_move_application_selected if app_coords == coords_to_move else _phone_move_application)
 
-                if app is None:
-                    add phone.application.Borders("#ffffffcc", 5)
-                else:
-                    add phone.application.IconBackground("#ffffffcc")
+                add phone.application.IconBackground("#ffffffcc")
 
                 action [
                     Function(phone.application.move_application, coords_to_move, app_coords),

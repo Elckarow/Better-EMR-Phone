@@ -19,3 +19,7 @@ This framework comes with a built-in emoji system (used in text messages but I g
 
         phone.emoji.format_emoji_tag("This framework is {emoji=poggers}!")
         >>> "This framework is :poggers:!"
+
+Default emojis include:
+    * The most used twemojis
+    * Some emojis from the Doki Doki Undercurrents discord server.

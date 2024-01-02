@@ -56,7 +56,7 @@ Configuration Variables
 ``data = {...}``
     A dictionnary mapping a name to a callable. Each \*character\* has an entry (their key) containing these values in the ``phone.data`` dictionnary. When the entry is created, the callables are called without arguments, and the values are set.
     tl;dr ``collections.defaultdict``
-    The following keys are defined in the dictionnary:
+    The following keys are documented:
     
     * ``"call_history"``
     * ``"group_chats"``
@@ -104,3 +104,11 @@ Configuration Variables
     
 ``message_delay = 0.6``
     A number of seconds added to the pause before each message.
+
+``unread_group_chat_pov = False``
+    If true, a group chat's "unreadness" is determined on the pov the group chat was read in.
+    I.e, if the group chat was read in the "mc" pov, then it won't be marked as read in the "s" pov.
+    If false, it is determined by whether the player has opened the group chat or not.
+
+``auto_emojis = True``
+    If true, will define all images found in "assets/emojis" as emojis.

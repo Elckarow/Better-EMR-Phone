@@ -18,6 +18,12 @@ Utility Functions
 ``def short_name(s, length)``
     Shortens the string ``s`` after translating it. The string is sliced to ``length - 3`` and ``"..."`` is appended to it.
 
+``def path_join(*args)``
+    Computes *os.path.join(\*args).replace("\\\\", "/")*
+
+``def asset(path)``
+    Computes *path_join(phone.config.basedir, path)*
+
 ``data = {...}``
     The dictionnary that's storing all of the phone's in-game data. Each ``*character*`` has an entry (their key) in this dict and will return another dictionnary as described in ``phone.config.data``.
 

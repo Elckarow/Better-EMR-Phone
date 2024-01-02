@@ -38,10 +38,17 @@ init 1000 python hide in phone.emojis:
 
         emoji_base_path = phone.asset("emojis")
 
-        for emoji in os.listdir(phone.path_join(store.config.basedir, "game", emoji_base_path)):
-            name, extension = emoji.split(".")
+        try:
+            for emoji in os.listdir(phone.path_join(store.config.basedir, "game", emoji_base_path)):
+                stuff = emoji.split(".")
+                
+                if len(stuff) != 2: continue
+                name, extension = stuff
 
-            if extension.lower() not in ("png", "jpg", "jpeg", "svg"):
-                continue
+                if extension.lower() not in ("png", "jpg", "jpeg", "svg"):
+                    continue
 
-            add(name, phone.path_join(emoji_base_path, emoji))
+                add(name, phone.path_join(emoji_base_path, emoji))
+
+        except OSError:
+            pass

@@ -1,6 +1,5 @@
 python early in phone.config:
-    from renpy import store
-    from store import Dissolve, _warper, _, phone, Transform
+    from renpy.store import store, config as renpy_config, Dissolve, _warper, _, phone, Transform
     _constant = True
 
     # Where the assets are located.
@@ -69,6 +68,7 @@ python early in phone.config:
         "group_chats": list,
         "background_image": lambda: None,
         "calendars": list,
+        "group_chat_unread_pov": dict
     }
 
     def _generate_applications_dict():
@@ -130,5 +130,18 @@ python early in phone.config:
     # If `True`, tries to retrieve the calendar that's in concordance to `phone.system.get_date()`.
     default_calendar_index = -1
 
+    # If true, a group chat's "unreadness" is determined on the pov the group chat was read in.
+    # I.e, if the group chat was read in the "mc" pov, then it won't be marked as read in the "s" pov.
+    # If false, it is determined by whether the player has opened the group chat or not.
+    unread_group_chat_pov = False
+
 python early: # prevent "default"
     config.special_namespaces["store.phone.config"] = type(config.special_namespaces["store.config"])(phone.config, "phone.config")
+
+init 1500 python in phone:
+    @renpy_config.after_load_callbacks.append
+    def __ensure_phone_data_entries():
+        for d in data.values():
+            for thing, f in config.data.items():
+                if thing not in d:
+                    d[thing] = f()

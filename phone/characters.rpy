@@ -4,7 +4,6 @@ init -100 python in phone.character:
 
     class Character(object):
         def __init__(self, name, icon, key, cps, color):
-            global _characters
             _characters[key] = self
 
             self.name = name
@@ -37,7 +36,7 @@ init -100 python in phone.character:
         if isinstance(x, Character): return x
         if x is None: x = store.pov_key
         if not has_character(x):
-            raise KeyError("nno phone Character with the key %r exists (check your definitions)" % x)
+            raise KeyError("no phone Character with the key %r exists (check your definitions)" % x)
         return _characters[x]
     
     def has_character(key):

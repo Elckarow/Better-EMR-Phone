@@ -6,6 +6,7 @@ init -100 python in phone.group_chat:
 
     class GroupChat(object):    
         transient = False
+        _unread = True
         
         def __init__(self, name, icon, key, transient=False):
             global _group_chats
@@ -16,7 +17,7 @@ init -100 python in phone.group_chat:
             self.date = datetime.datetime(year=1970, month=1, day=1, hour=0, minute=0)
             self.transient = transient
 
-            self.unread = True
+            self._unread = True
 
             self._characters = set()            
             self._payloads = [ ]
@@ -27,6 +28,19 @@ init -100 python in phone.group_chat:
 
             # deprecated
             self.short_name = name
+        
+        @property
+        def unread(self):
+            if not config.unread_group_chat_pov:
+                return self._unread
+            return phone.data[store.pov_key]["group_chat_unread_pov"].setdefault(self.key, True)
+        
+        @unread.setter
+        def unread(self, v):
+            if not config.unread_group_chat_pov:
+                self._unread = v
+            else:
+                phone.data[store.pov_key]["group_chat_unread_pov"][self.key] = v
                 
         def add_character(self, char):
             if isinstance(char, list):

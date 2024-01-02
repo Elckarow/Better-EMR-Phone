@@ -3,7 +3,7 @@ Credits
 
 I'd like to thank to following people for their contributions:
 
-* silversnow__ (MC's icon)
+* silversnow\_\_ (MC's icon)
 * lameman (Quick menu icons)
 * negative.two (Shader code for the ``CircleDisplayable`` displayable)
 * calebthepianist (Renaming all the twemojis)

@@ -1,6 +1,7 @@
 init -150 python in phone.emojis:
     from renpy.store import store, Transform, phone
     from store.phone import config
+    _constant = True
 
     import string
     _NOT_ALLOWED_CHARACTERS = set(string.punctuation.strip("_") + " ")
@@ -52,3 +53,10 @@ init 1000 python hide in phone.emojis:
 
         except OSError:
             pass
+
+# prevent `default`
+python early in phone.emojis:
+    pass
+
+python early:
+    config.special_namespaces["store.phone.emojis"] = type(config.special_namespaces["store.config"])(phone.emojis, "phone.emojis")

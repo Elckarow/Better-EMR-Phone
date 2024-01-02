@@ -5,6 +5,8 @@ This framework comes with a built-in emoji system (used in text messages but I g
 
 *The following functions are defined in the* **phone.emojis** *namespace.*
 
+**This namespace is considered *constant* and should not be modified outside of init time.**
+
 ``def add(name, emoji)``
     This function adds an emoji to the list of known emojis. It take a string ``name`` (which amy only contain letters, numbers and underscores) and a displayable ``emoji``.
 

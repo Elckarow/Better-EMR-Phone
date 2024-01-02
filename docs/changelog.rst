@@ -8,6 +8,7 @@ A list of all the changes throughout the versions, starting from 3.0.0.
 3.2.2
 -----
 
+* The ``phone call`` statement can now take a ``nosave`` clause.
 * Added new default emojis.
 * 2 new functions ``phone.asset`` and ``phone.path_join``.
 * ``GroupChat.short_name`` and ``Character.short_name`` are now deprecated. See the new ``phone.short_name`` function.

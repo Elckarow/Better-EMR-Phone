@@ -7,7 +7,7 @@ init -100 python in phone.calls:
     config.layer_at_transforms["phone_call"] = Transform(matrixcolor=BrightnessMatrix(-0.21), blur=20)
     config.hide_status_bar_screens.append("phone_call")
 
-    def call(caller, video=False):
+    def call(caller, video=False, nosave=False):
         store._window_hide()
 
         global _current_caller
@@ -21,6 +21,9 @@ init -100 python in phone.calls:
 
         renpy.show_screen("phone_call", video=video)
         renpy.with_statement(config.enter_transition)
+
+        global _nosave
+        _nosave = bool(nosave)
     
     def end_call():
         global _current_caller
@@ -60,14 +63,19 @@ init -100 python in phone.calls:
 
         date = system.get_date()
 
-        ch1 = phone.data[key1]["call_history"]
-        ch1.append(_CallEntry(key2, date, duration))
+        global _nosave
+        if _nosave is not None and not _nosave:
+            _nosave = None
+            
+            ch1 = phone.data[key1]["call_history"]
+            ch1.append(_CallEntry(key2, date, duration))
 
-        while len(ch1) > config.call_history_lenght: ch1.pop(0)
-        
-        ch2 = phone.data[key2]["call_history"]
-        ch2.append(_CallEntry(key1, date, duration))
+            while len(ch1) > config.call_history_lenght: ch1.pop(0)
 
-        while len(ch2) > config.call_history_lenght: ch2.pop(0)
+            ch2 = phone.data[key2]["call_history"]
+            ch2.append(_CallEntry(key1, date, duration))
+
+            while len(ch2) > config.call_history_lenght: ch2.pop(0)
 
 default -100 phone.calls._current_caller = None
+default -100 phone.calls._nosave = None

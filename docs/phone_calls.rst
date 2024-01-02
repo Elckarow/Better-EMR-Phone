@@ -16,8 +16,8 @@ The rest is as usual. ::
 Functions
 ---------
 
-``def call(caller, video=False)``
-    Starts a phone call with the ``*character*`` ``caller``. If ``video`` is true, a video call is started (this is ignored if the game is on a version prior to 7.5.0).
+``def call(caller, video=False, nosave=False)``
+    Starts a phone call with the ``*character*`` ``caller``. If ``video`` is true, a video call is started (this is ignored if the game is on a version prior to 7.5.0). If ``nosave`` is true, the call won't be saved to the call history.
     Replaces the ``narrator`` with a special narrator.
     The python equivalent of the ``phone call`` statement.
 
@@ -33,7 +33,7 @@ Statements
 ----------
 
 ``phone call``
-    Used to start a phone call. It expects a ``*character*``. If the ``video`` clause is given, a video call is started. 
+    Used to start a phone call. It expects a ``*character*``. If the ``video`` clause is given, a video call is started. If the ``nosave`` clause is given, the call won't be saved to the call history.
 
 ``phone end call``
     Used to end a phone call. It doesn't expect anything.
@@ -55,6 +55,16 @@ Example
         phone_s "Ohayouuu!!!!!!!!!!!!!!!!"
         phone_mc "Hey!"
         "Why is she always this energetic?"
+        phone end call
+        "..."
+
+        return
+    
+    label phone_video_call_test:
+        show sayori onlayer phone_video_call
+        show bg sayori_room onlayer phone_video_call
+        phone call "s" video
+        phone_s "Hey! That's my room"
         phone end call
         "..."
 

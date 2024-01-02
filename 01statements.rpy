@@ -980,14 +980,39 @@ python early in phone:
 
     def _parse_phone_call(l):
         rv = l.require(l.simple_expression)
-        video = bool(l.keyword("video"))
+        video = False
+        nosave = False
+        
+        while not l.eol():
+            state = l.checkpoint()
+            thing = l.word()
+
+            if thing == "video":
+                if video:
+                    l.revert(state)
+                    l.error("video clause already given")
+                else:
+                    video = True
+
+            elif thing == "nosave":
+                if nosave:
+                    l.revert(state)
+                    l.error("nosave clause already given")
+                else:
+                    nosave = True
+            
+            else:
+                l.revert(state)
+                l.error("unknown property %s" % thing)
+        
+
         l.expect_eol()
         l.expect_noblock("phone call")
-        return rv, video
+        return rv, video, nosave
 
     def _execute_phone_call(tu):
         c = character.character(eval(tu[0], store.__dict__))
-        calls.call(c, tu[1])
+        calls.call(c, tu[1], tu[2])
     
     def _predict_phone_call(tu):
         renpy.predict_screen("phone_call", video=tu[1])

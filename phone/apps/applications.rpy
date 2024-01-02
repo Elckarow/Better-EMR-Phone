@@ -134,7 +134,7 @@ screen phone():
         current_page = min(current_page, max_page)
 
     fixed style_prefix "phone_main":
-        button style "empty" xysize (1.0, 1.0) action PhoneReturn()
+        button style "empty" xysize (1.0, 1.0) action If(coords_to_move is None, PhoneReturn(), SetScreenVariable("coords_to_move", None))
 
         if coords_to_move is not None:
             key "K_ESCAPE" action SetScreenVariable("coords_to_move", None)

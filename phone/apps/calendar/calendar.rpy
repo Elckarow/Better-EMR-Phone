@@ -225,7 +225,7 @@ screen phone_calendars():
 
             side "l c r" xalign 0.5:
                 textbutton "<" action If(n != 0, (SetScreenVariable("n", n - 1), SetScreenVariable("selected_entry", None)))
-                text _("[calendar.month_name]-[calendar.year]") size 25 xalign 0.5 text_align 0.5
+                text _("[calendar.month_name!t]-[calendar.year]") size 25 xalign 0.5 text_align 0.5
                 textbutton ">" action If(n != m, (SetScreenVariable("n", n + 1), SetScreenVariable("selected_entry", None)))
             
             frame at CurriedRoundedCorners(radius=(0, 25, 0, 25)):

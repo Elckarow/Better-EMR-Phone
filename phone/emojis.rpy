@@ -1,6 +1,5 @@
 init -150 python in phone.emojis:
-    from renpy import store
-    from store import Transform
+    from renpy.store import store, Transform
     from store.phone import config
 
     import string
@@ -15,16 +14,13 @@ init -150 python in phone.emojis:
         
         global _emojis
         _emojis[name] = renpy.displayable(emoji)
-    
-    add("clueless", config.basedir + "emojis/clueless.png")
-    add("randomguy", config.basedir + "emojis/randomguy.png")
-    
+        
     def get(name):
         return _emojis[name]
     
     def _emoji_tag(tag, name):
         return [
-            (renpy.TEXT_DISPLAYABLE, Transform(get(name), subpixel=True, ysize=1.0, fit="contain", yoffset=2))
+            (renpy.TEXT_DISPLAYABLE, Transform(get(name), subpixel=True, ysize=1.0, fit="contain"))
         ]
     
     store.config.self_closing_custom_text_tags["emoji"] = _emoji_tag
@@ -35,3 +31,17 @@ init -150 python in phone.emojis:
     def format_emoji_tag(s):
         for emoji in _tag_pattern.findall(s): s = _tag_pattern.sub(":" + emoji + ":", s, 1)
         return s
+
+init 1000 python hide in phone.emojis:
+    if config.auto_emojis:
+        import os
+
+        emoji_base_path = os.path.join(config.basedir, "emojis").replace("\\", "/")
+
+        for emoji in os.listdir(os.path.join(store.config.basedir, "game", emoji_base_path).replace("\\", "/")):
+            name, extension = emoji.split(".")
+
+            if extension.lower() not in ("png", "jpg", "jpeg", "svg"):
+                continue
+
+            add(name, os.path.join(emoji_base_path, emoji).replace("\\", "/"))

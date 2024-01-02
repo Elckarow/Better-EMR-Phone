@@ -135,6 +135,9 @@ python early in phone.config:
     # If false, it is determined by whether the player has opened the group chat or not.
     unread_group_chat_pov = False
 
+    # If true, will define all images found in "assets/emojis" as emojis.
+    auto_emojis = True
+
 python early: # prevent "default"
     config.special_namespaces["store.phone.config"] = type(config.special_namespaces["store.config"])(phone.config, "phone.config")
 

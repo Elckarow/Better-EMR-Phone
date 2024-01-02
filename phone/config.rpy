@@ -144,7 +144,11 @@ python early: # prevent "default"
 init 1500 python in phone:
     @renpy_config.after_load_callbacks.append
     def __ensure_phone_data_entries():
+        changed = False
         for d in data.values():
             for thing, f in config.data.items():
                 if thing not in d:
                     d[thing] = f()
+                    changed = True
+        if changed:
+            renpy.block_rollback()

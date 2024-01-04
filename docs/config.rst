@@ -112,3 +112,6 @@ Configuration Variables
 
 ``auto_emojis = True``
     If true, will define all images found in "assets/emojis" as emojis.
+
+``default_label_delay = 0.5``
+    The default value of the `delay` property for the `time` and `label` discussion statements.

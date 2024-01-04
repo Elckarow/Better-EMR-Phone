@@ -185,7 +185,7 @@ screen _chat_messages():
                                         fit "scale-down"
 
                                     idle p.data
-                                    action Show("_phone_image", dissolve, img=p.data)
+                                    action Show("_phone_image", Dissolve(0.5), img=p.data)
 
                         elif p.type == phone.discussion._PayloadTypes.AUDIO:
                             use _chat_message(p):
@@ -260,7 +260,7 @@ screen _phone_image(img):
     add img:
         align (0.5, 0.5)
     
-    key ["mouseup_1", "mouseup_3"] action Hide("_phone_image", dissolve)
+    key ["mouseup_1", "mouseup_3"] action Hide("_phone_image", Dissolve(0.5))
 
 style phone_messages_button is empty:
     xalign 0.5

@@ -92,7 +92,7 @@ python early in phone._lint:
                 error("audio '{}' isn't loadable.".format(a))      
 
 python early in phone:
-    from renpy.store import cds_utils 
+    from renpy.store import cds_utils
 
     class _RawPhoneMessage(cds_utils.Statement):
         __slots__ = ("sender", "message", "delay")
@@ -149,10 +149,12 @@ python early in phone:
             self.delay = delay
         
         def execute(self):
-            discussion.label(self.label, eval(self.delay, store.__dict__))
+            delay = config.default_label_delay if self.delay is None else eval(self.delay, store.__dict__)
+            discussion.label(self.label, delay)
         
         def lint(self):
-            _lint.eval(self.delay)
+            if self.delay is not None:
+                _lint.eval(self.delay)
         
         def get_translatable_strings(self):
             return [self.label]
@@ -167,7 +169,8 @@ python early in phone:
         
         def execute(self):
             globals = store.__dict__
-            discussion.date(delay=eval(self.delay, globals), auto=eval(self.auto, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
+            delay = config.default_label_delay if self.delay is None else eval(self.delay, globals)
+            discussion.date(delay=delay, auto=eval(self.auto, globals), **{k: eval(v, globals) for k, v in self.kwargs.items()})
         
         def lint(self):
             month = _lint.eval(self.kwargs["month"])
@@ -196,7 +199,8 @@ python early in phone:
                     _lint.error("'{}' isn't a valid second.".format(second))
             
             _lint.eval(self.kwargs["year"])
-            _lint.eval(self.delay)
+            if self.delay is not None:
+                _lint.eval(self.delay)
             _lint.eval(self.auto)
     
     class _RawPhoneTyping(cds_utils.Statement):
@@ -634,12 +638,13 @@ python early in phone:
 
         if register: return _RawPhoneRegisterLabel(label)
 
-        delay = "0.5" if not ll.keyword("delay") else ll.require(ll.simple_expression)
+        delay = None if not ll.keyword("delay") else ll.require(ll.simple_expression)
         return _RawPhoneLabel(label, delay)
     
     def _parse_phone_date(ll, register):
         kwargs = {time_thing: "None" for time_thing in ("month", "day", "year", "hour", "minute", "second")}
         kwargs["auto"] = "False"
+        kwargs["delay"] = None
         seen = set()
 
         while True:
@@ -665,11 +670,13 @@ python early in phone:
                 break
         
         auto = kwargs.pop("auto")
+        delay = kwargs.pop("delay")
 
         if register:
+            if delay is not None:
+                renpy.error("'delay' can't be used here")
             return _RawPhoneRegisterDate(kwargs, auto)
 
-        delay = "0.5" if not ll.keyword("delay") else ll.require(ll.simple_expression)
         return _RawPhoneDate(kwargs, delay, auto)
     
     def _parse_phone_typing(ll):

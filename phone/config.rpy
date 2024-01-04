@@ -138,6 +138,9 @@ python early in phone.config:
     # If true, will define all images found in "assets/emojis" as emojis.
     auto_emojis = True
 
+    # The default value of the `delay` property for the `time` and `label` discussion statements.
+    default_label_delay = 0.5
+
 python early: # prevent "default"
     config.special_namespaces["store.phone.config"] = type(config.special_namespaces["store.config"])(phone.config, "phone.config")
 

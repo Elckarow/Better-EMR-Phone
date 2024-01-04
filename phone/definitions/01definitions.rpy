@@ -27,21 +27,25 @@ init phone register:
 
 label phone_discussion_test:
     phone discussion "ddu":
-        time year 2023 month 6 day 5 hour 16 minute 30 # exact date and time at which i wrote this. yes i am feeling quite silly and goofy
-        label "'Sayori' has been added to the group"
-        label "'MC' has been added to the group"
-        label "'Yuri' has been added to the group"
-        label "'Monika' has been added to the group"
-        label "'Natsuki' has been added to the group"
+        time year 2023 month 6 day 5 hour 16 minute 30 delay -1 # exact date and time at which i wrote this. yes i am feeling quite silly and goofy
+        label "'Sayori' has been added to the group" delay -1
+        label "'MC' has been added to the group" delay -1
+        label "'Yuri' has been added to the group" delay -1
+        label "'Monika' has been added to the group" delay -1
+        label "'Natsuki' has been added to the group" delay 0.2
         "m" "Hey there!"
         "n" "Thank you for using my framework."
         "n" "I mean {i}of course{/i} you're using {b}this{/b} framework."
         "n" "...not like there are any better ones out there~"
-        "s" "natsuki!!!!!"
-        "s" "no being a meanie!!!!!!!"
-        "y" "If you are interested in DDLC mods, be sure to check out our mod {a=https://undercurrentsmod.weebly.com}Doki Doki Undercurrents{/a}!"
+        "s" "natsuki!!!!! {emoji=EllenScream}"
+        "s" "no being a meanie!!!!!!!{emoji=EllenScream}{emoji=EllenScream}{emoji=EllenScream}"
+        "y" "If you are interested in DDLC mods, be sure to check out our mod {a=https://undercurrentsmod.weebly.com}Doki Doki Undercurrents{/a}! {emoji=Melody}"
         "mc" "In case you encounter an issue (or wanna make a suggestion),"
-        "mc" "please DM me at Elckarow#8399 or open an issue on {a=https://github.com/Elckarow/Better-EMR-Phone}GitHub{/a}."
+        "mc" "you can:"
+        "mc" "DM me at {i}elckarow{/i} on Discord,"
+        "mc" "open an issue on {a=https://github.com/Elckarow/Better-EMR-Phone}GitHub{/a},"
+        "mc" "make a post on the phone's {a=https://elckarow.itch.io/better-emr-phone}Itch page{/a}."
+        "s" "Happy coding!" 
     phone end discussion
 
     return

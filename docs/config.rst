@@ -68,7 +68,7 @@ Configuration Variables
     A list of functions that are called whenever a phone discussion function executes.
     They are called with three arguments:
 
-    * the ``\*group chat\*`` the interaction is taking place in.
+    * the ``*group chat*`` the interaction is taking place in.
     * an event:
   
       * ``"start"`` is delivered at the start of the interaction.
@@ -77,7 +77,7 @@ Configuration Variables
 
     * an object representing the data, which has thefollowing fields:
         
-      * ``source``, the ``\*character\*`` that's sending the data, or ``None``.
+      * ``source``, the ``*character*`` that's sending the data, or ``None``.
       * ``type``, one of the following constants (in the ``phone.discussion`` namespace): ``TYPING``, ``TEXT``, ``IMAGE``, ``LABEL``, ``DATE``, ``MENU``, ``AUDIO``, ``VIDEO`` (if it ever gets implemented).
       * ``data``:
   

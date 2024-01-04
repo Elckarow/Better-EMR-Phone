@@ -155,7 +155,6 @@ screen _chat_messages():
                         action (
                             Function(phone.discussion._group_chat._page_up),
                             SetField(phone.discussion._yadjustment, "value", float("inf")),
-                            SetLocalVariable("_label", False),
                             Function(phone.discussion.audio_messages.reset)
                         )
                         bottom_margin 5
@@ -250,7 +249,6 @@ screen _chat_messages():
                         action (
                             Function(phone.discussion._group_chat._page_down),
                             SetField(phone.discussion._yadjustment, "value", 0.0),
-                            SetLocalVariable("_label", False),
                             Function(phone.discussion.audio_messages.reset)
                         )
                         top_margin 5

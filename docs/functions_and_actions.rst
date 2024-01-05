@@ -42,6 +42,6 @@ Screen Functions and Actions
     The framework's equvalent of the ``Return`` action. It should be used to return from a phone screen.
 
 ``menu = False``
-    Indicates whether we're in a phone menu or not. This is useful when a button is used in a phone screen that's used both in-game and through the ``PhoneMenu`` action (for instance, the ``Back`` button is disabled during a phone discussion). As it is set by ``phone.call_screen``, this variable should be read-only.
+    Indicates whether we're in a phone menu or not. This is useful when a button is used in a phone screen that's used both in-game and through the ``PhoneMenu`` action (for instance, the ``Back`` textbutton in the ``phone_discussion`` is disabled during a phone discussion). As it is set by ``phone.call_screen``, this variable should be read-only.
 
 *The* **PhoneReturn** *and* **PhoneMenu** *actions are available in the global store. If their values are overridden during init phase, an error is raised.*

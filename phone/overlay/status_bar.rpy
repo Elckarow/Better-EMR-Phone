@@ -95,12 +95,9 @@ screen _phone_status_bar():
                     add DynamicDisplayable(phone.status_bar.battery_text_displayable)
                     add DynamicDisplayable(phone.status_bar.battery_displayable) at _fits(0.74) yalign 0.5
 
-                action SetLocalVariable("control_center", True)
+                action (SetLocalVariable("control_center", True), SetField(phone.system, "at_list", _phone_control_center))
         
         else:
-            on "show" action SetField(phone.system, "at_list", _phone_control_center)
-            on "hide" action SetField(phone.system, "at_list", _phone_status_bar)
-
             add "#c4c4c438":
                 at transform:
                     on show:
@@ -122,7 +119,7 @@ screen _phone_status_bar():
                 frame style "empty" modal True:
                     button:
                         style "empty" xfill True yfill True
-                        action SetLocalVariable("control_center", False)
+                        action (SetLocalVariable("control_center", False), SetField(phone.system, "at_list", _phone_status_bar))
 
                 hbox at Flatten:
                     xalign 0.5 yanchor 1.0 ypos 0.98

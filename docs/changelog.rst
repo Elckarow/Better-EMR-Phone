@@ -10,7 +10,7 @@ A list of all the changes throughout the versions, starting from 3.0.0.
 
 * The ``phone call`` statement can now take a ``nosave`` clause.
 * Added new default emojis.
-* 3 new functions ``phone.asset``, ``phone.path_join`` and ``phone.execute_default``.
+* 4 new functions ``phone.asset``, ``phone.path_join``, ``phone.short_name`` and ``phone.execute_default``.
 * ``GroupChat.short_name`` and ``Character.short_name`` are now deprecated. See the new ``phone.short_name`` function.
 * Reworked a bit the ``phone_contacts`` screen.
 * Reset the yadjustment when starting a phone discussion.

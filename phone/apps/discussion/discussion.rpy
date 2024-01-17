@@ -316,7 +316,7 @@ init python in phone.discussion:
     from store.phone.character  import character
 
 init 1400 python in phone:
-    @renpy.partial(_run_on_start, id="__sort_register_messages")
+    @renpy.partial(execute_default, id="__sort_register_messages")
     def __sort_register_messages():
         global data
         for key in data:

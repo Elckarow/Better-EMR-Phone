@@ -112,7 +112,7 @@ init -100 python in phone.calendar:
     
     def add_calendar(year, month, key=None, first_day=SUNDAY):
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_calendar, year=year, month=month, key=key, first_day=first_day), ("_phone_add_calendar", month, year, key))
+            phone.execute_default(renpy.partial(add_calendar, year=year, month=month, key=key, first_day=first_day), ("_phone_add_calendar", month, year, key))
         else:
             key = character.character(key).key
 
@@ -127,7 +127,7 @@ init -100 python in phone.calendar:
 
     def add_calendar_to_all_characters(year, month, first_day=SUNDAY):
         if renpy.is_init_phase():
-            phone._run_on_start(renpy.partial(add_calendar_to_all_characters, year=year, month=month, first_day=first_day), ("_phone_add_calendar", month, year))
+            phone.execute_default(renpy.partial(add_calendar_to_all_characters, year=year, month=month, first_day=first_day), ("_phone_add_calendar", month, year))
         else:
             for key in character._characters:
                 add_calendar(year=year, month=month, first_day=first_day, key=key)

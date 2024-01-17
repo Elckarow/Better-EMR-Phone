@@ -132,6 +132,20 @@ init -100 python in phone:
     def asset(path):
         return path_join(config.basedir, path)
 
+    def execute_default(f, id):
+        def run(load):
+            if id not in _defaults_ran:
+                _defaults_ran.add(id)
+                f()
+                if load: renpy.block_rollback()
+
+        renpy_config.start_callbacks.append(renpy.partial(run, load=False))
+        renpy_config.after_load_callbacks.append(renpy.partial(run, load=True))
+
+# a set() object
+# renamed it because why not
+default -999 phone._defaults_ran = phone._id_ran_on_start
+
 default -100 phone._stack_depth = 0
 default -100 phone._current_screen = None
 
@@ -171,7 +185,7 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
 
             fixed style "empty":
                 for o in phone.config.overlay_screens:
-                    use expression o  
+                    use expression o
                         
             # https://www.renpy.org/doc/html/incompatible.html#incompatible-7-5-2
             # the thing just above
@@ -184,19 +198,6 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
     on "hide" action (
         SetVariable("phone.system.at_list", []),
     )
-
-init -500 python in phone:
-    def _run_on_start(f, id):
-        def run(load):
-            if id not in _id_ran_on_start:
-                _id_ran_on_start.add(id)
-                f()
-                if load: renpy.block_rollback()
-
-        renpy_config.start_callbacks.append(renpy.partial(run, load=False))
-        renpy_config.after_load_callbacks.append(renpy.partial(run, load=True))
-
-default -1000 phone._id_ran_on_start = set()
 
 init 1500: 
     # narrator is guarenteed to exist at init 1400
@@ -218,3 +219,6 @@ init 1500:
         
         # https://github.com/renpy/renpy/issues/5044
         renpy_config.layer_clipping[config.video_call_layer] = (0, 0, renpy_config.screen_width, renpy_config.screen_height)
+
+# previous name, when the function it's used in was undocumented
+default -1000 phone._id_ran_on_start = set()

@@ -1114,7 +1114,7 @@ python early in phone:
         def execute(self):
             if self.default_statement is not None:
                 self.default_statement.execute()
-            _run_on_start(self._execute, ("phone define gc", self.gc if self.gc is not None else str(self.key)))
+            execute_default(self._execute, ("phone define gc", self.gc if self.gc is not None else str(self.key)))
         
         def _execute(self):
             gc = None

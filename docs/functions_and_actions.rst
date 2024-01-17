@@ -24,6 +24,12 @@ Utility Functions
 ``def asset(path)``
     Computes *path_join(phone.config.basedir, path)*
 
+``def execute_default(f, id)``
+    Mimics the behavior of the ``default`` statement by calling ``f`` if a function with the unique value ``id`` has never been called before.
+    The function is added to ``config.start_callbacks`` and ``config.after_load_callbacks``, and in the latter case, if the function is called, rollback will be blocked.
+    A good *unique value*, for instance, is a tuple where the first component is a string describing what the function does, and where the remaining components are the actual unique value related to whatever the function does.
+    For example, when calling ``phone.calendar.add_calendar`` during init phase, this function is called with the unique value ``("_phone_add_calendar", month, year, key)``, where ``month``, ``year`` and ``key`` are the values passed to ``phone.calendar.add_calendar``.
+
 ``data = {...}``
     The dictionnary that's storing all of the phone's in-game data. Each ``*character*`` has an entry (their key) in this dict and will return another dictionnary as described in ``phone.config.data``.
 

@@ -86,6 +86,8 @@ init -100 python in phone.click_effects:
             self.height = h
 
             rv = renpy.Render(w, h)
+            rv.xclipping = True
+            rv.yclipping = True
 
             if not self.displayables: return rv
 

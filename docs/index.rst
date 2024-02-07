@@ -5,7 +5,7 @@ Welcome to the Better EMR Phone Documentation!
 
 As the name indicates, the first version of this phone was first seen in the DDLC mod `Doki Doki: Exit Music REDUX <https://www.reddit.com/r/DDLCMods/comments/q3xamu/edit_music_redux_full_release/>`_.
 
-It was pretty good (visually that is). The back-end code was... *a bit spaghetti not gonna lie*. Since I needed a phone for my own (well not my *own* per se, I simply am the lead coder) DDLC mod `Doki Doki Undercurrents <https://undercurrentsmod.weebly.com/>`_ (go check it out), I decided to... remake the whole thing.
+It was pretty good (visually that is). The back-end code was... *a bit spaghetti not gonna lie*. Since I needed a phone for my own (well not my *own* per se, I simply am the lead coder) DDLC mod `Doki Doki Undercurrents <https://https://dokidokiundercurrents.com/>`_ (go check it out), I decided to... remake the whole thing.
 Took a few tries but here we are I guess.
 
 *Credit goes to Wretched Team for the original version.*

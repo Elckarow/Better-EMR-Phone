@@ -16,5 +16,6 @@ This framework was originally intended for DDLC modding. If you are not making a
 
 - Download the latest release
 - Copy/Paste the `phone` folder, `01statements.rpy` and `phone_stuff.rpy` into your `game` folder.
+- (if you change the location of the `phone` folder, make sure to also change `phone.config.basedir`)
 - Launch your game and call either the label `phone_discussion_test` or `phone_call_test`.
 - It works? Perfect!

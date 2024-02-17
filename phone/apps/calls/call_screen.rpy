@@ -70,7 +70,7 @@ screen _phone_video_call():
         at Transform(**phone.config.video_call_layer_transform_properties)
     
     vbox:
-        text _("Facetime - [phone.calls._current_caller.name!t]")
+        text _("Facetime - [phone.calls._current_caller.name!ti]")
         add DynamicDisplayable(phone.calls._call_time)
     
     use phone_quick_menu_video()

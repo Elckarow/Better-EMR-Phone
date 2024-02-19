@@ -170,6 +170,9 @@ screen _phone(xpos=0.5, xanchor=0.5, ypos=0.1, yanchor=0.1, horizontal=False):
             xysize (gui.phone_ysize, gui.phone_xsize)
 
         fixed style "empty":
+            at transform:
+                crop (0.0, 0.0, 1.0, 1.0) crop_relative True
+                
             fixed style "empty":
                 if phone.system.at_list: # https://github.com/renpy/renpy/issues/4628
                     at phone.system.at_list

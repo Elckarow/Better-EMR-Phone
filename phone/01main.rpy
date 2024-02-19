@@ -47,6 +47,8 @@ default -100 phone.menu = False
 init -100 python in phone:
     from store import Action, Return, With
 
+    NoValue = renpy.object.Sentinel("_phone_NoValue")
+
     class PhoneMenu(Action):
         def __init__(self, screen, *args, **kwargs):
             self.screen = screen
@@ -79,7 +81,7 @@ init -100 python in phone:
         if needs_rollback:
             renpy.checkpoint()
 
-        renpy.transition(config.enter_transition if first_call else config.intra_transition)
+        renpy.transition(kwargs.pop("_transition", config.enter_transition if first_call else config.intra_transition))
         store._window_hide(None, True)
 
         current_screen = get_current_screen()
@@ -98,8 +100,8 @@ init -100 python in phone:
 
         return rv
     
-    def PhoneReturn(value=None):
-        return (Return(value), With(config.exit_transition if renpy.context_nesting_level() == 1 else config.intra_transition))
+    def PhoneReturn(value=None, transition=NoValue):
+        return (Return(value), With(transition if transition is not NoValue else (config.exit_transition if renpy.context_nesting_level() == 1 else config.intra_transition)))
 
     store.PhoneReturn = PhoneReturn
 

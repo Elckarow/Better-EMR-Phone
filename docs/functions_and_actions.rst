@@ -33,6 +33,9 @@ Utility Functions
 ``data = {...}``
     The dictionnary that's storing all of the phone's in-game data. Each ``*character*`` has an entry (their key) in this dict and will return another dictionnary as described in ``phone.config.data``.
 
+``NoValue = ...``
+    A unique object that's used when no value is passed to a callable.
+
 Screen Functions and Actions
 ----------------------------
 
@@ -42,9 +45,10 @@ Screen Functions and Actions
 
 ``def call_screen(_screen_name, *args, **kwargs)``
     The framework's equivalent of the ``renpy.call_screen`` function.
+    If the ``_transition`` keyword argument is passed, it's the transition ran when showing the screen. Otherwise, it's taken from ``phone.config.enter_transition`` and ``phone.config.intra_transition`.
     Invokes ``renpy.call_screen`` in a new context, passing all arguments and keyword arguments to it. This ensures a sort of "depths" effect (going to screen A, then screen B, then screen C, returning brings you back to screen B, and so on).
 
-``def PhoneReturn(value=None)``
+``def PhoneReturn(value=None, transition=NoValue)``
     The framework's equvalent of the ``Return`` action. It should be used to return from a phone screen.
 
 ``menu = False``

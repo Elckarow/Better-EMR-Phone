@@ -20,12 +20,10 @@ init -150 python in phone.emojis:
     def get(name):
         return _emojis[name]
     
-    def _emoji_tag(tag, name):
-        return [
+    store.config.self_closing_custom_text_tags["emoji"] = \
+        lambda tag, name: [
             (renpy.TEXT_DISPLAYABLE, Transform(get(name), subpixel=True, ysize=1.0, fit="contain"))
         ]
-    
-    store.config.self_closing_custom_text_tags["emoji"] = _emoji_tag
 
     import re
     _tag_pattern = re.compile(r"\{emoji\=([a-zA-Z0-9_]*)\}")

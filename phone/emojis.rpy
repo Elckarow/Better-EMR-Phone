@@ -1,6 +1,7 @@
 init -150 python in phone.emojis:
     from renpy.store import store, Transform, phone
     from store.phone import config
+    import os
     _constant = True
 
     import string
@@ -35,8 +36,6 @@ init -150 python in phone.emojis:
 
 init 1000 python hide in phone.emojis:
     if config.auto_emojis:
-        import os
-
         emoji_base_path = phone.asset("emojis")
 
         try:

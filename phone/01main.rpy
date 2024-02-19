@@ -72,8 +72,7 @@ init -100 python in phone:
         global menu
         menu = True
 
-        global _stack_depth
-        first_call = _stack_depth == 0
+        first_call = renpy.context_nesting_level() == 0
 
         needs_rollback = first_call and renpy.game.context().interacting
 
@@ -83,8 +82,6 @@ init -100 python in phone:
         renpy.transition(config.enter_transition if first_call else config.intra_transition)
         store._window_hide(None, True)
 
-        _stack_depth += 1
-
         current_screen = get_current_screen()
         set_current_screen(_screen_name)
 
@@ -93,7 +90,6 @@ init -100 python in phone:
         show_layer_at(current_screen or [])
 
         set_current_screen(current_screen)
-        _stack_depth -= 1
 
         menu = not first_call
 
@@ -103,7 +99,7 @@ init -100 python in phone:
         return rv
     
     def PhoneReturn(value=None):
-        return (Return(value), With(config.exit_transition if _stack_depth == 1 else config.intra_transition))
+        return (Return(value), With(config.exit_transition if renpy.context_nesting_level() == 1 else config.intra_transition))
 
     store.PhoneReturn = PhoneReturn
 
@@ -146,7 +142,6 @@ init -100 python in phone:
 # renamed it because why not
 default -999 phone._defaults_ran = phone._id_ran_on_start
 
-default -100 phone._stack_depth = 0
 default -100 phone._current_screen = None
 
 # The base screen for all phone screens.

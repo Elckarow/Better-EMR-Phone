@@ -32,7 +32,7 @@ Configuration Variables
 ``textbox_radius = 15``
     The radius of the rounded corners of the text messages' textboxes.
 
-``call_history_lenght = 20``
+``call_history_length = 20``
     How many phone calls we save.
 
 ``message_text_tags = set(...)``

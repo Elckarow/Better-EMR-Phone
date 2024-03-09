@@ -30,7 +30,7 @@ python early in phone.config:
     textbox_radius = 15
 
     # How many calls do we save?
-    call_history_lenght = 20
+    call_history_length = 20
 
     # A set of text tags that are allowed in text messages.
     # They should not change the size of the text.

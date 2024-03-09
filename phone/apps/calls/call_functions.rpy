@@ -70,12 +70,12 @@ init -100 python in phone.calls:
             ch1 = phone.data[key1]["call_history"]
             ch1.append(_CallEntry(key2, date, duration))
 
-            while len(ch1) > config.call_history_lenght: ch1.pop(0)
+            while len(ch1) > config.call_history_length: ch1.pop(0)
 
             ch2 = phone.data[key2]["call_history"]
             ch2.append(_CallEntry(key1, date, duration))
 
-            while len(ch2) > config.call_history_lenght: ch2.pop(0)
+            while len(ch2) > config.call_history_length: ch2.pop(0)
 
 default -100 phone.calls._current_caller = None
 default -100 phone.calls._nosave = None

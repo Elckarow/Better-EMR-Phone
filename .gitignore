@@ -10,7 +10,7 @@ tl/
 cache/
 gui/
 audio/
-image/
+images/
 saves/
 mod_assets/
 .vscode/

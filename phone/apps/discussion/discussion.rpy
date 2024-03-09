@@ -1,6 +1,5 @@
 init -100 python in phone.discussion:
-    from renpy import store
-    from store import ui, pause, phone
+    from renpy.store import store, ui, pause, phone
     from store.phone import config, show_layer_at, set_current_screen, format_date, format_time, emojis
     import datetime
 

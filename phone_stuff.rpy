@@ -145,8 +145,8 @@ python early:
         if (u_outline_width > 0.0) {
             vec2 center_outline = center - u_outline_width;
 
-            float crop1 = rounded_rectangle(uv - center, center, radius);
-            float crop2 = rounded_rectangle(uv - center, center_outline, radius - u_outline_width);
+            float crop1 = rounded_rectangle(uv_minus_center, center, radius);
+            float crop2 = rounded_rectangle(uv_minus_center, center_outline, radius - u_outline_width);
 
             float coeff1 = smoothstep(1.0, -1.0, crop1);
             float coeff2 = smoothstep(1.0, -1.0, crop2);

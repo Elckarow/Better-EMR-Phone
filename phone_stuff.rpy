@@ -89,16 +89,18 @@ python early:
         "height": 4.0,
     }
 
-    def RoundedCorners(child, radius, relative=None, **kwargs):
+    def RoundedCorners(child, radius, relative=None, outline_width=0.0, outline_color="#fff", **kwargs):
         if not isinstance(radius, tuple): radius = (radius,) * 4
         relative = _rounded_corners_relative[relative]
-
-        return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, **kwargs)
+        outline_color = normalize_color(Color(outline_color))
+        return Transform(child, mesh=True, shader="shader.rounded_corners", u_radius=radius, u_relative=relative, u_outline_color=outline_color, u_outline_width=outline_width, **kwargs)
 
     CurriedRoundedCorners = renpy.curry(RoundedCorners)
 
     renpy.register_shader("shader.rounded_corners", variables="""
         uniform vec4 u_radius;
+        uniform float u_outline_width;
+        uniform vec4 u_outline_color;
         uniform float u_relative;
         uniform sampler2D tex0;
         attribute vec2 a_tex_coord;
@@ -123,6 +125,8 @@ python early:
         vec2 uv_minus_center = uv - center;
         float radius = get_radius(uv_minus_center, u_radius);
 
+        vec4 color = texture2D(tex0, v_tex_coord);
+
         if (u_relative != 0.0) {
             float side_size;
             if (u_relative == 1.0) {
@@ -138,10 +142,23 @@ python early:
             radius *= side_size;
         }
 
-        float crop = rounded_rectangle(uv_minus_center, center, radius);
+        if (u_outline_width > 0.0) {
+            vec2 center_outline = center - u_outline_width;
 
-        vec4 color = texture2D(tex0, v_tex_coord);
-        gl_FragColor = mix(color, vec4(0.0), smoothstep(0.0, 1.0, crop));
+            float crop1 = rounded_rectangle(uv - center, center, radius);
+            float crop2 = rounded_rectangle(uv - center, center_outline, radius - u_outline_width);
+
+            float coeff1 = smoothstep(1.0, -1.0, crop1);
+            float coeff2 = smoothstep(1.0, -1.0, crop2);
+
+            float outline_coeff = (coeff1 - coeff2);
+
+            gl_FragColor = mix(vec4(0.0), mix(color, u_outline_color, outline_coeff), coeff1);
+        } 
+        else {
+            float crop = rounded_rectangle(uv_minus_center, center, radius);
+            gl_FragColor = mix(color, vec4(0.0), smoothstep(0.0, 1.0, crop));
+        }
     """)
 
     # taken from

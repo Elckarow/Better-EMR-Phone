@@ -952,10 +952,6 @@ python early in phone:
 
         return _RawPhoneDiscussion(gc, statements)
     
-    def _predict_phone_discussion(rd):
-        renpy.predict_screen("phone_discussion")
-        return [ ]
-    
     def _phone_execute_init(rv):
         for statement in rv.statements:
             if isinstance(statement, _RawPhonePython):
@@ -969,7 +965,6 @@ python early in phone:
         execute_init=_phone_execute_init,
         translation_strings=cds_utils.get_translatable_strings,
         lint=cds_utils.lint,
-        predict=_predict_phone_discussion
     )       
 
     ########################################################

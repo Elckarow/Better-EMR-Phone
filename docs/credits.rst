@@ -10,7 +10,10 @@ I'd like to thank to following people for their contributions:
 
 as well as the project's contributors on GitHub:
 
-* Galo223344 (transient group chats)
+* Galo223344
+* MapMappening
+* VodkaBro
+* avocolado
 
 Various ressources used:
 

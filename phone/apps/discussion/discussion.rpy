@@ -10,7 +10,7 @@ init -100 python in phone.discussion:
         if renpy.filter_text_tags(s, allow=config.message_text_tags) != s:
             raise ValueError("only the following text tags are allowed:\n{}\n\ntext: '{}'".format("\n".join(config.message_text_tags), s))
 
-    def discussion(gc):
+    def set_up_group_chat(gc):
         global _group_chat
 
         if gc is None:
@@ -24,12 +24,15 @@ init -100 python in phone.discussion:
         if not gc._characters:
             raise Exception("group chat '{}' has no characters".format(gc.name))
         
-        store._window_hide()
-        
         _group_chat = gc
         _group_chat.unread = False
 
         _yadjustment.value = float("inf")
+
+    def discussion(gc):
+        set_up_group_chat(gc)
+
+        store._window_hide()
 
         set_current_screen("phone_discussion")
         show_layer_at("phone_discussion")

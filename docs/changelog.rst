@@ -5,6 +5,11 @@ Changelog
 
 A list of all the changes throughout the versions, starting from 3.0.0.
 
+3.3.0
+-----
+
+* A new function ``phone.discussion.set_up_group_chat``.
+
 3.2.2
 -----
 

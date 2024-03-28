@@ -11,6 +11,10 @@ Functions
 ``def remove_text_tags(s)``
     Formats the ``emoji`` text tag in ``s`` according to ``phone.emojis.format_emoji_tag`` and removes all other text tags.
 
+``def set_up_group_chat(gc)``
+    Tells the framework to use the ``*group chat*`` ``gc``. This can be used in conjunction with ``phone.call_screen("phone_discussion")``
+    to show a group chat directly without having to go through the ``phone_contacts`` screen.
+
 ``def discussion(gc)``
     Starts a discussion with the ``*group chat*`` ``gc``. If ``None`` is passed, the current group chat is used.
     The python equivalent of the ``phone discussion`` statement.

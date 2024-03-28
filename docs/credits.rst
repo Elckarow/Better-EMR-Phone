@@ -14,6 +14,7 @@ as well as the project's contributors on GitHub:
 * MapMappening
 * VodkaBro
 * avocolado
+* MDHtrappy
 
 Various ressources used:
 
